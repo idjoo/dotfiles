@@ -32,7 +32,7 @@ in
         enable = true;
 
         stores = [
-          "$XDG_DATA_HOME/pass"
+          "${config.xdg.dataHome}/pass"
         ];
 
         extraConfig = "";

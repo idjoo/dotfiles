@@ -59,7 +59,10 @@
     btop.enable = true;
     eza.enable = true;
     flameshot.enable = true;
-    git.enable = true;
+    git = {
+      enable = true;
+      email = "adrianus.vian.habirowo@devoteam.com";
+    };
     gpg.enable = true;
     lazygit.enable = true;
     password-store.enable = true;

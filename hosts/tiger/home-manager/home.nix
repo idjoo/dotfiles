@@ -53,7 +53,10 @@
     # cli
     eza.enable = true;
     gpg.enable = true;
-    git.enable = true;
+    git = {
+      enable = true;
+      email = "vian@idjo.cc";
+    };
     password-store.enable = true;
   };
 

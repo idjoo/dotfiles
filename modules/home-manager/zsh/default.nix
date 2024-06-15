@@ -36,7 +36,7 @@ in
 
       shellAliases = {
         reload = "source $ZDOTDIR/.zshrc";
-        rebuild = "nh os switch ~/dotfiles";
+        rebuild = "nh os switch";
 
         # git
         lg = "lazygit";
