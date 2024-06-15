@@ -128,8 +128,7 @@
   users.users.${outputs.username} = {
     isNormalUser = true;
     description = "Adrianus Vian Habirowo";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     useDefaultShell = true;
   };
@@ -157,7 +156,12 @@
     };
   };
 
+  virtualisation = {
+    docker.enable = true;
+  };
+
   modules = {
+    nh.enable = true;
     stylix.enable = true;
     pipewire.enable = true;
     tailscale.enable = true;

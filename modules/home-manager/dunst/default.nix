@@ -1,5 +1,4 @@
-{ pkgs
-, lib
+{ lib
 , config
 , ...
 }:
@@ -18,7 +17,7 @@ in
           };
 
           urgency_normal = {
-            timeout = 10;
+            timeout = 5;
           };
         };
       };

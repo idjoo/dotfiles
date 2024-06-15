@@ -67,6 +67,7 @@
     tmux.enable = true;
     lazygit.enable = true;
     password-store.enable = true;
+    flameshot.enable = true;
   };
 
   # Nicely reload system units when changing configs

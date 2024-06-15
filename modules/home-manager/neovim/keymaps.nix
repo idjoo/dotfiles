@@ -33,5 +33,14 @@
       key = "<down>";
       mode = "n";
     }
+
+    {
+      action = ''y:let @"=system('base64 --decode', @")<cr>gvP'';
+      key = "<leader>64";
+      mode = "v";
+      options = {
+        remap = false;
+      };
+    }
   ];
 }

@@ -91,9 +91,11 @@ in
         XF86AudioPlay = "spawn ${pkgs.playerctl}/bin/playerctl play-pause";
         XF86AudioNext = "spawn ${pkgs.playerctl}/bin/playerctl next";
         XF86AudioPrev = "spawn ${pkgs.playerctl}/bin/playerctl previous";
+
+        Print = "spawn ${pkgs.flameshot}/bin/flameshot gui";
+
         #
         #XF86Launch1 spawn rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xsel --clipboard"
-        #Print spawn flameshot gui
         #Control-Print spawn color-picker
         #Mod4-p spawn rofi-pass
         #Mod4-a spawn ani-cli --rofi --skip

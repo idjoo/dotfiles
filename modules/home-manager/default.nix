@@ -9,7 +9,6 @@
     ./gpg
     ./herbstluftwm
     ./lazygit
-    ./nvim
     ./neovim
     ./password-store
     ./btop
@@ -18,5 +17,6 @@
     ./tmux
     ./wezterm
     ./zsh
+    ./flameshot
   ];
 }

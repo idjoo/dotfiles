@@ -7,5 +7,6 @@
     ./stylix
     ./pipewire
     ./utils
+    ./nh
   ];
 }
