@@ -13,7 +13,7 @@ in
       enable = true;
       package = pkgs.pass.withExtensions (exts: [ exts.pass-otp ]);
       settings = {
-        PASSWORD_STORE_DIR = "$XDG_DATA_HOME/password-store";
+        PASSWORD_STORE_DIR = "${config.xdg.dataHome}/pass";
       };
     };
   };

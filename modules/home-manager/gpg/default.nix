@@ -1,5 +1,4 @@
-{ outputs
-, pkgs
+{ pkgs
 , lib
 , config
 , ...
@@ -17,6 +16,12 @@ in
       mutableTrust = false;
       publicKeys = [ ];
       #settings = {};
+    };
+
+    services.gpg-agent = {
+      enable = true;
+      enableSshSupport = true;
+      pinentryPackage = pkgs.pinentry-rofi;
     };
   };
 }

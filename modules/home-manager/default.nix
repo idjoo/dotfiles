@@ -3,20 +3,22 @@
 {
   # List your module files here
   imports = [
-    ./eza
+    ./btop
     ./dunst
+    ./eza
+    ./flameshot
     ./git
+    ./go
     ./gpg
     ./herbstluftwm
     ./lazygit
     ./neovim
     ./password-store
-    ./btop
     ./polybar
     ./rofi
+    ./ssh
     ./tmux
     ./wezterm
     ./zsh
-    ./flameshot
   ];
 }

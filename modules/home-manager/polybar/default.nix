@@ -154,7 +154,7 @@ in
 
         "module/distro" = {
           type = "custom/script";
-          exec = ''echo ""'';
+          exec = ''echo ""'';
         };
 
         "module/date" = {

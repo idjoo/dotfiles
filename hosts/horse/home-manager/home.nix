@@ -1,8 +1,5 @@
-{ inputs
+{ pkgs
 , outputs
-, lib
-, config
-, pkgs
 , ...
 }: {
   imports = [
@@ -50,7 +47,6 @@
     zsh.enable = true;
 
     # editor
-    # nvim.enable = true;
     neovim.enable = true;
 
     # launcher
@@ -60,14 +56,18 @@
     dunst.enable = true;
 
     # cli
-    eza.enable = true;
-    gpg.enable = true;
-    git.enable = true;
     btop.enable = true;
-    tmux.enable = true;
+    eza.enable = true;
+    flameshot.enable = true;
+    git.enable = true;
+    gpg.enable = true;
     lazygit.enable = true;
     password-store.enable = true;
-    flameshot.enable = true;
+    ssh.enable = true;
+    tmux.enable = true;
+
+    # prog lang
+    go.enable = true;
   };
 
   # Nicely reload system units when changing configs

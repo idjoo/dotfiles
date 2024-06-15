@@ -8,28 +8,30 @@
         remap = false;
       };
     }
+
     {
       action = "<cmd>nohlsearch<cr>";
       key = "<esc>";
       mode = "n";
     }
+
     {
-      action = ''<cmd> echo "tolol" <cr>'';
+      action = ''<cmd>echo "tolol"<cr>'';
       key = "<left>";
       mode = "n";
     }
     {
-      action = ''<cmd> echo "tolol" <cr>'';
+      action = ''<cmd>echo "tolol"<cr>'';
       key = "<right>";
       mode = "n";
     }
     {
-      action = ''<cmd> echo "tolol" <cr>'';
+      action = ''<cmd>echo "tolol"<cr>'';
       key = "<up>";
       mode = "n";
     }
     {
-      action = ''<cmd> echo "tolol" <cr>'';
+      action = ''<cmd>echo "tolol"<cr>'';
       key = "<down>";
       mode = "n";
     }
@@ -41,6 +43,12 @@
       options = {
         remap = false;
       };
+    }
+
+    {
+      action = ''<cmd>bd<cr>'';
+      key = "<leader>bd";
+      mode = "n";
     }
   ];
 }

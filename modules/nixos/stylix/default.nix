@@ -15,6 +15,10 @@ in
   options.modules.stylix = { enable = mkEnableOption "stylix"; };
   config = mkIf cfg.enable {
     stylix = {
+      enable = cfg.enable;
+
+      polarity = "dark";
+
       image = pkgs.fetchurl {
         url = "https://ember.idjo.cc/images/wallpaper.png";
         sha256 = "09f7fd058106437ff791cf97b5e408019622914f5f831358a44e5b108e5e5f99";

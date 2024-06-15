@@ -36,7 +36,7 @@ in
 
       shellAliases = {
         reload = "source $ZDOTDIR/.zshrc";
-        rebuild = "(cd ~/dotfiles && nix fmt) && sudo nixos-rebuild switch --verbose --flake ~/dotfiles#$(hostname)";
+        rebuild = "nh os switch ~/dotfiles";
 
         # git
         lg = "lazygit";
