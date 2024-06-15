@@ -52,7 +52,7 @@
       };
 
       gc = {
-        automatic = true;
+        automatic = false;
         dates = "weekly";
         options = "--delete-older-than 7d";
       };
@@ -131,7 +131,6 @@
     isNormalUser = true;
     description = "Adrianus Vian Habirowo";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ ];
     shell = pkgs.zsh;
     useDefaultShell = true;
   };
@@ -139,12 +138,12 @@
   # packages
   environment.systemPackages = with pkgs; [
     google-chrome
-    nodejs_22
     hicolor-icon-theme
   ];
 
   # fonts
   fonts.packages = with pkgs; [
+    dank-mono-nerdfont
     fira-code-nerdfont
     terminus-nerdfont
     font-awesome
@@ -152,14 +151,14 @@
 
   programs = {
     zsh.enable = true;
+  };
 
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
+  virtualisation = {
+    docker.enable = true;
   };
 
   modules = {
+    nh.enable = true;
     stylix.enable = true;
     pipewire.enable = true;
     tailscale.enable = true;
@@ -168,6 +167,7 @@
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
+    backupFileExtension = "bak";
     useGlobalPkgs = false;
     useUserPackages = true;
     users = {

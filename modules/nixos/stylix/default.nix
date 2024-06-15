@@ -46,8 +46,8 @@ in
         };
 
         monospace = {
-          package = pkgs.fira-code-nerdfont;
-          name = "FiraCode Nerd Font Mono";
+          package = pkgs.dank-mono-nerdfont;
+          name = "DankMono Nerd Font Mono";
         };
 
         emoji = {

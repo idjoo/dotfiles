@@ -10,16 +10,16 @@ in
   options.modules.gpg = { enable = mkEnableOption "gpg"; };
   config = mkIf cfg.enable {
     programs.gpg = {
-      enable = true;
+      enable = cfg.enable;
       homedir = "${config.xdg.dataHome}/gnupg";
       mutableKeys = false;
       mutableTrust = false;
       publicKeys = [ ];
-      #settings = {};
+      settings = { };
     };
 
     services.gpg-agent = {
-      enable = true;
+      enable = cfg.enable;
       enableSshSupport = true;
       pinentryPackage = pkgs.pinentry-rofi;
     };

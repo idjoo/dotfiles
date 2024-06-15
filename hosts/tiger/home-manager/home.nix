@@ -1,13 +1,7 @@
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{ inputs
+{ pkgs
 , outputs
-, lib
-, config
-, pkgs
 , ...
 }: {
-  # You can import other home-manager modules here
   imports = [
     outputs.homeManagerModules
   ];
@@ -31,6 +25,14 @@
     homeDirectory = "/home/${outputs.username}";
   };
 
+  home.packages = with pkgs; [
+    (
+      google-cloud-sdk.withExtraComponents [
+        google-cloud-sdk.components.gke-gcloud-auth-plugin
+      ]
+    )
+  ];
+
   modules = {
     # window manager
     herbstluftwm.enable = true;
@@ -45,19 +47,30 @@
     zsh.enable = true;
 
     # editor
-    nvim.enable = true;
+    neovim.enable = true;
 
     # launcher
     rofi.enable = true;
 
+    # notification
+    dunst.enable = true;
+
     # cli
+    btop.enable = true;
     eza.enable = true;
-    gpg.enable = true;
+    flameshot.enable = true;
     git = {
       enable = true;
       email = "vian@idjo.cc";
     };
+    gpg.enable = true;
+    lazygit.enable = true;
     password-store.enable = true;
+    ssh.enable = true;
+    tmux.enable = true;
+
+    # prog lang
+    go.enable = true;
   };
 
   # Nicely reload system units when changing configs
