@@ -6,5 +6,6 @@
     ./tailscale
     ./stylix
     ./pipewire
+    ./utils
   ];
 }

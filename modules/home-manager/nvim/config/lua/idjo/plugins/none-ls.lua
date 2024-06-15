@@ -39,7 +39,8 @@ return {
 
 	opts = {
 		ensure_installed = nil,
-		automatic_installation = true,
+		automatic_installation = {
+			exclude = {"nixpkgs-fmt"}},
 
 		methods = {
 			diagnostics = true,

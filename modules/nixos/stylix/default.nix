@@ -1,21 +1,18 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, inputs
+, ...
 }:
 with lib; let
   cfg = config.modules.stylix;
-in {
-  options.modules.stylix = {
-    enable = mkOption {
-      type = lib.types.bool;
-      default = true;
-      example = true;
-      description = "stylix";
-    };
-  };
+in
+{
+  imports = [
+    inputs.stylix.nixosModules.stylix
+  ];
 
+  options.modules.stylix = { enable = mkEnableOption "stylix"; };
   config = mkIf cfg.enable {
     stylix = {
       image = pkgs.fetchurl {
@@ -56,23 +53,21 @@ in {
       };
     };
 
-    # stylix.base16Scheme = {
-    #   base00 = "#293329"; # base
-    #   base01 = "#3e4d3e"; # mantle
-    #   base02 = "#5f6d5f"; # surface0
-    #   base03 = "#738b73"; # surface1
-    #   base04 = "#5f7f6b"; # surface2
-    #   base05 = "#c6d0f5"; # text
-    #   base06 = "#f2d5cf"; # rosewater
-    #   base07 = "#babbf1"; # lavender
-    #   base08 = "#e78284"; # red
-    #   base09 = "#ef9f76"; # peach
-    #   base0A = "#e5c890"; # yellow
-    #   base0B = "#a6d189"; # green
-    #   base0C = "#81c8be"; # teal
-    #   base0D = "#8caaee"; # blue
-    #   base0E = "#ca9ee6"; # mauve
-    #   base0F = "#eebebe"; # flamingo
-    # };
+    # base00 = base
+    # base01 = mantle
+    # base02 = surface0
+    # base03 = surface1
+    # base04 = surface2
+    # base05 = text
+    # base06 = rosewater
+    # base07 = lavender
+    # base08 = red
+    # base09 = peach
+    # base0A = yellow
+    # base0B = green
+    # base0C = teal
+    # base0D = blue
+    # base0E = mauve
+    # base0F = flamingo
   };
 }

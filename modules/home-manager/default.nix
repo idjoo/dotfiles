@@ -4,15 +4,19 @@
   # List your module files here
   imports = [
     ./eza
-    ./polybar
+    ./dunst
+    ./git
+    ./gpg
     ./herbstluftwm
-    ./rofi
+    ./lazygit
     ./nvim
+    ./neovim
+    ./password-store
+    ./btop
+    ./polybar
+    ./rofi
+    ./tmux
     ./wezterm
     ./zsh
-    ./tmux
-    ./gpg
-    ./git
-    ./password-store
   ];
 }

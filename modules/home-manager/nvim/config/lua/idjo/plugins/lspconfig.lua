@@ -13,7 +13,6 @@ return {
         "ansiblels",
         "terraformls",
         "jsonls",
-        "nil_ls",
 			},
 
 			handlers = {

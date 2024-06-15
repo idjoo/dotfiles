@@ -1,13 +1,13 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 with lib; let
   cfg = config.modules.zsh;
-in {
-  options.modules.zsh = {enable = mkEnableOption "zsh";};
+in
+{
+  options.modules.zsh = { enable = mkEnableOption "zsh"; };
   config = mkIf cfg.enable {
     programs.zsh = {
       enable = true;
@@ -36,7 +36,11 @@ in {
 
       shellAliases = {
         reload = "source $ZDOTDIR/.zshrc";
-        rebuild = "sudo nixos-rebuild switch --verbose --flake ~/nix-config#$(hostname)";
+        rebuild = "(cd ~/dotfiles && nix fmt) && sudo nixos-rebuild switch --verbose --flake ~/dotfiles#$(hostname)";
+
+        # git
+        lg = "lazygit";
+        ga = "git add";
       };
 
       plugins = [
