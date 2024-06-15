@@ -3,16 +3,24 @@
 {
   # List your module files here
   imports = [
+    ./btop
+    ./cava
+    ./dunst
     ./eza
-    ./polybar
+    ./flameshot
+    ./fzf
+    ./git
+    ./go
+    ./gpg
     ./herbstluftwm
+    ./lazygit
+    ./neovim
+    ./password-store
+    ./polybar
     ./rofi
-    ./nvim
+    ./ssh
+    ./tmux
     ./wezterm
     ./zsh
-    ./tmux
-    ./gpg
-    ./git
-    ./password-store
   ];
 }

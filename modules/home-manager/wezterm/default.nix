@@ -1,16 +1,15 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ lib
+, config
+, ...
 }:
 with lib; let
   cfg = config.modules.wezterm;
-in {
-  options.modules.wezterm = {enable = mkEnableOption "wezterm";};
+in
+{
+  options.modules.wezterm = { enable = mkEnableOption "wezterm"; };
   config = mkIf cfg.enable {
     programs.wezterm = {
-      enable = true;
+      enable = cfg.enable;
 
       extraConfig = ''
         local config = {}
@@ -24,10 +23,7 @@ in {
         	bottom = 6,
         }
 
-        -- config.font = wezterm.font_with_fallback({
-        -- 	"DankMono Nerd Font Mono",
-        -- 	"FiraCode Nerd Font Mono",
-        -- })
+        config.window_close_confirmation = 'NeverPrompt'
 
         config.font_size = 12.0
         config.line_height = 1.0

@@ -1,24 +1,24 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 with lib; let
   cfg = config.modules.tmux;
-in {
-  options.modules.tmux = {enable = mkEnableOption "tmux";};
+in
+{
+  options.modules.tmux = { enable = mkEnableOption "tmux"; };
   config = mkIf cfg.enable {
     programs.tmux = {
-      enable = true;
+      enable = cfg.enable;
       historyLimit = 999999999;
       keyMode = "vi";
       newSession = false;
       prefix = "M-f";
       resizeAmount = 5;
       shell = "${pkgs.zsh}/bin/zsh";
-      terminal = "xterm-256color";
       sensibleOnTop = false;
+      mouse = true;
       plugins = [
         {
           plugin = pkgs.tmuxPlugins.resurrect;
@@ -41,11 +41,17 @@ in {
       ];
 
       extraConfig = ''
+        # https://old.reddit.com/r/tmux/comments/mesrci/tmux_2_doesnt_seem_to_use_256_colors/
+        # ---------------------
+        set -g default-terminal "xterm-256color"
+        set -ga terminal-overrides ",*256col*:Tc"
+        set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
+        set-environment -g COLORTERM "truecolor"
+
         unbind-key -T copy-mode-vi v
         bind-key -T copy-mode-vi 'v' send -X begin-selection
         bind-key -T copy-mode-vi 'C-v' send -X rectangle-toggle
         bind-key -T copy-mode-vi 'y' send-keys -X copy-pipe "xsel -i -p && xsel -o -p | xsel -i -b"
-        # bind-key 'p' run "xsel -o | tmux load-buffer - ; tmux paste-buffer"
         bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-selection -x
 
         # windows titles
@@ -60,18 +66,10 @@ in {
 
         # status bar
         # ---------------------
-        set -g status-bg '#1f281f'
-        set -g status-fg '#ffffff'
         set -g status-left ""
-        set -g status-right '#{continuum_status}m #[bg=#435643]#[fg=#ffffff]#(date +" %H:%M ")'
+        set -g status-right '#{continuum_status}m #(date +" %H:%M ")'
         set -g window-status-format '#I #W'
         set -g window-status-current-format ' #I #W '
-        setw -g window-status-current-style bg='#435643',fg='#a4cc78'
-
-        # pane border colors
-        # ---------------------
-        set -g pane-active-border-style fg='#a4cc78'
-        set -g pane-border-style fg='#555555'
 
         # reload config
         # ---------------------
@@ -84,10 +82,10 @@ in {
 
         # split pane
         # ---------------------
-        unbind '"'
-        unbind %
-        bind | split-window -h -c "#{pane_current_path}"
-        bind - split-window -v -c "#{pane_current_path}"
+        #unbind '"'
+        #unbind %
+        #bind | split-window -h -c "#{pane_current_path}"
+        #bind - split-window -v -c "#{pane_current_path}"
       '';
     };
   };

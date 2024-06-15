@@ -6,5 +6,8 @@
     ./tailscale
     ./stylix
     ./pipewire
+    ./utils
+    ./nh
+    ./ssh
   ];
 }
