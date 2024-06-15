@@ -1,8 +1,7 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 with lib; let
   cfg = config.modules.polybar;
@@ -93,11 +92,12 @@ with lib; let
         echo "''${VOLUME}"
     esac
   '';
-in {
-  options.modules.polybar = {enable = mkEnableOption "polybar";};
+in
+{
+  options.modules.polybar = { enable = mkEnableOption "polybar"; };
   config = mkIf cfg.enable {
     services.polybar = {
-      enable = true;
+      enable = cfg.enable;
 
       script = "${pkgs.polybar}/bin/polybar main";
 
@@ -141,7 +141,7 @@ in {
           modules = {
             left = "distro date xwindow";
             center = "hlwm";
-            right = "bluetooth backlight pipewire cpu memory temperature wireless";
+            right = "bluetooth backlight pipewire cpu memory temperature wireless battery";
           };
         };
 
@@ -154,7 +154,7 @@ in {
 
         "module/distro" = {
           type = "custom/script";
-          exec = ''echo ""'';
+          exec = ''echo ""'';
         };
 
         "module/date" = {
@@ -191,7 +191,6 @@ in {
 
         "module/backlight" = {
           type = "internal/backlight";
-          card = "intel_backlight";
           use.actual-brightness = true;
           label = "%percentage%";
 
@@ -222,7 +221,7 @@ in {
           interval = 0.5;
           format = "<ramp-load> <label>";
           ramp.load = {
-            text = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█"];
+            text = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
             foreground = "#${config.lib.stylix.colors.base0C}";
           };
         };
@@ -257,7 +256,7 @@ in {
           };
 
           ramp = {
-            text = ["" "" "" "" ""];
+            text = [ "" "" "" "" "" ];
             foreground = "#${config.lib.stylix.colors.base0E}";
           };
         };
@@ -283,7 +282,7 @@ in {
           };
 
           ramp.signal = {
-            text = [" "];
+            text = [ " " ];
             foreground = "#${config.lib.stylix.colors.base0F}";
           };
         };
@@ -293,6 +292,28 @@ in {
           full.at = 100;
           low.at = 20;
           adapter = "AC";
+          battery = "BAT0";
+
+          format = {
+            charging = "<animation-charging> <label-charging>";
+            discharging = "<animation-discharging> <label-discharging>";
+            full.prefix = {
+              text = "";
+              foreground = "#${config.lib.stylix.colors.base0B}";
+            };
+          };
+
+          animation = {
+            charging = {
+              text = [ "" "" "" "" "" "" "" ];
+              foreground = "#${config.lib.stylix.colors.base0B}";
+            };
+
+            discharging = {
+              text = [ "" "" "" "" "" "" "" "" "" "" ];
+              foreground = "#${config.lib.stylix.colors.base08}";
+            };
+          };
         };
       };
     };

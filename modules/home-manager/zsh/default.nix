@@ -1,16 +1,16 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 with lib; let
   cfg = config.modules.zsh;
-in {
-  options.modules.zsh = {enable = mkEnableOption "zsh";};
+in
+{
+  options.modules.zsh = { enable = mkEnableOption "zsh"; };
   config = mkIf cfg.enable {
     programs.zsh = {
-      enable = true;
+      enable = cfg.enable;
 
       dotDir = ".config/zsh";
 
@@ -30,13 +30,24 @@ in {
         share = true;
       };
 
-      historySubstringSearch = {
-        enable = true;
-      };
-
       shellAliases = {
         reload = "source $ZDOTDIR/.zshrc";
-        rebuild = "sudo nixos-rebuild switch --verbose --flake ~/nix-config#$(hostname)";
+        rebuild = "nh os switch";
+
+        # git
+        lg = "lazygit";
+        ga = "git add";
+
+        # nix
+        nix-shell = "nom-shell --command zsh";
+
+        # work
+        spindo-dev-dashboard = ''xdg-open "https://console.cloud.google.com/monitoring/dashboards/builder/afa6b769-7933-4f81-9d52-7735bfcb79a9;startTime=$(date -u -d yesterday +"%Y-%m-%dT10:30:00Z");endTime=$(date -u +"%Y-%m-%dT10:30:00Z")?project=prj-sap-dev-398404"'';
+        spindo-prod-dashboard = ''xdg-open "https://console.cloud.google.com/monitoring/dashboards/builder/5deb3680-dcd5-4a70-8749-c84dfd2efcd3;startTime=$(date -u -d yesterday +"%Y-%m-%dT10:30:00Z");endTime=$(date -u +"%Y-%m-%dT10:30:00Z")?project=prj-sap-prod-398404"'';
+        spindo-dev-snapshot = ''xdg-open "https://console.cloud.google.com/compute/snapshots?referrer=search&project=prj-sap-dev-398404&pageState=(%22snapshots%22:(%22s%22:%5B(%22i%22:%22creationTimestamp%22,%22s%22:%221%22),(%22i%22:%22name%22,%22s%22:%220%22)%5D))"'';
+        spindo-prod-snapshot = ''xdg-open "https://console.cloud.google.com/compute/snapshots?referrer=search&project=prj-sap-prod-398404&pageState=(%22snapshots%22:(%22s%22:%5B(%22i%22:%22creationTimestamp%22,%22s%22:%221%22),(%22i%22:%22name%22,%22s%22:%220%22)%5D))"'';
+
+        mount-gdrive = ''rclone mount gdrive:/ ~/documents/drive'';
       };
 
       plugins = [
@@ -62,6 +73,16 @@ in {
           };
         }
       ];
+
+      initExtra = ''
+        bindkey "^H" backward-delete-char
+        bindkey "^?" backward-delete-char
+        zstyle ':completion:*' menu select
+      '';
+
+      envExtra = ''
+        export KEYTIMEOUT=1
+      '';
     };
   };
 }

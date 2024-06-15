@@ -1,56 +1,79 @@
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
+{ pkgs
+, outputs
+, ...
 }: {
-  # You can import other home-manager modules here
   imports = [
     outputs.homeManagerModules
-
-    # Or modules exported from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModules.default
-    inputs.nixvim.homeManagerModules.nixvim
-    inputs.nix-colors.homeManagerModules.default
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
-    ./color.nix
   ];
 
-  nixpkgs = {
-    overlays = [
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.stable-packages
-    ];
+  programs.home-manager.enable = true;
 
-    config = {
-      allowUnfree = true;
-    };
-  };
+  # nixpkgs = {
+  #   overlays = [
+  #     outputs.overlays.additions
+  #     outputs.overlays.modifications
+  #     outputs.overlays.stable-packages
+  #   ];
+  #
+  #   config = {
+  #     allowUnfree = true;
+  #   };
+  # };
 
   home = {
-    username = "idjo";
-    homeDirectory = "/home/idjo";
+    username = "${outputs.username}";
+    homeDirectory = "/home/${outputs.username}";
   };
 
-  programs.home-manager.enable = true;
-  programs.git.enable = true;
+  home.packages = with pkgs; [
+    (
+      google-cloud-sdk.withExtraComponents [
+        google-cloud-sdk.components.gke-gcloud-auth-plugin
+      ]
+    )
+  ];
 
   modules = {
-    eza.enable = true;
-    nvim.enable = true;
-    wezterm.enable = true;
-    zsh.enable = true;
+    # window manager
     herbstluftwm.enable = true;
-    rofi.enable = true;
-    tmux.enable = true;
+
+    # bar
     polybar.enable = true;
+
+    # terminal
+    urxvt.enable = true;
+    wezterm.enable = true;
+
+    # shell
+    zsh.enable = true;
+
+    # editor
+    neovim.enable = true;
+
+    # launcher
+    rofi.enable = true;
+
+    # notification
+    dunst.enable = true;
+
+    # cli
+    btop.enable = true;
+    eza.enable = true;
+    flameshot.enable = true;
+    git = {
+      enable = true;
+      email = "adrianus.vian.habirowo@devoteam.com";
+    };
+    gpg.enable = true;
+    lazygit.enable = true;
+    password-store.enable = true;
+    ssh.enable = true;
+    tmux.enable = true;
+    cava.enable = true;
+    fzf.enable = true;
+
+    # prog lang
+    go.enable = true;
   };
 
   # Nicely reload system units when changing configs
