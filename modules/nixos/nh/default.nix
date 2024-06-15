@@ -12,9 +12,13 @@ in
     mkIf cfg.enable {
       programs.nh = {
         enable = true;
-        clean.enable = true;
-        clean.extraArgs = "--keep-since 7d --keep 5";
+
         flake = "/home/${outputs.username}/dotfiles";
+
+        clean = {
+          enable = true;
+          extraArgs = "--keep-since 7d --keep 5";
+        };
       };
     };
 }
