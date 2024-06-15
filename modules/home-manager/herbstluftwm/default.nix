@@ -1,28 +1,39 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 with lib; let
   cfg = config.modules.herbstluftwm;
-in {
-  options.modules.herbstluftwm = {enable = mkEnableOption "herbstluftwm";};
+
+  polybar = pkgs.writeShellScriptBin "panel.sh" ''
+    pkill polybar
+
+    while pgrep -u $UID -x polybar >/dev/null; do sleep 0.1; done
+
+    polybar main -r 2>&1 | tee -a /tmp/polybar.log & disown
+  '';
+
+  wallpaper = pkgs.fetchurl {
+    url = "https://ember.idjo.cc/images/wallpaper.png";
+    sha256 = "09f7fd058106437ff791cf97b5e408019622914f5f831358a44e5b108e5e5f99";
+  };
+in
+{
+  options.modules.herbstluftwm = { enable = mkEnableOption "herbstluftwm"; };
   config = mkIf cfg.enable {
     xsession.windowManager.herbstluftwm = {
-      enable = true;
-      tags = ["1" "2" "3" "4" "5" "6" "7" "8" "9" "0"];
+      enable = cfg.enable;
+      tags = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ];
       keybinds = {
         Mod4-Shift-q = "quit";
         Mod4-Shift-r = "reload";
         Mod4-w = "close";
 
         # terminal
-        Mod4-Return = "spawn ${pkgs.wezterm}/bin/wezterm";
+        Mod4-Return = "spawn ${pkgs.rxvt-unicode}/bin/urxvt";
 
-        # rofi
-        Mod4-d = "spawn ${pkgs.rofi}/bin/rofi -show drun -modi drun";
-
+        # workspaces
         Mod4-1 = "use_index 0";
         Mod4-2 = "use_index 1";
         Mod4-3 = "use_index 2";
@@ -45,10 +56,11 @@ in {
         Mod4-Shift-9 = "move_index 8";
         Mod4-Shift-0 = "move_index 9";
 
-        Mod4-h = "focus left";
-        Mod4-j = "focus down";
-        Mod4-k = "focus up";
-        Mod4-l = "focus right";
+        # window movement
+        Mod4-h = "focus --level=all left";
+        Mod4-j = "focus --level=all down";
+        Mod4-k = "focus --level=all up";
+        Mod4-l = "focus --level=all right";
 
         Mod4-Shift-h = "shift left";
         Mod4-Shift-j = "shift down";
@@ -63,19 +75,31 @@ in {
             , cycle_layout +1
         '';
 
-        ## xf86
-        #XF86MonBrightnessUp spawn xbacklight -inc 10
-        #XF86MonBrightnessDown spawn xbacklight -dec 10
-        #XF86AudioMute spawn pamixer --toggle-mute
-        #XF86AudioRaiseVolume spawn pamixer --increase 5
-        #XF86AudioLowerVolume spawn pamixer --decrease 5
-        #
-        #XF86AudioPlay spawn playerctl play-pause
-        #XF86AudioNext spawn playerctl next
-        #XF86AudioPrev spawn playerctl previous
+        Mod4-f = "set_attr clients.focus.floating toggle";
+        Mod4-Shift-f = "fullscreen toggle";
+
+        # rofi
+        Mod4-d = "spawn ${pkgs.rofi}/bin/rofi -show drun -modi drun";
+        Mod4-p = "spawn ${pkgs.rofi-pass}/bin/rofi-pass";
+        Mod4-a = "spawn ${pkgs.ani-cli}/bin/ani-cli --rofi --skip";
+        Mod4-b = "spawn ${pkgs.rofi-bluetooth}/bin/rofi-bluetooth";
+        Mod4-e = "spawn ${pkgs.rofi}/bin/rofi -show emoji -modi emoji";
+        Mod4-c = ''spawn ${pkgs.rofi}/bin/rofi -show calc -modi calc -no-show-match -no-sort -calc-command " echo - n '{ result }' | xsel --clipboard"'';
+
+        # xf86
+        XF86MonBrightnessUp = "spawn ${pkgs.acpilight}/bin/xbacklight -inc 10";
+        XF86MonBrightnessDown = "spawn ${pkgs.acpilight}/bin/xbacklight -dec 10";
+        XF86AudioMute = "spawn ${pkgs.pamixer}/bin/pamixer --toggle-mute";
+        XF86AudioRaiseVolume = "spawn ${pkgs.pamixer}/bin/pamixer --increase 5";
+        XF86AudioLowerVolume = "spawn ${pkgs.pamixer}/bin/pamixer --decrease 5";
+        XF86AudioPlay = "spawn ${pkgs.playerctl}/bin/playerctl play-pause";
+        XF86AudioNext = "spawn ${pkgs.playerctl}/bin/playerctl next";
+        XF86AudioPrev = "spawn ${pkgs.playerctl}/bin/playerctl previous";
+
+        Print = "spawn ${pkgs.flameshot}/bin/flameshot gui";
+
         #
         #XF86Launch1 spawn rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xsel --clipboard"
-        #Print spawn flameshot gui
         #Control-Print spawn color-picker
         #Mod4-p spawn rofi-pass
         #Mod4-a spawn ani-cli --rofi --skip
@@ -113,55 +137,38 @@ in {
       rules = [
         "focus=on"
         "floatplacement=smart"
-        "class=Google-chrome tag=0"
+        "fixedsize floating=on"
+        "instance=google-chrome tag=0"
+        "instance=telegram-desktop tag=7"
       ];
 
       settings = {
-        always_show_frame = "on";
+        show_frame_decorations = true;
+        auto_detect_monitors = true;
+        auto_detect_panels = true;
         default_frame_layout = "grid";
-        frame_bg_active_color = "#292229";
-        frame_bg_normal_color = "#565656";
-        frame_bg_transparent = "on";
-        frame_border_active_color = "#222222";
-        frame_border_normal_color = "#101010";
-        frame_border_width = 1;
+        focus_follows_mouse = false;
+        frame_active_opacity = 0;
+        frame_normal_opacity = 0;
+        frame_border_width = 0;
         frame_gap = 0;
         frame_padding = 0;
-        frame_transparent_width = 5;
+        frame_transparent_width = 0;
         mouse_recenter_gap = 0;
-        smart_frame_surroundings = "off";
-        smart_window_surroundings = "off";
+        smart_frame_surroundings = false;
+        smart_window_surroundings = false;
         tree_style = ''╾│ ├└╼─┐'';
         window_gap = 0;
       };
 
       extraConfig = ''
-        systemctl --user restart polybar
+        herbstclient attr theme.active.color '#${config.lib.stylix.colors.base0B}'
+        herbstclient attr theme.active.border_width 1
 
-        hc() {
-            herbstclient "$@"
-        }
+        ${pkgs.feh}/bin/feh --no-fehbg --bg-fill "${wallpaper}"
+        ${polybar}/bin/panel.sh
 
-        hc attr theme.active.color '#345F0C'
-        hc attr theme.active.inner_color '#789161'
-        hc attr theme.active.outer_width 1
-        hc attr theme.background_color '#141414'
-        hc attr theme.border_width 2
-        hc attr theme.floating.border_width 2
-        hc attr theme.floating.outer_color black
-        hc attr theme.floating.outer_width 0
-        hc attr theme.floating.reset 1
-        hc attr theme.inner_color black
-        hc attr theme.inner_width 0
-        hc attr theme.normal.color '#4c594c'
-        hc attr theme.normal.inner_color '#606060'
-        hc attr theme.normal.title_color '#898989'
-        hc attr theme.padding_top 0 # space below the title's baseline (i.e. text depth)
-        hc attr theme.tiling.reset 1
-        hc attr theme.title_color '#000000'
-        hc attr theme.title_height 0
-        hc attr theme.urgent.color '#7811A1'
-        hc attr theme.urgent.inner_color '#9A65B0'
+        ${pkgs.dunst}/bin/dunstify "herbstluftwm reloaded!"
       '';
     };
   };

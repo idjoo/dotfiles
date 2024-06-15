@@ -1,157 +1,176 @@
-# This is your system's configuration file.
-# Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
+{ inputs
+, outputs
+, lib
+, config
+, pkgs
+, ...
 }: {
-  # You can import other NixOS modules here
   imports = [
-    # If you want to use modules your own flake exports (from modules/nixos):
-    # outputs.nixosModules.example
     outputs.nixosModules
 
-    # Or modules from other flakes (such as nixos-hardware):
-    # inputs.hardware.nixosModules.common-cpu-amd
-    # inputs.hardware.nixosModules.common-ssd
     inputs.home-manager.nixosModules.home-manager
 
-    # You can also split up your configuration and import pieces of it here:
-    # ./users.nix
-
-    # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
   ];
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.stable-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
     ];
-    # Configure your nixpkgs instance
+
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
     };
   };
 
-  nix = let
-    flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-  in {
-    settings = {
-      trusted-users = ["idjo"];
+  nix =
+    let
+      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+    in
+    {
+      settings = {
+        trusted-users = [ "${outputs.username}" ];
 
-      substituters = [
-        "https://nix-community.cachix.org"
-        "https://cache.nixos.org"
-      ];
+        substituters = [
+          "https://cache.nixos.org"
+          "https://nix-community.cachix.org"
+        ];
 
-      trusted-public-keys = [
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      ];
+        trusted-public-keys = [
+          "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
 
-      # Enable flakes and new 'nix' command
-      experimental-features = "nix-command flakes";
+        experimental-features = "nix-command flakes";
 
-      # Opinionated: disable global registry
-      flake-registry = "";
+        flake-registry = "";
 
-      # Workaround for https://github.com/NixOS/nix/issues/9574
-      nix-path = config.nix.nixPath;
+        # Workaround for https://github.com/NixOS/nix/issues/9574
+        nix-path = config.nix.nixPath;
+      };
+
+      gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 7d";
+      };
+
+      channel.enable = false;
+
+      registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
+      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     };
 
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-
-    # Opinionated: disable channels
-    channel.enable = false;
-
-    # Opinionated: make flake registry and nix path match flake inputs
-    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
-    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
-  };
-
-  networking.hostName = "ox";
-
-  users.users = {
-    idjo = {
-      initialPassword = "matamupicekasw";
-      isNormalUser = true;
-      openssh.authorizedKeys.keys = [
-      ];
-      extraGroups = ["wheel"];
-      shell = pkgs.zsh;
-    };
-  };
-
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = true;
-    };
-  };
-
-  # FIXME: Add the rest of your current configuration
-  networking.networkmanager.enable = true;
+  # bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # hostname
+  networking.hostName = "ox";
+
+  # proxy
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+
+  # services
+  services = {
+    openssh.enable = true;
+  };
+
+  # firewall
+  networking.firewall = {
+    enable = false;
+    # allowedTCPPorts = [ ... ];
+    # allowedUDPPorts = [ ... ];
+  };
+
+  # time zone
   time.timeZone = "Asia/Jakarta";
 
+  # locale
   i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
+  };
 
-  services.xserver.enable = true;
-  services.xserver.displayManager.startx.enable = true;
-  services.xserver.xkb.options = "caps:escape";
+  # x11
+  services.xserver = {
+    enable = true;
+    autorun = false;
 
-  environment.systemPackages = [
-    pkgs.neovim
-    pkgs.tmux
-    pkgs.nurl
-    pkgs.jq
-    pkgs.vegeta
+    xkb = {
+      layout = "us";
+      variant = "";
+      options = "caps:escape";
+    };
+
+    displayManager.startx.enable = true;
+  };
+
+  # user accounts
+  users.users.${outputs.username} = {
+    isNormalUser = true;
+    description = "Adrianus Vian Habirowo";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = [ ];
+    shell = pkgs.zsh;
+    useDefaultShell = true;
+  };
+
+  # packages
+  environment.systemPackages = with pkgs; [
+    nurl
   ];
 
-  programs.zsh.enable = true;
+  # fonts
+  fonts.packages = with pkgs; [
+    fira-code-nerdfont
+    terminus-nerdfont
+    font-awesome
+  ];
 
-  networking.firewall.allowedTCPPorts = [22];
-  networking.nameservers = ["1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one"];
+  programs = {
+    zsh.enable = true;
 
-  home-manager = {
-    extraSpecialArgs = {inherit inputs outputs;};
-    useGlobalPkgs = false;
-    useUserPackages = true;
-    users = {
-      idjo = import ../home-manager/home.nix;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
     };
   };
 
   modules = {
+    stylix.enable = true;
     tailscale.enable = true;
+    utils.enable = true;
   };
-  # END #
 
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.11";
+  home-manager = {
+    extraSpecialArgs = { inherit inputs outputs; };
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users = {
+      ${outputs.username} = import ../home-manager/home.nix;
+    };
+  };
+
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "23.11"; # Did you read the comment?
 }

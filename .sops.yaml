@@ -1,0 +1,7 @@
+keys:
+  - &idjo age1k2e5cle465gaw404avc69j7st02234g2wsueuccc4tk5gdhg4d3sgww8q3
+creation_rules:
+  - path_regex: ^.*$
+    key_groups:
+    - age:
+      - *idjo
