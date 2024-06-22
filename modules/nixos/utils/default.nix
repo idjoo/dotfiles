@@ -23,7 +23,11 @@ in
         ripgrep
         fd
         jq
-        p7zip
+
+        # nix
+        nurl
+        nix-index
+        nix-init
       ];
     };
 }
