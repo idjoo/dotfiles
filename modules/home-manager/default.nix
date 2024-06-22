@@ -6,6 +6,7 @@
     ./btop
     ./dunst
     ./eza
+    ./cava
     ./flameshot
     ./git
     ./go

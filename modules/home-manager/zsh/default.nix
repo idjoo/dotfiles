@@ -41,6 +41,10 @@ in
         # git
         lg = "lazygit";
         ga = "git add";
+
+        # work
+        spindo-dev = ''echo "https://console.cloud.google.com/monitoring/dashboards/builder/afa6b769-7933-4f81-9d52-7735bfcb79a9;startTime=$(date -u -d yesterday +"%Y-%m-%dT10:30:00Z");endTime=$(date -u +"%Y-%m-%dT10:30:00Z")?project=prj-sap-dev-398404"'';
+        spindo-prod = ''echo "https://console.cloud.google.com/monitoring/dashboards/builder/5deb3680-dcd5-4a70-8749-c84dfd2efcd3;startTime=$(date -u -d yesterday +"%Y-%m-%dT10:30:00Z");endTime=$(date -u +"%Y-%m-%dT10:30:00Z")?project=prj-sap-prod-398404"'';
       };
 
       plugins = [

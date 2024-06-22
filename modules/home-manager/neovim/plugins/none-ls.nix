@@ -6,6 +6,7 @@
     sources = {
       formatting = {
         nixpkgs_fmt.enable = true;
+        gofmt.enable = true;
       };
     };
   };

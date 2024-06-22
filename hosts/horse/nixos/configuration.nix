@@ -170,6 +170,7 @@
   };
 
   home-manager = {
+    backupFileExtension = ".bak";
     extraSpecialArgs = { inherit inputs outputs; };
     useGlobalPkgs = false;
     useUserPackages = true;

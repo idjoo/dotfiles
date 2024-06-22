@@ -68,6 +68,7 @@
     password-store.enable = true;
     ssh.enable = true;
     tmux.enable = true;
+    cava.enable = true;
 
     # prog lang
     go.enable = true;

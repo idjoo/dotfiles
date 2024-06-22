@@ -6,6 +6,8 @@
       nil-ls.enable = true;
       pylsp.enable = true;
       csharp-ls.enable = true;
+      gopls.enable = true;
+      rust-analyzer.enable = true;
     };
 
     keymaps = {
@@ -20,6 +22,7 @@
         gd = "definition";
         gi = "implementation";
         gt = "type_definition";
+        gr = "rename";
       };
     };
   };
