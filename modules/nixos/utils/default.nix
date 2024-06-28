@@ -29,6 +29,10 @@ in
         nurl
         nix-index
         nix-init
+
+        # desktop app
+        telegram-desktop
+        monero-gui
       ];
     };
 }

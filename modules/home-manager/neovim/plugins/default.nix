@@ -1,17 +1,19 @@
 {
   imports = [
     ./autopairs.nix
-    ./autopairs.nix
     ./barbar.nix
     ./cmp.nix
     ./colorizer.nix
     ./comment.nix
+    ./dap.nix
     ./gitsigns.nix
     ./indent-blankline.nix
     ./lsp.nix
+    ./lspsaga.nix
     ./none-ls.nix
     ./surround.nix
     ./telescope.nix
     ./treesitter.nix
+    ./which-key.nix
   ];
 }

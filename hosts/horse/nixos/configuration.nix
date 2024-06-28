@@ -136,6 +136,7 @@
   # packages
   environment.systemPackages = with pkgs; [
     google-chrome
+    telegram-desktop
     nodejs_22
     hicolor-icon-theme
   ];

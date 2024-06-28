@@ -1,5 +1,4 @@
-{ pkgs
-, lib
+{ lib
 , config
 , inputs
 , ...
@@ -16,21 +15,27 @@ in
     ./plugins
   ];
 
-  options.modules.neovim = { enable = mkEnableOption "neovim"; };
+  options. modules. neovim = {
+    enable = mkEnableOption "neovim";
+  };
+
   config =
-    mkIf cfg.enable {
-      programs.nixvim = {
-        enable = true;
-        defaultEditor = true;
-        enableMan = true;
+    mkIf
+      cfg.enable
+      {
+        programs.nixvim = {
+          enable = true;
+          defaultEditor = true;
+          enableMan = true;
 
-        clipboard = {
-          register = "unnamedplus";
-          providers = {
-            xsel.enable = true;
+          clipboard = {
+            register = "unnamedplus";
+            providers = {
+              xsel.enable = true;
+            };
           };
-        };
 
+          globals.mapleader = " ";
+        };
       };
-    };
 }

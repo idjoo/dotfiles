@@ -133,7 +133,9 @@ in
       rules = [
         "focus=on"
         "floatplacement=smart"
-        "class=Google-chrome tag=0"
+        "fixedsize floating=on"
+        "instance=google-chrome tag=0"
+        "instance=telegram-desktop tag=7"
       ];
 
       settings = {
