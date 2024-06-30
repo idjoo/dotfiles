@@ -44,11 +44,5 @@
         remap = false;
       };
     }
-
-    {
-      action = ''<cmd>bd<cr>'';
-      key = "<leader>bd";
-      mode = "n";
-    }
   ];
 }

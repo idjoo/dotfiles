@@ -10,7 +10,7 @@ in
   options.modules.rofi = { enable = mkEnableOption "rofi"; };
   config = mkIf cfg.enable {
     programs.rofi = {
-      enable = true;
+      enable = cfg.enable;
       location = "center";
 
       terminal = "${pkgs.wezterm}/bin/wezterm";

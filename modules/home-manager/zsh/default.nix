@@ -10,7 +10,7 @@ in
   options.modules.zsh = { enable = mkEnableOption "zsh"; };
   config = mkIf cfg.enable {
     programs.zsh = {
-      enable = true;
+      enable = cfg.enable;
 
       dotDir = ".config/zsh";
 
@@ -28,10 +28,6 @@ in
         ignoreSpace = true;
         path = "${config.xdg.dataHome}/zsh/history";
         share = true;
-      };
-
-      historySubstringSearch = {
-        enable = true;
       };
 
       shellAliases = {
@@ -72,6 +68,16 @@ in
           };
         }
       ];
+
+      initExtra = ''
+        bindkey "^H" backward-delete-char
+        bindkey "^?" backward-delete-char
+        zstyle ':completion:*' menu select
+      '';
+
+      envExtra = ''
+        export KEYTIMEOUT=1
+      '';
     };
   };
 }

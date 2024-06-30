@@ -7,12 +7,11 @@ with lib; let
 in
 {
   options.modules.ssh = { enable = mkEnableOption "ssh"; };
-  config =
-    mkIf cfg.enable {
-      programs.ssh = {
-        enable = true;
-        addKeysToAgent = "yes";
-        forwardAgent = true;
-      };
+  config = mkIf cfg.enable {
+    programs.ssh = {
+      enable = cfg.enable;
+      addKeysToAgent = "yes";
+      forwardAgent = true;
     };
+  };
 }

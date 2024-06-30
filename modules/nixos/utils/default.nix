@@ -33,6 +33,7 @@ in
         # desktop app
         telegram-desktop
         monero-gui
+        zathura
       ];
     };
 }

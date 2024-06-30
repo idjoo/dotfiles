@@ -11,6 +11,7 @@
     ./lsp.nix
     ./lspsaga.nix
     ./none-ls.nix
+    ./spider.nix
     ./surround.nix
     ./telescope.nix
     ./treesitter.nix

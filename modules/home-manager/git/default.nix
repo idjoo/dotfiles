@@ -17,7 +17,7 @@ in
 
   config = mkIf cfg.enable {
     programs.git = {
-      enable = true;
+      enable = cfg.enable;
 
       userName = "Adrianus Vian Habirowo";
       userEmail = cfg.email;
@@ -29,6 +29,10 @@ in
       extraConfig = {
         init = {
           defaultBranch = "master";
+        };
+
+        pull = {
+          rebase = true;
         };
       };
     };

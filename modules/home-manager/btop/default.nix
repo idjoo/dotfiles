@@ -1,5 +1,4 @@
-{ pkgs
-, lib
+{ lib
 , config
 , ...
 }:
@@ -8,11 +7,10 @@ with lib; let
 in
 {
   options.modules.btop = { enable = mkEnableOption "btop"; };
-  config =
-    mkIf cfg.enable {
-      programs.btop = {
-        enable = true;
-        settings = { };
-      };
+  config = mkIf cfg.enable {
+    programs.btop = {
+      enable = cfg.enable;
+      settings = { };
     };
+  };
 }

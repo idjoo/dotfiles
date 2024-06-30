@@ -23,7 +23,7 @@ in
   options.modules.herbstluftwm = { enable = mkEnableOption "herbstluftwm"; };
   config = mkIf cfg.enable {
     xsession.windowManager.herbstluftwm = {
-      enable = true;
+      enable = cfg.enable;
       tags = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ];
       keybinds = {
         Mod4-Shift-q = "quit";
@@ -81,6 +81,7 @@ in
         Mod4-a = "spawn ${pkgs.ani-cli}/bin/ani-cli --rofi --skip";
         Mod4-b = "spawn ${pkgs.rofi-bluetooth}/bin/rofi-bluetooth";
         Mod4-e = "spawn ${pkgs.rofi}/bin/rofi -show emoji -modi emoji";
+        Mod4-c = ''spawn ${pkgs.rofi}/bin/rofi -show calc -modi calc -no-show-match -no-sort -calc-command " echo - n '{ result }' | xsel --clipboard"'';
 
         # xf86
         XF86MonBrightnessUp = "spawn ${pkgs.acpilight}/bin/xbacklight -inc 10";
@@ -158,8 +159,12 @@ in
       };
 
       extraConfig = ''
-        herbstclient attr theme.active.color '#${config.lib.stylix.colors.base0B}'
-        herbstclient attr theme.active.border_width 1
+        herbstclient
+        attr
+        theme.active.color '#${config.lib.stylix.colors.base0B}'
+        herbstclient
+        attr
+        theme.active.border_width 1
 
         ${pkgs.feh}/bin/feh --no-fehbg --bg-fill "${wallpaper}"
         ${polybar}/bin/panel.sh

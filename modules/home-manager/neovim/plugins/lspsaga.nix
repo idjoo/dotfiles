@@ -5,13 +5,13 @@
 
   programs.nixvim.keymaps = [
     {
-      key = "<leader>j";
+      key = "]d";
       action = "<cmd>Lspsaga diagnostic_jump_next<cr>";
       mode = "n";
     }
 
     {
-      key = "<leader>k";
+      key = "[d";
       action = "<cmd>Lspsaga diagnostic_jump_prev<cr>";
       mode = "n";
     }

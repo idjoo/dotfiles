@@ -4,10 +4,11 @@
   # List your module files here
   imports = [
     ./btop
+    ./cava
     ./dunst
     ./eza
-    ./cava
     ./flameshot
+    ./fzf
     ./git
     ./go
     ./gpg

@@ -69,6 +69,7 @@
     ssh.enable = true;
     tmux.enable = true;
     cava.enable = true;
+    fzf.enable = true;
 
     # prog lang
     go.enable = true;

@@ -7,19 +7,19 @@ with lib; let
 in
 {
   options.modules.dunst = { enable = mkEnableOption "dunst"; };
-  config =
-    mkIf cfg.enable {
-      services.dunst = {
-        enable = true;
-        settings = {
-          global = {
-            origin = "top-right";
-          };
+  config = mkIf cfg.enable {
+    services.dunst = {
+      enable = cfg.enable;
 
-          urgency_normal = {
-            timeout = 5;
-          };
+      settings = {
+        global = {
+          origin = "top-right";
+        };
+
+        urgency_normal = {
+          timeout = 5;
         };
       };
     };
+  };
 }

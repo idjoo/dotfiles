@@ -1,5 +1,4 @@
-{ pkgs
-, lib
+{ lib
 , config
 , ...
 }:
@@ -8,15 +7,15 @@ with lib; let
 in
 {
   options.modules.cava = { enable = mkEnableOption "cava"; };
-  config =
-    mkIf cfg.enable {
-      programs.cava = {
-        enable = true;
-        settings = {
-          general = {
-            framerate = 60;
-          };
+  config = mkIf cfg.enable {
+    programs.cava = {
+      enable = cfg.enable;
+
+      settings = {
+        general = {
+          framerate = 60;
         };
       };
     };
+  };
 }

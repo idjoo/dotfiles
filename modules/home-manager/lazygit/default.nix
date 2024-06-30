@@ -1,5 +1,4 @@
-{ pkgs
-, lib
+{ lib
 , config
 , ...
 }:
@@ -10,7 +9,7 @@ in
   options.modules.lazygit = { enable = mkEnableOption "lazygit"; };
   config = mkIf cfg.enable {
     programs.lazygit = {
-      enable = true;
+      enable = cfg.enable;
     };
   };
 }

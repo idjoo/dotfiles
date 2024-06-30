@@ -97,7 +97,7 @@ in
   options.modules.polybar = { enable = mkEnableOption "polybar"; };
   config = mkIf cfg.enable {
     services.polybar = {
-      enable = true;
+      enable = cfg.enable;
 
       script = "${pkgs.polybar}/bin/polybar main";
 

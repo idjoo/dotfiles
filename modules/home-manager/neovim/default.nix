@@ -19,23 +19,20 @@ in
     enable = mkEnableOption "neovim";
   };
 
-  config =
-    mkIf
-      cfg.enable
-      {
-        programs.nixvim = {
-          enable = true;
-          defaultEditor = true;
-          enableMan = true;
+  config = mkIf cfg.enable {
+    programs.nixvim = {
+      enable = cfg.enable;
+      defaultEditor = true;
+      enableMan = true;
 
-          clipboard = {
-            register = "unnamedplus";
-            providers = {
-              xsel.enable = true;
-            };
-          };
-
-          globals.mapleader = " ";
+      clipboard = {
+        register = "unnamedplus";
+        providers = {
+          xsel.enable = true;
         };
       };
+
+      globals.mapleader = " ";
+    };
+  };
 }

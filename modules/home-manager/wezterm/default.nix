@@ -1,5 +1,4 @@
-{ pkgs
-, lib
+{ lib
 , config
 , ...
 }:
@@ -10,7 +9,7 @@ in
   options.modules.wezterm = { enable = mkEnableOption "wezterm"; };
   config = mkIf cfg.enable {
     programs.wezterm = {
-      enable = true;
+      enable = cfg.enable;
 
       extraConfig = ''
         local config = {}
