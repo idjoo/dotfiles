@@ -18,10 +18,18 @@
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.stable-packages
+
+      inputs.nur.overlay
     ];
 
     config = {
       allowUnfree = true;
+
+      packageOverrides = pkgs: {
+        nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+          inherit pkgs;
+        };
+      };
     };
   };
 
@@ -120,6 +128,8 @@
     displayManager.startx.enable = true;
 
     windowManager.herbstluftwm.enable = true;
+
+    videoDrivers = [ "amdgpu" ];
   };
 
   # user accounts
@@ -148,8 +158,7 @@
 
   # fonts
   fonts.packages = with pkgs; [
-    fira-code-nerdfont
-    terminus-nerdfont
+    (nerdfonts.override { fonts = [ "RobotoMono" ]; })
     font-awesome
   ];
 

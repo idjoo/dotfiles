@@ -12,7 +12,7 @@ in
       enable = cfg.enable;
 
       git = true;
-      icons = true;
+      icons = "auto";
 
       extraOptions = [
         "--group-directories-first"

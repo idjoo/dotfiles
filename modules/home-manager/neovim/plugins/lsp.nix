@@ -5,9 +5,9 @@
     inlayHints = true;
 
     servers = {
-      lua-ls.enable = true;
+      lua_ls.enable = true;
       nixd.enable = true;
-      nil-ls.enable = false;
+      nil_ls.enable = false;
       pylsp = {
         enable = true;
 
@@ -19,13 +19,15 @@
           };
         };
       };
-      csharp-ls.enable = true;
+      csharp_ls.enable = true;
       gopls.enable = true;
       clangd.enable = true;
       terraformls.enable = true;
-      ts-ls.enable = true;
+      ts_ls.enable = true;
       jsonls.enable = true;
-      jdt-language-server.enable = true;
+      yamlls.enable = true;
+      jdtls.enable = true;
+      taplo.enable = true;
     };
 
     keymaps = {
