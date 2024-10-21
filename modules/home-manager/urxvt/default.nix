@@ -21,6 +21,7 @@ in
       };
 
       fonts = [
+        "xft:RobotoMono Nerd Font Mono:size=12"
         "xft:DankMono Nerd Font Mono:size=12"
         "xft:FiraCode Nerd Font Mono:size=12"
         "xft:Font Awesome 6 Free:style=Solid"
