@@ -12,6 +12,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid/testing";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,11 +25,6 @@
 
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -36,6 +37,7 @@
   outputs =
     { self
     , nixpkgs
+    , nix-on-droid
     , ...
     } @ inputs:
     let
@@ -55,7 +57,7 @@
 
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
 
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
 
       overlays = import ./overlays { inherit inputs; };
 
@@ -82,6 +84,16 @@
           specialArgs = { inherit inputs outputs; };
           modules = [
             ./hosts/tiger/nixos/configuration.nix
+          ];
+        };
+      };
+
+      nixOnDroidConfigurations = {
+        rabbit = nix-on-droid.lib.nixOnDroidConfiguration {
+          pkgs = import nixpkgs { system = "aarch64-linux"; };
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            ./hosts/rabbit/config.nix
           ];
         };
       };

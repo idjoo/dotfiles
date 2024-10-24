@@ -5,7 +5,7 @@
 
     settings = {
       formatters_by_ft = {
-        nix = [ "nixpkgs-fmt" ];
+        nix = [ "nixfmt" ];
         go = [ "gofmt" ];
         c = [ "clang-format" ];
         cpp = [ "clang-format" ];
@@ -24,8 +24,8 @@
       };
 
       formatters = {
-        nixpkgs-fmt = {
-          command = lib.getExe pkgs.nixpkgs-fmt;
+        nixfmt = {
+          command = lib.getExe pkgs.nixfmt-rfc-style;
         };
 
         gofmt = {

@@ -33,6 +33,7 @@ in
       shellAliases = {
         reload = "source $ZDOTDIR/.zshrc";
         rebuild = "nh os switch";
+        n = "nvim ~/note.md";
 
         # git
         lg = "lazygit";
@@ -48,6 +49,10 @@ in
         spindo-prod-snapshot = ''xdg-open "https://console.cloud.google.com/compute/snapshots?referrer=search&project=prj-sap-prod-398404&pageState=(%22snapshots%22:(%22s%22:%5B(%22i%22:%22creationTimestamp%22,%22s%22:%221%22),(%22i%22:%22name%22,%22s%22:%220%22)%5D))"'';
 
         mount-gdrive = ''rclone mount gdrive:/ ~/documents/drive'';
+
+        # k8s
+        kc = "${pkgs.kubectx}/bin/kubectx";
+        kn = "${pkgs.kubectx}/bin/kubens";
       };
 
       plugins = [
