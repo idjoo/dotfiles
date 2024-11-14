@@ -1,13 +1,16 @@
-{ lib
-, config
-, ...
+{
+  lib,
+  config,
+  ...
 }:
 let
   cfg = config.modules.urxvt;
 
 in
 {
-  options.modules.urxvt = { enable = lib.mkEnableOption "urxvt"; };
+  options.modules.urxvt = {
+    enable = lib.mkEnableOption "urxvt";
+  };
   config = lib.mkIf cfg.enable {
     programs.urxvt = {
       enable = true;

@@ -1,7 +1,8 @@
-{ lib
-, config
-, inputs
-, ...
+{
+  lib,
+  config,
+  inputs,
+  ...
 }:
 let
   cfg = config.modules.neovim;

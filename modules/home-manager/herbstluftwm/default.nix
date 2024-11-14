@@ -1,9 +1,11 @@
-{ pkgs
-, lib
-, config
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.modules.herbstluftwm;
 
   polybar = pkgs.writeShellScriptBin "panel.sh" ''
@@ -20,11 +22,24 @@ with lib; let
   };
 in
 {
-  options.modules.herbstluftwm = { enable = mkEnableOption "herbstluftwm"; };
+  options.modules.herbstluftwm = {
+    enable = mkEnableOption "herbstluftwm";
+  };
   config = mkIf cfg.enable {
     xsession.windowManager.herbstluftwm = {
       enable = cfg.enable;
-      tags = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ];
+      tags = [
+        "1"
+        "2"
+        "3"
+        "4"
+        "5"
+        "6"
+        "7"
+        "8"
+        "9"
+        "0"
+      ];
       keybinds = {
         Mod4-Shift-q = "quit";
         Mod4-Shift-r = "reload";

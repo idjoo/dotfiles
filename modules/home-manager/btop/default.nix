@@ -1,12 +1,16 @@
-{ lib
-, config
-, ...
+{
+  lib,
+  config,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.modules.btop;
 in
 {
-  options.modules.btop = { enable = mkEnableOption "btop"; };
+  options.modules.btop = {
+    enable = mkEnableOption "btop";
+  };
   config = mkIf cfg.enable {
     programs.btop = {
       enable = cfg.enable;

@@ -1,48 +1,57 @@
-{ pkgs
-, lib
-, config
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.modules.utils;
 in
 {
-  options.modules.utils = { enable = mkEnableOption "utils"; };
-  config =
-    mkIf cfg.enable {
-      environment.systemPackages = with pkgs; [
-        # archive
-        zip
-        unzip
+  options.modules.utils = {
+    enable = mkEnableOption "utils";
+  };
+  config = mkIf cfg.enable {
+    programs.nix-ld.enable = true;
+    programs.nix-ld.libraries = with pkgs; [
+      zlib
+      libgcc
+    ];
 
-        # clipboard
-        xsel
-        xclip
+    environment.systemPackages = with pkgs; [
+      # archive
+      zip
+      unzip
 
-        # nix
-        nurl
-        nix-index
-        nix-init
-        nix-output-monitor
+      # clipboard
+      xsel
+      xclip
 
-        # desktop app
-        telegram-desktop
-        monero-gui
-        zathura
-        dbeaver-bin
-        remmina
-        rclone
+      # nix
+      nurl
+      nix-index
+      nix-init
+      nix-output-monitor
 
-        # others
-        ripgrep
-        fd
-        jq
-        p7zip
-        kubectl
+      # desktop app
+      telegram-desktop
+      monero-gui
+      zathura
+      dbeaver-bin
+      remmina
+      rclone
 
-        # custom
-        android-unpinner
-        httpgenerator
-      ];
-    };
+      # others
+      ripgrep
+      fd
+      jq
+      p7zip
+      kubectl
+
+      # custom
+      android-unpinner
+      httpgenerator
+    ];
+  };
 }

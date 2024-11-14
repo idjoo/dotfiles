@@ -1,10 +1,12 @@
-{ inputs
-, outputs
-, lib
-, config
-, pkgs
-, ...
-}: {
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
   imports = [
     outputs.nixosModules
 
@@ -124,7 +126,10 @@
   users.users.${outputs.username} = {
     isNormalUser = true;
     description = "Adrianus Vian Habirowo";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = [ ];
     shell = pkgs.zsh;
     useDefaultShell = true;
@@ -158,7 +163,9 @@
   };
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs outputs; };
+    extraSpecialArgs = {
+      inherit inputs outputs;
+    };
     useGlobalPkgs = true;
     useUserPackages = true;
     users = {

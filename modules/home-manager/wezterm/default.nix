@@ -1,14 +1,17 @@
-{ lib
-, config
-, pkgs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  ...
 }:
 let
   cfg = config.modules.wezterm;
 
 in
 {
-  options.modules.wezterm = { enable = lib.mkEnableOption "wezterm"; };
+  options.modules.wezterm = {
+    enable = lib.mkEnableOption "wezterm";
+  };
   config = lib.mkIf cfg.enable {
     programs.wezterm = {
       enable = true;

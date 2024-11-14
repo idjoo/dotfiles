@@ -1,12 +1,16 @@
-{ lib
-, config
-, ...
+{
+  lib,
+  config,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.modules.eza;
 in
 {
-  options.modules.eza = { enable = mkEnableOption "eza"; };
+  options.modules.eza = {
+    enable = mkEnableOption "eza";
+  };
   config = mkIf cfg.enable {
     programs.eza = {
       enable = cfg.enable;

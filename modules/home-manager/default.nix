@@ -5,6 +5,7 @@
   imports = [
     ./btop
     ./cava
+    ./direnv
     ./dunst
     ./eza
     ./flameshot

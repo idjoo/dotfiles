@@ -28,6 +28,7 @@
       yamlls.enable = true;
       jdtls.enable = true;
       taplo.enable = true;
+      rust_analyzer.enable = true;
     };
 
     keymaps = {
@@ -39,20 +40,13 @@
   };
 
   programs.nixvim.extraConfigLua = ''
-    local client = vim.lsp.start_client {
-      name = "sop-ls",
-      cmd = {"/home/idjo/documents/sop-language-server/bin/sop-language-server"},
-    }
-
-    if not client then
-      vim.notify("client error")
-      return
-    end
-
     vim.api.nvim_create_autocmd("FileType", {
-      pattern = "*",
+      pattern = { "sop" },
       callback = function()
-        vim.lsp.buf_attach_client(0, client)
+        local client = vim.lsp.start({
+          name = "sop-ls",
+          cmd = {"/home/idjo/documents/sop-ls/bin/sop-ls"},
+        })
       end,
     })
   '';

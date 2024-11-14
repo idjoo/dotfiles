@@ -1,13 +1,17 @@
-{ pkgs
-, lib
-, config
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.modules.rofi;
 in
 {
-  options.modules.rofi = { enable = mkEnableOption "rofi"; };
+  options.modules.rofi = {
+    enable = mkEnableOption "rofi";
+  };
   config = mkIf cfg.enable {
     programs.rofi = {
       enable = cfg.enable;
@@ -76,7 +80,6 @@ in
             padding = mkLiteral "2px";
           };
 
-
           scrollbar = {
             width = mkLiteral "4px";
             border = 0;
@@ -91,7 +94,12 @@ in
           inputbar = {
             spacing = 0;
             padding = mkLiteral "2px";
-            children = map mkLiteral [ "prompt" "textbox-prompt-sep" "entry" "case-indicator" ];
+            children = map mkLiteral [
+              "prompt"
+              "textbox-prompt-sep"
+              "entry"
+              "case-indicator"
+            ];
           };
 
           "case-indicator, entry, prompt, button" = {
