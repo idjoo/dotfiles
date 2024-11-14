@@ -1,12 +1,16 @@
-{ lib
-, config
-, ...
+{
+  lib,
+  config,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.modules.fzf;
 in
 {
-  options.modules.fzf = { enable = mkEnableOption "fzf"; };
+  options.modules.fzf = {
+    enable = mkEnableOption "fzf";
+  };
   config = mkIf cfg.enable {
     programs.fzf = {
       enable = cfg.enable;
@@ -17,8 +21,9 @@ in
       };
 
       defaultCommand = "fd --type f";
-      defaultOptions = [
-      ];
+      defaultOptions =
+        [
+        ];
 
       changeDirWidgetCommand = "fd --type d";
       changeDirWidgetOptions = [

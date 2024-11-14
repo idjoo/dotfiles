@@ -1,4 +1,5 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }:
+{
   programs.nixvim.plugins.dap = {
     enable = true;
 
@@ -10,7 +11,13 @@
 
           executable = {
             command = lib.getExe pkgs.delve;
-            args = [ "dap" "-l" "127.0.0.1:\${port}" "--log" "--log-output=dap" ];
+            args = [
+              "dap"
+              "-l"
+              "127.0.0.1:\${port}"
+              "--log"
+              "--log-output=dap"
+            ];
           };
         };
       };

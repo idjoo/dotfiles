@@ -1,6 +1,7 @@
-{ lib
-, buildDotnetGlobalTool
-, dotnetCorePackages
+{
+  lib,
+  buildDotnetGlobalTool,
+  dotnetCorePackages,
 }:
 
 buildDotnetGlobalTool {

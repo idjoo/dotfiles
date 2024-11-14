@@ -35,11 +35,12 @@
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , nix-on-droid
-    , ...
-    } @ inputs:
+    {
+      self,
+      nixpkgs,
+      nix-on-droid,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
       # Supported systems for your flake packages, shell, etc.
@@ -67,21 +68,27 @@
 
       nixosConfigurations = {
         ox = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
+          specialArgs = {
+            inherit inputs outputs;
+          };
           modules = [
             ./hosts/ox/nixos/configuration.nix
           ];
         };
 
         horse = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
+          specialArgs = {
+            inherit inputs outputs;
+          };
           modules = [
             ./hosts/horse/nixos/configuration.nix
           ];
         };
 
         tiger = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
+          specialArgs = {
+            inherit inputs outputs;
+          };
           modules = [
             ./hosts/tiger/nixos/configuration.nix
           ];
@@ -91,7 +98,9 @@
       nixOnDroidConfigurations = {
         rabbit = nix-on-droid.lib.nixOnDroidConfiguration {
           pkgs = import nixpkgs { system = "aarch64-linux"; };
-          extraSpecialArgs = { inherit inputs outputs; };
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
           modules = [
             ./hosts/rabbit/config.nix
           ];

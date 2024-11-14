@@ -1,9 +1,11 @@
-{ pkgs
-, lib
-, config
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.modules.ssh;
 
   rofi-askpass = pkgs.writers.writeBashBin "rofi-askpass" ''
@@ -11,15 +13,16 @@ with lib; let
   '';
 in
 {
-  options.modules.ssh = { enable = mkEnableOption "ssh"; };
-  config =
-    mkIf cfg.enable {
-      services = {
-        openssh.enable = true;
-      };
-
-      programs.ssh = {
-        askPassword = "${rofi-askpass}/bin/rofi-askpass";
-      };
+  options.modules.ssh = {
+    enable = mkEnableOption "ssh";
+  };
+  config = mkIf cfg.enable {
+    services = {
+      openssh.enable = true;
     };
+
+    programs.ssh = {
+      askPassword = "${rofi-askpass}/bin/rofi-askpass";
+    };
+  };
 }

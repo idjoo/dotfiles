@@ -1,7 +1,8 @@
-{ python3
-, fetchFromGitHub
-, autoPatchelfHook
-, pkgs
+{
+  python3,
+  fetchFromGitHub,
+  autoPatchelfHook,
+  pkgs,
 }:
 
 python3.pkgs.buildPythonApplication {

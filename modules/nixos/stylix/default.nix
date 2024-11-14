@@ -1,10 +1,12 @@
-{ pkgs
-, lib
-, config
-, inputs
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.modules.stylix;
 in
 {
@@ -12,7 +14,9 @@ in
     inputs.stylix.nixosModules.stylix
   ];
 
-  options.modules.stylix = { enable = mkEnableOption "stylix"; };
+  options.modules.stylix = {
+    enable = mkEnableOption "stylix";
+  };
   config = mkIf cfg.enable {
     stylix = {
       enable = cfg.enable;

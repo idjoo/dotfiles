@@ -7,16 +7,18 @@ let
     hash = "sha256-wB0SwOlo2gwzgYFBBaW4jxvBBKMI+4fuIPfHIgu5e5w=";
   };
 
-  treesitter-sop-grammar = (pkgs.tree-sitter.buildGrammar {
-    language = "sop";
-    src = tree-sitter-sop;
-    version = "0.1.0";
-  }).overrideAttrs (drv: {
-    fixupPhase = ''
-      mkdir -p $out/queries/sop
-      mv $out/queries/*.scm $out/queries/sop/
-    '';
-  });
+  treesitter-sop-grammar =
+    (pkgs.tree-sitter.buildGrammar {
+      language = "sop";
+      src = tree-sitter-sop;
+      version = "0.1.0";
+    }).overrideAttrs
+      (drv: {
+        fixupPhase = ''
+          mkdir -p $out/queries/sop
+          mv $out/queries/*.scm $out/queries/sop/
+        '';
+      });
 in
 {
   config = {
