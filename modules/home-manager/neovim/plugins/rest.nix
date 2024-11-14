@@ -81,7 +81,6 @@
         };
       };
 
-
       # @class rest.Config.Cookies
       cookies = {
         # @type boolean Whether enable cookies support or not
@@ -126,7 +125,9 @@
 
       # @see vim.log.levels
       # @type integer log level
-      _log_level = { __raw = "vim.log.levels.WARN"; };
+      _log_level = {
+        __raw = "vim.log.levels.WARN";
+      };
     };
   };
 

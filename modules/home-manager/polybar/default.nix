@@ -1,9 +1,11 @@
-{ pkgs
-, lib
-, config
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.modules.polybar;
 
   herbstluftwm = pkgs.writeShellScriptBin "herbstluftwm.sh" ''
@@ -94,7 +96,9 @@ with lib; let
   '';
 in
 {
-  options.modules.polybar = { enable = mkEnableOption "polybar"; };
+  options.modules.polybar = {
+    enable = mkEnableOption "polybar";
+  };
   config = mkIf cfg.enable {
     services.polybar = {
       enable = cfg.enable;
@@ -221,7 +225,16 @@ in
           interval = 0.5;
           format = "<ramp-load> <label>";
           ramp.load = {
-            text = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+            text = [
+              "▁"
+              "▂"
+              "▃"
+              "▄"
+              "▅"
+              "▆"
+              "▇"
+              "█"
+            ];
             foreground = "#${config.lib.stylix.colors.base0C}";
           };
         };
@@ -256,7 +269,13 @@ in
           };
 
           ramp = {
-            text = [ "" "" "" "" "" ];
+            text = [
+              ""
+              ""
+              ""
+              ""
+              ""
+            ];
             foreground = "#${config.lib.stylix.colors.base0E}";
           };
         };
@@ -305,12 +324,31 @@ in
 
           animation = {
             charging = {
-              text = [ "" "" "" "" "" "" "" ];
+              text = [
+                ""
+                ""
+                ""
+                ""
+                ""
+                ""
+                ""
+              ];
               foreground = "#${config.lib.stylix.colors.base0B}";
             };
 
             discharging = {
-              text = [ "" "" "" "" "" "" "" "" "" "" ];
+              text = [
+                ""
+                ""
+                ""
+                ""
+                ""
+                ""
+                ""
+                ""
+                ""
+                ""
+              ];
               foreground = "#${config.lib.stylix.colors.base08}";
             };
           };

@@ -1,7 +1,9 @@
-{ pkgs
-, outputs
-, ...
-}: {
+{
+  pkgs,
+  outputs,
+  ...
+}:
+{
   imports = [
     outputs.homeManagerModules
   ];
@@ -26,11 +28,9 @@
   };
 
   home.packages = with pkgs; [
-    (
-      google-cloud-sdk.withExtraComponents [
-        google-cloud-sdk.components.gke-gcloud-auth-plugin
-      ]
-    )
+    (google-cloud-sdk.withExtraComponents [
+      google-cloud-sdk.components.gke-gcloud-auth-plugin
+    ])
   ];
 
   modules = {
@@ -71,6 +71,7 @@
     tmux.enable = true;
     cava.enable = true;
     fzf.enable = true;
+    direnv.enable = true;
 
     # prog lang
     go.enable = true;

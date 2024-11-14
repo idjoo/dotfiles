@@ -1,24 +1,27 @@
-{ lib
-, config
-, outputs
-, ...
+{
+  lib,
+  config,
+  outputs,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.modules.nh;
 in
 {
-  options.modules.nh = { enable = mkEnableOption "nh"; };
-  config =
-    mkIf cfg.enable {
-      programs.nh = {
+  options.modules.nh = {
+    enable = mkEnableOption "nh";
+  };
+  config = mkIf cfg.enable {
+    programs.nh = {
+      enable = true;
+
+      flake = "/home/${outputs.username}/dotfiles";
+
+      clean = {
         enable = true;
-
-        flake = "/home/${outputs.username}/dotfiles";
-
-        clean = {
-          enable = true;
-          extraArgs = "--keep-since 30d --keep 10";
-        };
+        extraArgs = "--keep-since 30d --keep 10";
       };
     };
+  };
 }

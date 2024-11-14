@@ -1,12 +1,16 @@
-{ lib
-, config
-, ...
+{
+  lib,
+  config,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.modules.ssh;
 in
 {
-  options.modules.ssh = { enable = mkEnableOption "ssh"; };
+  options.modules.ssh = {
+    enable = mkEnableOption "ssh";
+  };
   config = mkIf cfg.enable {
     programs.ssh = {
       enable = cfg.enable;

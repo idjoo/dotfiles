@@ -19,6 +19,7 @@
         yaml = [ "yamlfmt" ];
         java = [ "google-java-format" ];
         html = [ "prettierd" ];
+        rust = [ "rustfmt" ];
 
         "_" = [ "trim_whitespace" ];
       };
@@ -62,6 +63,10 @@
 
         google-java-format = {
           command = lib.getExe pkgs.google-java-format;
+        };
+
+        rustfmt = {
+          command = lib.getExe pkgs.rustfmt;
         };
       };
     };

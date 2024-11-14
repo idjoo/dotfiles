@@ -1,10 +1,12 @@
-{ inputs
-, outputs
-, lib
-, config
-, pkgs
-, ...
-}: {
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
   imports = [
     outputs.nixosModules
 
@@ -182,7 +184,9 @@
 
   home-manager = {
     backupFileExtension = ".bak";
-    extraSpecialArgs = { inherit inputs outputs; };
+    extraSpecialArgs = {
+      inherit inputs outputs;
+    };
     useGlobalPkgs = true;
     useUserPackages = true;
     users = {
