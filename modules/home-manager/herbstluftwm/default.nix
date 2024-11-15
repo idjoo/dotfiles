@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }:
 with lib;
@@ -46,7 +47,7 @@ in
         Mod4-w = "close";
 
         # terminal
-        Mod4-Return = "spawn ${pkgs.rxvt-unicode}/bin/urxvt";
+        Mod4-Return = "spawn ${pkgs.wezterm}/bin/wezterm";
 
         # workspaces
         Mod4-1 = "use_index 0";

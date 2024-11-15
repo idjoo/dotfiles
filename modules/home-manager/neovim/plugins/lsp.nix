@@ -28,7 +28,11 @@
       yamlls.enable = true;
       jdtls.enable = true;
       taplo.enable = true;
-      rust_analyzer.enable = true;
+      rust_analyzer = {
+        enable = true;
+        installRustc = true;
+        installCargo = true;
+      };
     };
 
     keymaps = {
