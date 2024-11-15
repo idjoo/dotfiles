@@ -114,7 +114,7 @@ in
 
         "bar/main" = {
           width = "100%";
-          height = 20;
+          height = 25;
           radius = 0.0;
           fixed.center = true;
 
@@ -135,7 +135,7 @@ in
           };
 
           font = [
-            "Terminess Nerd Font:pixelsize=11;2"
+            "RobotoMono Nerd Font Mono:pixelsize=11;2"
             "DankMono Nerd Font Mono:pixelsize=13;2"
             "FiraCode Nerd Font Mono:pixelsize=13;2"
             "Font Awesome 6 Free"
@@ -201,7 +201,7 @@ in
           format = {
             text = "<label>";
             prefix = {
-              text = "  ";
+              text = "󰃠 ";
               foreground = "#${config.lib.stylix.colors.base0A}";
             };
           };

@@ -11,6 +11,7 @@
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
+    wezterm = inputs.wezterm.packages.${prev.system}.default;
   };
 
   stable-packages = final: _prev: {
