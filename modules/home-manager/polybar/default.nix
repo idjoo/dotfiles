@@ -135,9 +135,9 @@ in
           };
 
           font = [
-            "RobotoMono Nerd Font Mono:pixelsize=11;2"
-            "DankMono Nerd Font Mono:pixelsize=13;2"
-            "FiraCode Nerd Font Mono:pixelsize=13;2"
+            "RobotoMono Nerd Font:pixelsize=11;2"
+            "DankMono Nerd Font:pixelsize=13;2"
+            "FiraCode Nerd Font:pixelsize=13;2"
             "Font Awesome 6 Free"
             "Font Awesome 6 Brands"
           ];
@@ -196,7 +196,7 @@ in
         "module/backlight" = {
           type = "internal/backlight";
           use.actual-brightness = true;
-          label = "%percentage%";
+          label = "%percentage%%";
 
           format = {
             text = "<label>";
@@ -244,7 +244,7 @@ in
           interval = 2;
           label = "%percentage_used%%";
           format.prefix = {
-            text = " ";
+            text = "󰍛  ";
             foreground = "#${config.lib.stylix.colors.base0D}";
             font = 2;
           };
@@ -325,29 +325,32 @@ in
           animation = {
             charging = {
               text = [
-                ""
-                ""
-                ""
-                ""
-                ""
-                ""
-                ""
+                "󰢜"
+                "󰂆"
+                "󰂇"
+                "󰂈"
+                "󰢝"
+                "󰂉"
+                "󰢞"
+                "󰂊"
+                "󰂋"
+                "󰂅"
               ];
               foreground = "#${config.lib.stylix.colors.base0B}";
             };
 
             discharging = {
               text = [
-                ""
-                ""
-                ""
-                ""
-                ""
-                ""
-                ""
-                ""
-                ""
-                ""
+                "󰁹"
+                "󰂂"
+                "󰂁"
+                "󰂀"
+                "󰁿"
+                "󰁾"
+                "󰁽"
+                "󰁼"
+                "󰁻"
+                "󰁺"
               ];
               foreground = "#${config.lib.stylix.colors.base08}";
             };

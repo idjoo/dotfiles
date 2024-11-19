@@ -44,6 +44,7 @@
       self,
       nixpkgs,
       nix-on-droid,
+      nix-index-database,
       ...
     }@inputs:
     let
@@ -78,6 +79,7 @@
           };
           modules = [
             ./hosts/ox/nixos/configuration.nix
+            nix-index-database.nixosModules.nix-index
           ];
         };
 
@@ -87,6 +89,7 @@
           };
           modules = [
             ./hosts/horse/nixos/configuration.nix
+            nix-index-database.nixosModules.nix-index
           ];
         };
 
@@ -96,6 +99,7 @@
           };
           modules = [
             ./hosts/tiger/nixos/configuration.nix
+            nix-index-database.nixosModules.nix-index
           ];
         };
       };

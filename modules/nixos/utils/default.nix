@@ -19,6 +19,10 @@ in
       libgcc
     ];
 
+    services.xrdp.enable = true;
+    services.xrdp.audio.enable = true;
+    services.xrdp.defaultWindowManager = "${pkgs.herbstluftwm}/bin/herbstluftwm --locked";
+
     environment.systemPackages = with pkgs; [
       # archive
       zip
@@ -33,6 +37,7 @@ in
       nix-index
       nix-init
       nix-output-monitor
+      comma
 
       # desktop app
       telegram-desktop
