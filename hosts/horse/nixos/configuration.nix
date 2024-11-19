@@ -134,6 +134,12 @@
     videoDrivers = [ "amdgpu" ];
   };
 
+  services.displayManager = {
+    ly = {
+      enable = true;
+    };
+  };
+
   # user accounts
   users.users.${outputs.username} = {
     isNormalUser = true;
