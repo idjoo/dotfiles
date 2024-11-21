@@ -10,17 +10,17 @@
 
   programs.home-manager.enable = true;
 
-  # nixpkgs = {
-  #   overlays = [
-  #     outputs.overlays.additions
-  #     outputs.overlays.modifications
-  #     outputs.overlays.stable-packages
-  #   ];
-  #
-  #   config = {
-  #     allowUnfree = true;
-  #   };
-  # };
+  nixpkgs = {
+    overlays = [
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      outputs.overlays.stable-packages
+    ];
+
+    config = {
+      allowUnfree = true;
+    };
+  };
 
   home = {
     username = "${outputs.username}";

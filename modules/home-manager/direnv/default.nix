@@ -15,6 +15,14 @@ in
     programs.direnv = {
       enable = cfg.enable;
       nix-direnv.enable = true;
+
+      config = {
+        whitelist = {
+          prefix = [
+            "/home/idjo"
+          ];
+        };
+      };
     };
   };
 }
