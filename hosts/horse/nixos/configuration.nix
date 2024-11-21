@@ -192,8 +192,8 @@
     extraSpecialArgs = {
       inherit inputs outputs;
     };
-    useGlobalPkgs = true;
-    useUserPackages = true;
+    useGlobalPkgs = false;
+    useUserPackages = false;
     users = {
       ${outputs.username} = import ../home-manager/home.nix;
     };
