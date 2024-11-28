@@ -1,41 +1,47 @@
-{ lib, pkgs, ... }:
+{ ... }:
 {
   programs.nixvim.plugins.dap = {
     enable = true;
 
-    adapters = {
-      servers = {
-        delve = {
-          host = "127.0.0.1";
-          port = "\${port}";
-
-          executable = {
-            command = lib.getExe pkgs.delve;
-            args = [
-              "dap"
-              "-l"
-              "127.0.0.1:\${port}"
-              "--log"
-              "--log-output=dap"
-            ];
-          };
-        };
-      };
-    };
-
     configurations = {
-      go = [
+      python = [
         {
-          name = "delve";
-          type = "delve";
+          name = "FastAPI";
+          type = "debugpy";
           request = "launch";
-          program = "\${file}";
+          module = "uvicorn";
+          args = {
+            __raw = ''
+              function()
+                return {
+                  vim.fn.input(
+                    'Module: ',
+                    'app:app',
+                    'file'
+                  ),
+                  '--reload',
+                }
+              end
+            '';
+          };
         }
       ];
     };
 
     extensions = {
       dap-ui = {
+        enable = true;
+      };
+
+      dap-python = {
+        enable = true;
+      };
+
+      dap-go = {
+        enable = true;
+      };
+
+      dap-virtual-text = {
         enable = true;
       };
     };
@@ -64,6 +70,53 @@
       options = {
         remap = false;
         desc = "nvim-dap - [d]ebug";
+      };
+    }
+
+    {
+      key = "<leader>db";
+      action = {
+        __raw = ''
+          function() require("dap").toggle_breakpoint() end
+        '';
+      };
+      mode = "n";
+      options = {
+        remap = false;
+        desc = "nvim-dap - [d]ebug [b]reakpoint";
+      };
+    }
+
+    {
+      key = "<leader>dc";
+      action = {
+        __raw = ''
+          function() require("dap").continue() end
+        '';
+      };
+      mode = "n";
+      options = {
+        remap = false;
+        desc = "nvim-dap - [d]ebug [c]ontinue";
+      };
+    }
+
+    {
+      key = "<leader>dq";
+      action = {
+        __raw = ''
+          function()
+            require("dap.breakpoints").clear()
+            require("dap").terminate()
+            require("dap").close()
+            require("dapui").close()
+          end
+        '';
+      };
+      mode = "n";
+      options = {
+        remap = false;
+        desc = "nvim-dap - [d]ebug [q]uit";
       };
     }
   ];

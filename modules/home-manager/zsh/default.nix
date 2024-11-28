@@ -41,7 +41,6 @@ in
 
         # git
         lg = "lazygit";
-        ga = "git add";
 
         # nix
         nix-shell = "nom-shell --command zsh";
@@ -57,6 +56,10 @@ in
         # k8s
         kc = "${pkgs.kubectx}/bin/kubectx";
         kn = "${pkgs.kubectx}/bin/kubens";
+
+        # gcloud
+        gp = "gcloud config set project \$(gcloud projects list --format='value(projectId)' | ${pkgs.fzf}/bin/fzf)";
+        ga = "gcloud config set account \$(gcloud auth list --format='value(account)' | ${pkgs.fzf}/bin/fzf)";
       };
 
       plugins = [
@@ -87,6 +90,7 @@ in
         bindkey "^H" backward-delete-char
         bindkey "^?" backward-delete-char
         zstyle ':completion:*' menu select
+        setopt interactivecomments
       '';
 
       envExtra = ''
