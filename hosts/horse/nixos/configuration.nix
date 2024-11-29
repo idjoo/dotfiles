@@ -88,7 +88,12 @@
   networking.networkmanager.enable = true;
 
   # services
-  services = { };
+  services = {
+    logind = {
+      lidSwitch = "ignore";
+      powerKey = "ignore";
+    };
+  };
 
   # firewall
   networking.firewall = {
