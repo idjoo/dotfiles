@@ -27,7 +27,7 @@ in
 
       changeDirWidgetCommand = "fd --type d";
       changeDirWidgetOptions = [
-        "--preview 'tree -C {} | head -200'"
+        "--preview 'ls --tree {} | head -200'"
       ];
 
       fileWidgetCommand = "fd --type f";

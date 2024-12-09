@@ -10,6 +10,7 @@
         c = [ "clang-format" ];
         cpp = [ "clang-format" ];
         javascript = [ "prettierd" ];
+        javascriptreact = [ "prettierd" ];
         sh = [
           "shellcheck"
           "shellharden"
@@ -19,6 +20,7 @@
         yaml = [ "yamlfmt" ];
         java = [ "google-java-format" ];
         html = [ "prettierd" ];
+        css = [ "prettierd" ];
         rust = [ "rustfmt" ];
 
         "_" = [ "trim_whitespace" ];

@@ -41,7 +41,6 @@ in
           config.audible_bell = "Disabled"
 
           config.keys = {
-            -- CTRL-SHIFT-l activates the debug overlay
             { key = 'L', mods = 'CTRL', action = wezterm.action.ShowDebugOverlay },
           }
 

@@ -56,6 +56,9 @@
     # notification
     dunst.enable = true;
 
+    # notification
+    qutebrowser.enable = true;
+
     # cli
     btop.enable = true;
     eza.enable = true;
