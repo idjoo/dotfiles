@@ -89,9 +89,10 @@
 
   # services
   services = {
-    logind = {
-      lidSwitch = "ignore";
-      powerKey = "ignore";
+    displayManager = {
+      ly = {
+        enable = true;
+      };
     };
   };
 
@@ -137,12 +138,6 @@
     windowManager.herbstluftwm.enable = true;
 
     videoDrivers = [ "amdgpu" ];
-  };
-
-  services.displayManager = {
-    ly = {
-      enable = true;
-    };
   };
 
   # user accounts

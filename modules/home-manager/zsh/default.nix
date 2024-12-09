@@ -58,8 +58,8 @@ in
         kn = "${pkgs.kubectx}/bin/kubens";
 
         # gcloud
-        gp = "gcloud config set project \$(gcloud projects list --format='value(projectId)' | ${pkgs.fzf}/bin/fzf)";
-        ga = "gcloud config set account \$(gcloud auth list --format='value(account)' | ${pkgs.fzf}/bin/fzf)";
+        gp = "gcloud config set project \$(gcloud projects list --format='value(projectId)' | ${pkgs.fzf}/bin/fzf --height=25% --layout=reverse --border)";
+        ga = "gcloud config set account \$(gcloud auth list --format='value(account)' | ${pkgs.fzf}/bin/fzf --height=25% --layout=reverse --border)";
       };
 
       plugins = [
@@ -82,6 +82,17 @@ in
             repo = "kubectl-aliases";
             rev = "ac5bfb00a1b351e7d5183d4a8f325bb3b235c1bd";
             hash = "sha256-X2E0n/U8uzZ/JAsYIvPjnEQLri8A7nveMmbkOFSxO5s=";
+          };
+        }
+
+        {
+          name = "fzf-gcloud";
+          file = "fzf-gcloud.plugin.zsh";
+          src = pkgs.fetchFromGitHub {
+            owner = "mbhynes";
+            repo = "fzf-gcloud";
+            rev = "2b4ffb169389c5eb807f3d609a759c959f445b32";
+            hash = "sha256-Kar27RlU22TiRF1oVubGY7WBRbDZDBqq08jC9co+G9w=";
           };
         }
       ];

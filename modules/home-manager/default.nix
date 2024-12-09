@@ -23,6 +23,7 @@
     ./tmux
     ./urxvt
     ./wezterm
+    ./qutebrowser
     ./zsh
   ];
 }
