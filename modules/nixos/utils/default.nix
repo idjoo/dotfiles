@@ -53,6 +53,8 @@ in
       jq
       p7zip
       kubectl
+      sqlite
+      openssl
 
       # custom
       android-unpinner
