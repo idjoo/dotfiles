@@ -38,6 +38,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
+
+    ghostty-hm = {
+      url = "github:clo4/ghostty-hm-module";
+    };
+
     xremap = {
       url = "github:xremap/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs";

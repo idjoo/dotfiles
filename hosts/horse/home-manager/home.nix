@@ -43,6 +43,7 @@
     # terminal
     urxvt.enable = true;
     wezterm.enable = true;
+    ghostty.enable = true;
 
     # shell
     zsh.enable = true;

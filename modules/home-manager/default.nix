@@ -11,6 +11,7 @@
     ./firefox
     ./flameshot
     ./fzf
+    ./ghostty
     ./git
     ./go
     ./gpg
@@ -19,12 +20,12 @@
     ./neovim
     ./password-store
     ./polybar
+    ./qutebrowser
     ./rofi
     ./ssh
     ./tmux
     ./urxvt
     ./wezterm
-    ./qutebrowser
     ./zsh
   ];
 }
