@@ -8,6 +8,7 @@
     ./direnv
     ./dunst
     ./eza
+    ./firefox
     ./flameshot
     ./fzf
     ./git
