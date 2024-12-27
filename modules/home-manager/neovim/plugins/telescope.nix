@@ -25,6 +25,14 @@
           desc = "telescope.nvim - [f]ind [q]uickfix";
         };
       };
+
+      "<leader>fb" = {
+        action = "buffers";
+        options = {
+          remap = false;
+          desc = "telescope.nvim - [f]ind [b]uffers";
+        };
+      };
     };
   };
 }

@@ -10,7 +10,7 @@
   imports = [
     outputs.nixosModules
 
-    inputs.home-manager.nixosModules.home-manager
+    inputs.home-manager.nixosModules.default
 
     ./hardware-configuration.nix
   ];
@@ -103,6 +103,10 @@
     # allowedUDPPorts = [ ... ];
   };
 
+  networking.extraHosts = ''
+    34.101.209.86 chatmalika.kai.id api.chatmalika.kai.id
+  '';
+
   # time zone
   time.timeZone = "Asia/Jakarta";
 
@@ -125,11 +129,14 @@
     enable = true;
     autorun = false;
 
-    xkb = {
-      layout = "us";
-      variant = "";
-      options = "caps:escape";
-    };
+    # xkb = {
+    #   layout = "us";
+    #   variant = "";
+    #   options = "caps:escape";
+    # };
+
+    autoRepeatDelay = 200;
+    autoRepeatInterval = 50;
 
     desktopManager.xterm.enable = true;
 
@@ -161,6 +168,7 @@
     google-chrome
     telegram-desktop
     hicolor-icon-theme
+    gpclient
   ];
 
   # fonts
@@ -185,6 +193,7 @@
     tailscale.enable = true;
     utils.enable = true;
     rclone.enable = true;
+    xremap.enable = true;
   };
 
   home-manager = {

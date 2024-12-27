@@ -102,6 +102,8 @@ in
         bindkey "^?" backward-delete-char
         zstyle ':completion:*' menu select
         setopt interactivecomments
+
+        ${pkgs.xorg.xset}/bin/xset r rate 200 50
       '';
 
       envExtra = ''
