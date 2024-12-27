@@ -47,7 +47,7 @@ in
         Mod4-w = "close";
 
         # terminal
-        Mod4-Return = "spawn ${pkgs.wezterm}/bin/wezterm";
+        Mod4-Return = "spawn ${inputs.ghostty.packages.x86_64-linux.default}/bin/ghostty";
 
         # workspaces
         Mod4-1 = "use_index 0";
