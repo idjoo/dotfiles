@@ -51,8 +51,8 @@ in
         };
 
         monospace = {
-          package = pkgs.dank-mono-nerdfont;
-          name = "DankMono Nerd Font Mono";
+          package = (pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; });
+          name = "RobotoMono Nerd Font Mono";
         };
 
         emoji = {
