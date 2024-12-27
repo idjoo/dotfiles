@@ -36,9 +36,7 @@ in
               enable = true;
 
               additional_vim_regex_highlighting = true;
-
               custom_captures = { };
-
               disable = [ ];
             };
 
@@ -49,7 +47,7 @@ in
 
               # TODO messy keymaps
               keymaps = {
-                init_selection = false;
+                init_selection = "gnn";
                 node_decremental = "grm";
                 node_incremental = "grn";
                 scope_incremental = "grc";

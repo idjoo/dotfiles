@@ -10,5 +10,6 @@
     ./nh
     ./ssh
     ./rclone
+    ./xremap
   ];
 }

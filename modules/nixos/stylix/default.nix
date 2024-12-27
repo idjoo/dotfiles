@@ -17,6 +17,7 @@ in
   options.modules.stylix = {
     enable = mkEnableOption "stylix";
   };
+
   config = mkIf cfg.enable {
     stylix = {
       enable = cfg.enable;

@@ -23,6 +23,8 @@ in
     services.xrdp.audio.enable = true;
     services.xrdp.defaultWindowManager = "${pkgs.herbstluftwm}/bin/herbstluftwm --locked";
 
+    environment.localBinInPath = true;
+
     environment.systemPackages = with pkgs; [
       # archive
       zip
@@ -55,6 +57,8 @@ in
       kubectl
       sqlite
       openssl
+      gpclient
+      openconnect
 
       # custom
       android-unpinner
