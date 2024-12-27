@@ -14,7 +14,9 @@ in
   config = mkIf cfg.enable {
     programs.btop = {
       enable = cfg.enable;
-      settings = { };
+      settings = {
+        vim_keys = true;
+      };
     };
   };
 }
