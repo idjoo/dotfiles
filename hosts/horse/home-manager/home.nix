@@ -56,8 +56,8 @@
     # notification
     dunst.enable = true;
 
-    # notification
-    qutebrowser.enable = true;
+    # browser
+    firefox.enable = true;
 
     # cli
     btop.enable = true;
