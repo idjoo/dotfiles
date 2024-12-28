@@ -8,6 +8,7 @@
 with lib;
 let
   cfg = config.modules.firefox;
+  firefox-addons = inputs.firefox-addons.packages.${pkgs.system};
 
   profile-settings = {
     # Disable about:config warning
@@ -24,10 +25,10 @@ let
     "browser.newtabpage.activity-stream.topSitesRows" = 2;
     "browser.newtabpage.storageVersion" = 1;
     "browser.newtabpage.pinned" = [
-      {
-        title = "NixOS";
-        url = "https://nixos.org";
-      }
+      # {
+      #   title = "NixOS";
+      #   url = "https://nixos.org";
+      # }
     ];
 
     # Activity Stream
@@ -62,25 +63,18 @@ let
     # Prefer dark theme
     "layout.css.prefers-color-scheme.content-override" = 0; # 0: Dark, 1: Light, 2: Auto
 
-    # HTTPS only
-    "dom.security.https_only_mode" = true;
-
-    # Trusted DNS (TRR)
-    "network.trr.mode" = 2;
-    "network.trr.uri" = "https://mozilla.cloudflare-dns.com/dns-query";
-
     # ECH - prevent TLS connections leaking request hostname
     "network.dns.echconfig.enabled" = true;
     "network.dns.http3_echconfig.enabled" = true;
 
     # Tracking
-    "browser.contentblocking.category" = "strict";
-    "privacy.trackingprotection.enabled" = true;
+    # Removed: "browser.contentblocking.category" = "strict";  // Covered by policies.EnableTrackingProtection
+    # Removed: "privacy.trackingprotection.enabled" = true; // Covered by policies.EnableTrackingProtection
     "privacy.trackingprotection.pbmode.enabled" = true;
     "privacy.trackingprotection.emailtracking.enabled" = true;
     "privacy.trackingprotection.socialtracking.enabled" = true;
-    "privacy.trackingprotection.cryptomining.enabled" = true;
-    "privacy.trackingprotection.fingerprinting.enabled" = true;
+    # Removed:  "privacy.trackingprotection.cryptomining.enabled" = true; // Covered by policies.EnableTrackingProtection
+    # Removed: "privacy.trackingprotection.fingerprinting.enabled" = true; // Covered by policies.EnableTrackingProtection
 
     # Fingerprinting
     "privacy.fingerprintingProtection" = true;
@@ -100,8 +94,8 @@ let
     "geo.provider.network.url" = "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
 
     # Disable password manager
-    "signon.rememberSignons" = false;
-    "signon.autofillForms" = false;
+    # Removed: "signon.rememberSignons" = false; // Covered by policies.PasswordManagerEnabled
+    # Removed: "signon.autofillForms" = false; // Covered by policies.PasswordManagerEnabled
     "signon.formlessCapture.enabled" = false;
 
     # Hardens against potential credentials phishing:
@@ -169,6 +163,12 @@ let
       ];
     }
   ];
+
+  profile-extensions = with firefox-addons; [
+    ublock-origin
+    privacy-badger
+    # enhancer-for-youtube
+  ];
 in
 {
   options.modules.firefox = {
@@ -188,7 +188,222 @@ in
       ];
 
       policies = {
-        DefaultDownloadDirectory = "\${home}/downloads";
+        #  ----------------------
+        #  General Settings
+        #  ----------------------
+        AllowFileSelectionDialogs = true; # Allows file selection dialogs to open.
+        DontCheckDefaultBrowser = false; # Prevents Firefox from checking if it's the default browser.
+        HardwareAcceleration = true; # Enables hardware acceleration for improved performance.
+        RequestedLocales = [
+          "en-US"
+          "id"
+        ]; # Sets the preferred UI languages for the browser.
+        UseSystemPrintDialog = true; # Forces the usage of the OS print dialog instead of firefox's print dialog
+
+        # ----------------------
+        #  Update Settings
+        #  ----------------------
+        AppAutoUpdate = false; # Disables automatic application updates.
+        BackgroundAppUpdate = false; # Disables background application updates.
+        DisableAppUpdate = true; # Further disables automatic updates of the application
+        ManualAppUpdateOnly = true; # Forces updates to be done manually.
+        ExtensionUpdate = false; # Disables automatic extension updates.
+        DisableSystemAddonUpdate = true; # Disables automatic system addons updates.
+
+        # ----------------------
+        #  Privacy and Security
+        # ----------------------
+        AutofillCreditCardEnabled = false; # Disables autofilling of credit card information.
+        DisableFeedbackCommands = true; # Disables sending feedback to mozilla.
+        DisableFirefoxAccounts = true; # Disables usage of firefox accounts
+        DisableFirefoxStudies = true; # Disables the firefox studies.
+        DisablePocket = true; # Disable pocket integration
+        DisableTelemetry = true; # Disables sending usage data to Mozilla.
+        DNSOverHTTPS = {
+          # Configures DNS over HTTPS settings.
+          Enabled = true;
+          ProviderURL = "https://all.dns.mullvad.net/dns-query";
+          Locked = true;
+        };
+        EnableTrackingProtection = {
+          # Enables enhanced tracking protection.
+          Value = true;
+          Locked = false;
+          Cryptomining = true;
+          Fingerprinting = true;
+        };
+        HttpsOnlyMode = "enabled"; # Forces HTTPS for all connections
+        PasswordManagerEnabled = false; # Disables the built-in password manager.
+        OfferToSaveLogins = false; # Disables saving login
+        OfferToSaveLoginsDefault = false; # Disables saving logins by default
+        PasswordManagerExceptions = [ ]; # Disables password manager exceptions
+        PictureInPicture = {
+          # Disables Picture-in-Picture mode
+          Enabled = false;
+          Locked = true;
+        };
+        PopupBlocking = {
+          # Enables popup blocking by default
+          Default = true;
+          Locked = false;
+        };
+
+        #  ----------------------
+        #  Homepage Settings
+        #  ----------------------
+        FirefoxHome = {
+          # Configures Firefox's homepage content.
+          Search = true;
+          TopSites = true;
+          SponsoredTopSites = false;
+          Highlights = false;
+          Pocket = false;
+          SponsoredPocket = false;
+          Snippets = true;
+          Locked = true;
+        };
+        NewTabPage = true; # Enables new tab page
+        ShowHomeButton = true; # Enables the home button
+
+        # ----------------------
+        # Search Settings
+        # ----------------------
+        FirefoxSuggest = {
+          # Configures search suggestions.
+          WebSuggestions = true;
+          SponsoredSuggestions = false;
+          ImproveSuggest = false;
+          Locked = true;
+        };
+        SearchBar = "unified"; # Enables unified search bar, combines address and search bar
+
+        # ----------------------
+        # User Interface Settings
+        # ----------------------
+        DisplayBookmarksToolbar = "newtab"; # Sets the bookmarks toolbar visibility to be on new tabs.
+        DisplayMenuBar = "default-off"; # Sets the menu bar to be hidden by default.
+        DisableSetDesktopBackground = true; # Disables the ability to set the background via firefox
+
+        # ----------------------
+        #  Download Settings
+        #  ----------------------
+        DefaultDownloadDirectory = "\$/downloads"; # Sets the default directory for downloads.
+        DownloadDirectory = "\$/downloads"; # Sets the download directory.
+        PromptForDownloadLocation = false; # Prevents firefox from asking the location to download a file
+        StartDownloadsInTempDirectory = true; # Starts downloads in a temporary directory
+
+        # ----------------------
+        #  Autofill Settings
+        #  ----------------------
+        AutofillAddressEnabled = true; # Enables autofilling of address information.
+
+        # ----------------------
+        #  Handler Settings
+        #  ----------------------
+        Handlers = {
+          # Configures how specific protocols are handled by the browser.
+          schemes = {
+            mailto = {
+              action = "useHelperApp";
+              ask = true;
+              handlers = [
+                {
+                  name = "Gmail";
+                  uriTemplate = "https://mail.google.com/mail/?extsrc=mailto&url=%s";
+                }
+              ];
+            };
+          };
+        };
+
+        #  ----------------------
+        #  PDF Settings
+        #  ----------------------
+        PDFjs = {
+          # Enables and configures PDF viewer within Firefox.
+          Enabled = true;
+          EnablePermissions = true;
+        };
+
+        # ----------------------
+        #  Permissions Settings
+        #  ----------------------
+        Permissions = {
+          # Configures permissions for specific websites.
+          Camera = {
+            Allow = [
+              "https://meet.google.com"
+              "https://teams.microsoft.com"
+            ];
+            Block = [ ];
+            BlockNewRequests = true;
+            Locked = true;
+          };
+          Microphone = {
+            Allow = [
+              "https://meet.google.com"
+              "https://teams.microsoft.com"
+            ];
+            Block = [ ];
+            BlockNewRequests = true;
+            Locked = true;
+          };
+          Location = {
+            Allow = [
+              "https://maps.google.com"
+            ];
+            Block = [ ];
+            BlockNewRequests = true;
+            Locked = true;
+          };
+          Notifications = {
+            Allow = [
+              "https://chat.google.com"
+              "https://mail.google.com"
+              "https://web.whatsapp.com"
+            ];
+            Block = [ ];
+            BlockNewRequests = true;
+            Locked = true;
+          };
+          Autoplay = {
+            Allow = [
+              "https://youtube.com"
+              "https://music.youtube.com"
+            ];
+            Block = [ ];
+            Default = "block-audio-video";
+            Locked = true;
+          };
+        };
+
+        # ----------------------
+        #  Add-ons Settings
+        #  ----------------------
+        InstallAddonsPermission = {
+          # Configures permission to install add-ons
+          Default = false;
+        };
+
+        # ----------------------
+        #  User Messaging Settings
+        #  ----------------------
+        UserMessaging = {
+          # Configures messaging and recommendation prompts to the user.
+          ExtensionRecommendations = false;
+          FeatureRecommendations = false;
+          UrlbarInterventions = false;
+          SkipOnboarding = true;
+          MoreFromMozilla = false;
+          FirefoxLabs = false;
+          Locked = true;
+        };
+        #  ----------------------
+        #  Other Settings
+        #  ----------------------
+        NetworkPrediction = true; # Enables network prediction to improve page load speed.
+        NoDefaultBookmarks = true; # Removes all default bookmarks on startup.
+        TranslateEnabled = true; # Enables the translator service.
       };
 
       profiles = {
@@ -205,9 +420,7 @@ in
             force = true;
           };
 
-          # extensions =
-          #   [
-          #   ];
+          extensions = profile-extensions;
 
           # userChrome = '''';
           # userContent = '''';
@@ -219,6 +432,8 @@ in
           bookmarks = profile-bookmarks;
 
           settings = profile-settings;
+
+          extensions = profile-extensions;
 
           search = {
             default = "DuckDuckGo";
@@ -233,6 +448,8 @@ in
           bookmarks = profile-bookmarks;
 
           settings = profile-settings;
+
+          extensions = profile-extensions;
 
           search = {
             default = "DuckDuckGo";

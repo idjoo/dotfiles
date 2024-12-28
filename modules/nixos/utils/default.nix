@@ -36,10 +36,8 @@ in
 
       # nix
       nurl
-      nix-index
       nix-init
       nix-output-monitor
-      comma
 
       # desktop app
       telegram-desktop
