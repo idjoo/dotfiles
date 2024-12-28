@@ -26,12 +26,7 @@
 
     config = {
       allowUnfree = true;
-
-      packageOverrides = pkgs: {
-        nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-          inherit pkgs;
-        };
-      };
+      allowUnfreePredicate = _: true;
     };
   };
 
@@ -127,21 +122,13 @@
   # x11
   services.xserver = {
     enable = true;
+
     autorun = false;
-
-    # xkb = {
-    #   layout = "us";
-    #   variant = "";
-    #   options = "caps:escape";
-    # };
-
     autoRepeatDelay = 200;
     autoRepeatInterval = 50;
 
     desktopManager.xterm.enable = true;
-
     displayManager.startx.enable = true;
-
     windowManager.herbstluftwm.enable = true;
 
     videoDrivers = [ "amdgpu" ];
@@ -201,8 +188,8 @@
     extraSpecialArgs = {
       inherit inputs outputs;
     };
-    useGlobalPkgs = false;
-    useUserPackages = false;
+    useGlobalPkgs = true;
+    useUserPackages = true;
     users = {
       ${outputs.username} = import ../home-manager/home.nix;
     };
