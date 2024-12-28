@@ -6,6 +6,7 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
 
     nur.url = "github:nix-community/NUR";
+    systems.url = "github:nix-systems/default-linux";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -61,28 +62,37 @@
     {
       self,
       nixpkgs,
+      systems,
       nix-on-droid,
       nix-index-database,
       ...
     }@inputs:
     let
       inherit (self) outputs;
-      # Supported systems for your flake packages, shell, etc.
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-      ];
 
       # This is a function that generates an attribute by calling a function you
       # pass to it, with each system as an argument
       forAllSystems = nixpkgs.lib.genAttrs systems;
+      lib = nixpkgs.lib;
+      forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
+      pkgsFor = lib.genAttrs (import systems) (
+        system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        }
+      );
     in
     {
       username = "idjo";
 
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; });
 
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+      formatter = forEachSystem (pkgs: pkgs.nixfmt-rfc-style);
+
+      # packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+
+      # formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
 
       overlays = import ./overlays { inherit inputs; };
 
@@ -97,7 +107,6 @@
           };
           modules = [
             ./hosts/ox/nixos/configuration.nix
-            nix-index-database.nixosModules.nix-index
           ];
         };
 
@@ -108,6 +117,7 @@
           modules = [
             ./hosts/horse/nixos/configuration.nix
             nix-index-database.nixosModules.nix-index
+            { programs.nix-index-database.comma.enable = true; }
           ];
         };
 
@@ -117,7 +127,6 @@
           };
           modules = [
             ./hosts/tiger/nixos/configuration.nix
-            nix-index-database.nixosModules.nix-index
           ];
         };
       };
