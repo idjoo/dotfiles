@@ -28,6 +28,7 @@ in
       };
 
       settings = {
+        theme = "catppuccin-frappe";
         background = "${config.lib.stylix.colors.base00}";
         foreground = "${config.lib.stylix.colors.base05}";
 
