@@ -37,7 +37,7 @@ in
       shellAliases = {
         reload = "source $ZDOTDIR/.zshrc";
         rebuild = "nh os switch";
-        n = "nvim ~/note.md";
+        n = "nvim ${config.home.homeDirectory}/note.md";
 
         # git
         lg = "lazygit";
