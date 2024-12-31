@@ -75,7 +75,7 @@ in
 
         # reload config
         # ---------------------
-        bind r source-file ~/.config/tmux/tmux.conf\; display "Config reloaded"
+        bind r source-file ${config.home.homeDirectory}/.config/tmux/tmux.conf\; display "Config reloaded"
 
         # sync pane
         # ---------------------
