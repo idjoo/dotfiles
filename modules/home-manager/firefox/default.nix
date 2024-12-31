@@ -107,6 +107,8 @@ let
     "browser.bookmarks.showMobileBookmarks" = true;
 
     "browser.sessionstore.max_windows_undo" = 3;
+
+    "extensions.autoDisableScopes" = 0;
   };
 
   profile-bookmarks = [
@@ -326,58 +328,6 @@ in
         };
 
         # ----------------------
-        #  Permissions Settings
-        #  ----------------------
-        Permissions = {
-          # Configures permissions for specific websites.
-          Camera = {
-            Allow = [
-              "https://meet.google.com"
-              "https://teams.microsoft.com"
-            ];
-            Block = [ ];
-            BlockNewRequests = true;
-            Locked = true;
-          };
-          Microphone = {
-            Allow = [
-              "https://meet.google.com"
-              "https://teams.microsoft.com"
-            ];
-            Block = [ ];
-            BlockNewRequests = true;
-            Locked = true;
-          };
-          Location = {
-            Allow = [
-              "https://maps.google.com"
-            ];
-            Block = [ ];
-            BlockNewRequests = true;
-            Locked = true;
-          };
-          Notifications = {
-            Allow = [
-              "https://chat.google.com"
-              "https://mail.google.com"
-              "https://web.whatsapp.com"
-            ];
-            Block = [ ];
-            BlockNewRequests = true;
-            Locked = true;
-          };
-          Autoplay = {
-            Allow = [
-              "https://youtube.com"
-              "https://music.youtube.com"
-            ];
-            Block = [ ];
-            Default = "block-audio-video";
-            Locked = true;
-          };
-        };
-
-        # ----------------------
         #  Add-ons Settings
         #  ----------------------
         InstallAddonsPermission = {
@@ -414,16 +364,16 @@ in
 
           settings = profile-settings;
 
+          extensions = with firefox-addons; [
+            ublock-origin
+            privacy-badger
+          ];
+
           search = {
             default = "DuckDuckGo";
             privateDefault = "DuckDuckGo";
             force = true;
           };
-
-          extensions = profile-extensions;
-
-          # userChrome = '''';
-          # userContent = '''';
         };
 
         "vian@idjo.cc" = {
