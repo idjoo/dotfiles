@@ -1,6 +1,7 @@
 {
   programs.nixvim.plugins.gitsigns = {
     enable = true;
+
     settings = {
       signs = {
         add = {
@@ -24,4 +25,16 @@
       };
     };
   };
+
+  programs.nixvim.keymaps = [
+    {
+      action = "<cmd>Gitsigns blame<cr>";
+      key = "<leader>gb";
+      mode = "n";
+      options = {
+        remap = false;
+        desc = "gitsigns - [g]it [b]lame";
+      };
+    }
+  ];
 }
