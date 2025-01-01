@@ -37,10 +37,10 @@ in
       shellAliases = {
         reload = "source $ZDOTDIR/.zshrc";
         rebuild = "${pkgs.nh}/bin/nh os switch";
-        n = "${pkgs.neovim}/bin/nvim ${config.home.homeDirectory}/note.md";
+        n = "nvim ${config.home.homeDirectory}/note.md";
 
         # git
-        lg = "${pkgs.neovim}/bin/nvim +Neogit";
+        lg = "nvim +Neogit";
 
         # nix
         nix-shell = "${pkgs.nix-output-monitor}/bin/nom-shell --command zsh";
