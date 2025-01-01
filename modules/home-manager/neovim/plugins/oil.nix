@@ -3,30 +3,27 @@
     enable = true;
 
     settings = {
+      default_file_explorer = true;
+      skip_confirm_for_simple_edits = true;
+      watch_for_changes = true;
+      natural_order = true;
+
       columns = [
         "icon"
       ];
 
-      # TODO keymaps messy
-      keymaps = {
-        "g?" = "actions.show_help";
-        "<cr>" = "actions.select";
-        "<c-s>" = "actions.select_vsplit";
-        "<c-h>" = "actions.select_split";
-        "<c-t>" = "actions.select_tab";
-        "<c-p>" = "actions.preview";
-        "<c-c>" = "actions.close";
-        "<c-l>" = "actions.refresh";
-        "-" = "actions.parent";
-        "_" = "actions.open_cwd";
-        "`" = "actions.cd";
-        "gs" = "actions.change_sort";
-        "gx" = "actions.open_external";
-        "g." = "actions.toggle_hidden";
-      };
-
       view_options = {
-        show_hidden = false;
+        wrap = true;
+        show_hidden = true;
+        is_always_hidden = {
+          __raw = # lua
+            ''
+              function(name, _)
+                return name == '..'
+              end
+            '';
+        };
+
       };
     };
   };

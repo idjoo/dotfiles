@@ -36,14 +36,14 @@ in
 
       shellAliases = {
         reload = "source $ZDOTDIR/.zshrc";
-        rebuild = "nh os switch";
-        n = "nvim ${config.home.homeDirectory}/note.md";
+        rebuild = "${pkgs.nh}/bin/nh os switch";
+        n = "${pkgs.neovim}/bin/nvim ${config.home.homeDirectory}/note.md";
 
         # git
-        lg = "lazygit";
+        lg = "${pkgs.neovim}/bin/nvim +Neogit";
 
         # nix
-        nix-shell = "nom-shell --command zsh";
+        nix-shell = "${pkgs.nix-output-monitor}/bin/nom-shell --command zsh";
 
         # work
         spindo-dev-dashboard = ''xdg-open "https://console.cloud.google.com/monitoring/dashboards/builder/afa6b769-7933-4f81-9d52-7735bfcb79a9;startTime=$(date -u -d yesterday +"%Y-%m-%dT10:30:00Z");endTime=$(date -u +"%Y-%m-%dT10:30:00Z")?project=prj-sap-dev-398404"'';
@@ -51,7 +51,7 @@ in
         spindo-dev-snapshot = ''xdg-open "https://console.cloud.google.com/compute/snapshots?referrer=search&project=prj-sap-dev-398404&pageState=(%22snapshots%22:(%22s%22:%5B(%22i%22:%22creationTimestamp%22,%22s%22:%221%22),(%22i%22:%22name%22,%22s%22:%220%22)%5D))"'';
         spindo-prod-snapshot = ''xdg-open "https://console.cloud.google.com/compute/snapshots?referrer=search&project=prj-sap-prod-398404&pageState=(%22snapshots%22:(%22s%22:%5B(%22i%22:%22creationTimestamp%22,%22s%22:%221%22),(%22i%22:%22name%22,%22s%22:%220%22)%5D))"'';
 
-        mount-gdrive = ''rclone mount gdrive:/ ~/documents/drive'';
+        mount-gdrive = ''${pkgs.rclone} mount gdrive:/ ~/documents/drive'';
 
         # k8s
         kc = "${pkgs.kubectx}/bin/kubectx";

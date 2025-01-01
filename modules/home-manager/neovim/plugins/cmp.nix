@@ -1,21 +1,21 @@
 {
   # dependencies
-  programs.nixvim.plugins.luasnip.enable = true;
-  programs.nixvim.plugins.cmp_luasnip.enable = true;
-  programs.nixvim.plugins.cmp-nvim-lsp.enable = true;
-  programs.nixvim.plugins.cmp-path.enable = true;
-  programs.nixvim.plugins.friendly-snippets.enable = true;
+  programs.nixvim.plugins = {
+    # luasnip.enable = true;
+    # friendly-snippets.enable = true;
+  };
 
   programs.nixvim.plugins.cmp = {
     enable = true;
     autoEnableSources = true;
     settings = {
       snippet = {
-        expand = ''
-          function(args)
-            require('luasnip').lsp_expand(args.body)
-          end
-        '';
+        expand = # lua
+          ''
+            function(args)
+              require('luasnip').lsp_expand(args.body)
+            end
+          '';
       };
 
       completion = {
@@ -23,30 +23,50 @@
       };
 
       mapping = {
-        "<C-n>" = "cmp.mapping.select_next_item()";
-        "<C-p>" = "cmp.mapping.select_prev_item()";
-        "<C-y>" = "cmp.mapping.confirm({ select = true })";
-        "<C-Space>" = "cmp.mapping.complete({})";
-        "<C-l>" = ''
-          cmp.mapping(function()
-            if luasnip.expand_or_locally_jumpable() then
-              luasnip.expand_or_jump()
-            end
-          end, { "i", "s" })
-        '';
-        "<C-h>" = ''
-          cmp.mapping(function()
-            if luasnip.locally_jumpable(-1) then
-              luasnip.jump(-1)
-            end
-          end, { "i", "s" })
-        '';
+        "<C-n>" = # lua
+          ''
+            cmp.mapping.select_next_item()
+          '';
+        "<C-p>" = # lua
+          ''
+            cmp.mapping.select_prev_item()
+          '';
+        "<C-y>" = # lua
+          ''
+            cmp.mapping.confirm({ select = true })
+          '';
+        "<C-Space>" = # lua
+          ''
+            cmp.mapping.complete({})
+          '';
+        "<C-l>" = # lua
+          ''
+            cmp.mapping(function()
+              if luasnip.expand_or_locally_jumpable() then
+                luasnip.expand_or_jump()
+              end
+            end, { "i", "s" })
+          '';
+        "<C-h>" = # lua
+          ''
+            cmp.mapping(function()
+              if luasnip.locally_jumpable(-1) then
+                luasnip.jump(-1)
+              end
+            end, { "i", "s" })
+          '';
       };
 
       sources = [
+        { name = "buffer"; }
+        { name = "calc"; }
+        { name = "conventionalcommits"; }
+        { name = "emoji"; }
         { name = "nvim_lsp"; }
-        { name = "luasnip"; }
+        { name = "nvim_lua"; }
         { name = "path"; }
+        { name = "luasnip"; }
+        { name = "render-markdown"; }
       ];
     };
   };

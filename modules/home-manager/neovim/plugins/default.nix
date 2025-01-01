@@ -8,15 +8,17 @@
     ./conform.nix
     ./dap.nix
     ./fidget.nix
-    ./fugitive.nix
+    ./neogit.nix
     ./gitsigns.nix
     ./indent-blankline.nix
     ./kubectl.nix
     ./lsp.nix
     ./lspsaga.nix
+    ./lz-n.nix
     ./oil.nix
     ./render-markdown.nix
     ./rest.nix
+    ./schemastore.nix
     ./spider.nix
     ./surround.nix
     ./telescope.nix
