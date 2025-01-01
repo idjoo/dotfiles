@@ -51,7 +51,7 @@ in
         };
 
         monospace = {
-          package = (pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; });
+          package = pkgs.nerd-fonts.roboto-mono;
           name = "RobotoMono Nerd Font Mono";
         };
 

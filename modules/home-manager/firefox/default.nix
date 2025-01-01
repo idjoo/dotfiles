@@ -78,8 +78,8 @@ let
 
     # Fingerprinting
     "privacy.fingerprintingProtection" = true;
-    "privacy.resistFingerprinting" = true;
-    "privacy.resistFingerprinting.pbmode" = true;
+    "privacy.resistFingerprinting" = false;
+    "privacy.resistFingerprinting.pbmode" = false;
 
     "privacy.firstparty.isolate" = true;
 
@@ -164,6 +164,27 @@ let
         "social"
       ];
     }
+    {
+      name = "NixOS Packages";
+      url = "https://search.nixos.org/packages?channel=unstable";
+      tags = [
+        "nixos"
+      ];
+    }
+    {
+      name = "NixOS Options";
+      url = "https://search.nixos.org/options?channel=unstable";
+      tags = [
+        "nixos"
+      ];
+    }
+    {
+      name = "NixVim";
+      url = "https://nix-community.github.io/nixvim/index.html";
+      tags = [
+        "nixos"
+      ];
+    }
   ];
 
   profile-extensions = with firefox-addons; [
@@ -230,9 +251,9 @@ in
         EnableTrackingProtection = {
           # Enables enhanced tracking protection.
           Value = true;
-          Locked = false;
+          Locked = true;
           Cryptomining = true;
-          Fingerprinting = true;
+          Fingerprinting = false;
         };
         HttpsOnlyMode = "enabled"; # Forces HTTPS for all connections
         PasswordManagerEnabled = false; # Disables the built-in password manager.

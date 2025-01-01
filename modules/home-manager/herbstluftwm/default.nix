@@ -154,6 +154,7 @@ in
         "focus=on"
         "floatplacement=smart"
         "fixedsize floating=on"
+        "instance=firefox tag=0"
         "instance=google-chrome tag=0"
         "instance=telegram-desktop tag=7"
       ];
