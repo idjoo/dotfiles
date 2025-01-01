@@ -12,13 +12,6 @@ in
     enable = mkEnableOption "flameshot";
   };
   config = mkIf cfg.enable {
-    systemd.user.targets.tray = {
-      Unit = {
-        Description = "Home Manager System Tray";
-        Requires = [ "graphical-session-pre.target" ];
-      };
-    };
-
     services.flameshot = {
       enable = cfg.enable;
 

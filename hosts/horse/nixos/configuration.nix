@@ -21,7 +21,7 @@
       outputs.overlays.modifications
       outputs.overlays.stable-packages
 
-      inputs.nur.overlay
+      inputs.nur.overlays.default
     ];
 
     config = {
@@ -160,7 +160,7 @@
 
   # fonts
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "RobotoMono" ]; })
+    nerd-fonts.roboto-mono
     font-awesome
   ];
 
