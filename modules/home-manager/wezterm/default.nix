@@ -11,9 +11,10 @@ in
   options.modules.wezterm = {
     enable = lib.mkEnableOption "wezterm";
   };
+
   config = lib.mkIf cfg.enable {
     programs.wezterm = {
-      enable = true;
+      enable = cfg.enable;
 
       extraConfig = # lua
         ''

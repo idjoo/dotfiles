@@ -9,23 +9,17 @@ let
   cfg = config.modules.ghostty;
 in
 {
-  imports = [
-    inputs.ghostty-hm.homeModules.default
-  ];
-
   options.modules.ghostty = {
     enable = mkEnableOption "ghostty";
   };
+
   config = mkIf cfg.enable {
     programs.ghostty = {
       enable = cfg.enable;
 
-      package = inputs.ghostty.packages.x86_64-linux.default;
+      enableZshIntegration = true;
 
-      shellIntegration = {
-        enable = false;
-        enableZshIntegration = true;
-      };
+      clearDefaultKeybinds = false;
 
       settings = {
         theme = "catppuccin-frappe";
@@ -51,6 +45,7 @@ in
         window-padding-y = 1;
         window-padding-balance = true;
         focus-follows-mouse = false;
+        confirm-close-surface = false;
 
         clipboard-read = "allow";
         clipboard-write = "allow";

@@ -17,7 +17,7 @@ in
       enable = cfg.enable;
       location = "center";
 
-      terminal = "${pkgs.wezterm}/bin/wezterm";
+      terminal = "${pkgs.ghostty}/bin/ghostty";
 
       extraConfig = {
         modi = "drun,run,ssh";

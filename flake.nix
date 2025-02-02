@@ -34,26 +34,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    wezterm = {
-      url = "github:wez/wezterm/main?dir=nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-    };
-
-    ghostty-hm = {
-      url = "github:clo4/ghostty-hm-module";
-    };
-
     xremap = {
       url = "github:xremap/nix-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -64,15 +46,11 @@
       nixpkgs,
       systems,
       nix-on-droid,
-      nix-index-database,
       ...
     }@inputs:
     let
       inherit (self) outputs;
 
-      # This is a function that generates an attribute by calling a function you
-      # pass to it, with each system as an argument
-      forAllSystems = nixpkgs.lib.genAttrs systems;
       lib = nixpkgs.lib;
       forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
       pkgsFor = lib.genAttrs (import systems) (
@@ -89,10 +67,6 @@
       packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; });
 
       formatter = forEachSystem (pkgs: pkgs.nixfmt-rfc-style);
-
-      # packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-
-      # formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
 
       overlays = import ./overlays { inherit inputs; };
 
@@ -116,8 +90,6 @@
           };
           modules = [
             ./hosts/horse/nixos/configuration.nix
-            nix-index-database.nixosModules.nix-index
-            { programs.nix-index-database.comma.enable = true; }
           ];
         };
 
