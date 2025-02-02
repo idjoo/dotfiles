@@ -30,7 +30,7 @@
 
     # terminal
     urxvt.enable = true;
-    wezterm.enable = true;
+    wezterm.enable = false;
     ghostty.enable = true;
 
     # shell
