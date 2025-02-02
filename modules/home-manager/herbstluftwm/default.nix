@@ -47,7 +47,7 @@ in
         Mod4-w = "close";
 
         # terminal
-        Mod4-Return = "spawn ${inputs.ghostty.packages.x86_64-linux.default}/bin/ghostty";
+        Mod4-Return = "spawn ${pkgs.ghostty}/bin/ghostty";
 
         # workspaces
         Mod4-1 = "use_index 0";
@@ -95,12 +95,12 @@ in
         Mod4-Shift-f = "fullscreen toggle";
 
         # rofi
-        Mod4-d = "spawn ${pkgs.rofi}/bin/rofi -show drun -modi drun";
+        Mod4-d = "spawn rofi -show drun -modi drun";
         Mod4-p = "spawn ${pkgs.rofi-pass}/bin/rofi-pass";
         Mod4-a = "spawn ${pkgs.ani-cli}/bin/ani-cli --rofi --skip";
         Mod4-b = "spawn ${pkgs.rofi-bluetooth}/bin/rofi-bluetooth";
-        Mod4-e = "spawn ${pkgs.rofi}/bin/rofi -show emoji -modi emoji";
-        Mod4-c = ''spawn ${pkgs.rofi}/bin/rofi -show calc -modi calc -no-show-match -no-sort -calc-command " echo - n '{ result }' | xsel --clipboard"'';
+        Mod4-e = "spawn rofi -show emoji -modi emoji";
+        Mod4-c = ''spawn rofi -show calc -modi calc -no-show-match -no-sort -calc-command " echo - n '{ result }' | xsel --clipboard"'';
 
         # xf86
         XF86MonBrightnessUp = "spawn ${pkgs.acpilight}/bin/xbacklight -inc 10";
