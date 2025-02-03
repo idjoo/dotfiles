@@ -2,13 +2,15 @@
   programs.nixvim.plugins.fidget = {
     enable = true;
 
-    logger = {
-      level = "trace";
-    };
+    settings = {
+      logger = {
+        level = "trace";
+      };
 
-    notification = {
-      filter = "trace";
-      overrideVimNotify = true;
+      notification = {
+        filter = "trace";
+        override_vim_notify = true;
+      };
     };
   };
 }

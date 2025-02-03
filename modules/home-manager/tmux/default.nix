@@ -45,6 +45,14 @@ in
         {
           plugin = pkgs.tmuxPlugins.pain-control;
         }
+
+        {
+          plugin = pkgs.tmuxPlugins.tmux-thumbs;
+          extraConfig = ''
+            set -g @thumbs-command 'echo -n {} | xsel --clipboard'
+            set -g @thumbs-contrast 1
+          '';
+        }
       ];
 
       extraConfig = ''
@@ -70,8 +78,8 @@ in
         # ---------------------
         set -g status-left ""
         set -g status-right '#(date +" %H:%M ")'
-        set -g window-status-format '#I #W'
-        set -g window-status-current-format ' #I #W '
+        set -g window-status-format '#I:#(pwd="#{pane_current_path}"; echo ''${pwd####*/})#F'
+        set -g window-status-current-format '#I:#(pwd="#{pane_current_path}"; echo ''${pwd####*/})#F'
 
         # reload config
         # ---------------------

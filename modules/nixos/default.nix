@@ -3,13 +3,14 @@
 {
   # List your module files here
   imports = [
-    ./tailscale
-    ./stylix
-    ./pipewire
-    ./utils
+    ./comma
     ./nh
-    ./ssh
+    ./pipewire
     ./rclone
+    ./ssh
+    ./stylix
+    ./tailscale
+    ./utils
     ./xremap
   ];
 }

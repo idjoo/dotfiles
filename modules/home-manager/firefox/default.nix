@@ -2,13 +2,11 @@
   pkgs,
   lib,
   config,
-  inputs,
   ...
 }:
 with lib;
 let
   cfg = config.modules.firefox;
-  firefox-addons = inputs.firefox-addons.packages.${pkgs.system};
 
   profile-settings = {
     # Disable about:config warning
@@ -52,10 +50,6 @@ let
     # Crash reports
     "breakpad.reportURL" = "";
     "browser.tabs.crashReporting.sendReport" = false;
-
-    # Auto-decline cookies
-    "cookiebanners.service.mode" = 2;
-    "cookiebanners.service.mode.privateBrowsing" = 2;
 
     # Disable autoplay
     "media.autoplay.default" = 5;
@@ -107,8 +101,6 @@ let
     "browser.bookmarks.showMobileBookmarks" = true;
 
     "browser.sessionstore.max_windows_undo" = 3;
-
-    "extensions.autoDisableScopes" = 0;
   };
 
   profile-bookmarks = [
@@ -187,10 +179,12 @@ let
     }
   ];
 
-  profile-extensions = with firefox-addons; [
+  profile-extensions = with pkgs.nur.repos.rycee.firefox-addons; [
     ublock-origin
     privacy-badger
-    # enhancer-for-youtube
+    tridactyl
+    enhancer-for-youtube
+    browserpass
   ];
 in
 {
@@ -251,7 +245,7 @@ in
         EnableTrackingProtection = {
           # Enables enhanced tracking protection.
           Value = true;
-          Locked = true;
+          Locked = false;
           Cryptomining = true;
           Fingerprinting = false;
         };
@@ -310,8 +304,8 @@ in
         # ----------------------
         #  Download Settings
         #  ----------------------
-        DefaultDownloadDirectory = "\$/downloads"; # Sets the default directory for downloads.
-        DownloadDirectory = "\$/downloads"; # Sets the download directory.
+        DefaultDownloadDirectory = "${config.home.homeDirectory}/downloads"; # Sets the default directory for downloads.
+        DownloadDirectory = "${config.home.homeDirectory}/downloads"; # Sets the download directory.
         PromptForDownloadLocation = false; # Prevents firefox from asking the location to download a file
         StartDownloadsInTempDirectory = true; # Starts downloads in a temporary directory
 
@@ -353,7 +347,7 @@ in
         #  ----------------------
         InstallAddonsPermission = {
           # Configures permission to install add-ons
-          Default = false;
+          Default = true;
         };
 
         # ----------------------
@@ -366,7 +360,7 @@ in
           UrlbarInterventions = false;
           SkipOnboarding = true;
           MoreFromMozilla = false;
-          FirefoxLabs = false;
+          FirefoxLabs = true;
           Locked = true;
         };
         #  ----------------------
@@ -385,10 +379,7 @@ in
 
           settings = profile-settings;
 
-          extensions = with firefox-addons; [
-            ublock-origin
-            privacy-badger
-          ];
+          extensions = profile-extensions;
 
           search = {
             default = "DuckDuckGo";
@@ -415,6 +406,22 @@ in
 
         "v_adrianus.devo@smartfren.com" = {
           id = 2;
+
+          bookmarks = profile-bookmarks;
+
+          settings = profile-settings;
+
+          extensions = profile-extensions;
+
+          search = {
+            default = "DuckDuckGo";
+            privateDefault = "DuckDuckGo";
+            force = true;
+          };
+        };
+
+        "muhammad.ghifari@magnaglobal.id" = {
+          id = 3;
 
           bookmarks = profile-bookmarks;
 

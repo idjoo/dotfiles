@@ -26,7 +26,7 @@
 
     config = {
       allowUnfree = true;
-      allowUnfreePredicate = _: true;
+      allowUnfreePredicate = true;
     };
   };
 
@@ -173,18 +173,19 @@
   };
 
   modules = {
-    ssh.enable = true;
+    comma.enable = true;
     nh.enable = true;
-    stylix.enable = true;
     pipewire.enable = true;
+    rclone.enable = true;
+    ssh.enable = true;
+    stylix.enable = true;
     tailscale.enable = true;
     utils.enable = true;
-    rclone.enable = true;
     xremap.enable = true;
   };
 
   home-manager = {
-    backupFileExtension = ".bak";
+    backupFileExtension = "hm.bak";
     extraSpecialArgs = {
       inherit inputs outputs;
     };

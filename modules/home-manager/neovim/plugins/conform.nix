@@ -3,6 +3,34 @@
   programs.nixvim.plugins.conform-nvim = {
     enable = true;
 
+    lazyLoad = {
+      enable = true;
+
+      settings = {
+        event = [ "BufWritePre" ];
+        cmd = [ "ConformInfo" ];
+        keys = [
+          {
+            __unkeyed-1 = "<leader>bf";
+            __unkeyed-3 = {
+              __raw = # lua
+                ''
+                  function() require("conform").format({ async = true, lsp_format = "fallback" }) end
+                '';
+            };
+            desc = "conform.nvim - [b]uffer [f]ormat";
+          }
+        ];
+      };
+    };
+
+    luaConfig = {
+      post = # lua
+        ''
+          vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+        '';
+    };
+
     settings = {
       formatters_by_ft = {
         nix = [ "nixfmt" ];
@@ -61,6 +89,14 @@
 
         yamlfmt = {
           command = lib.getExe pkgs.yamlfmt;
+          prepend_args = [
+            "-formatter"
+            (builtins.concatStringsSep "," [
+              "retain_line_breaks_single=true"
+              "max_line_length=80"
+              "trim_trailing_whitespace=true"
+            ])
+          ];
         };
 
         google-java-format = {
@@ -73,24 +109,4 @@
       };
     };
   };
-
-  programs.nixvim.extraConfigLua = ''
-    vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-  '';
-
-  programs.nixvim.keymaps = [
-    {
-      key = "<leader>bf";
-      action = {
-        __raw = ''
-          function() require("conform").format({ async = true, lsp_format = "fallback" }) end
-        '';
-      };
-      mode = "n";
-      options = {
-        remap = false;
-        desc = "conform.nvim - [b]uffer [f]ormat";
-      };
-    }
-  ];
 }
