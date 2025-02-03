@@ -38,6 +38,7 @@ in
         reload = "source $ZDOTDIR/.zshrc";
         rebuild = "${pkgs.nh}/bin/nh os switch";
         n = "nvim ${config.home.homeDirectory}/note.md";
+        c = "${pkgs.libqalculate}/bin/qalc";
 
         # git
         lg = "nvim +Neogit";
@@ -65,13 +66,13 @@ in
       plugins = [
         {
           name = "powerlevel10k";
-          src = pkgs.zsh-powerlevel10k;
           file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+          src = pkgs.zsh-powerlevel10k;
         }
         {
           name = "powerlevel10k-config";
-          src = ../zsh;
           file = "p10k.zsh";
+          src = ./.;
         }
 
         {
@@ -95,11 +96,28 @@ in
             hash = "sha256-Kar27RlU22TiRF1oVubGY7WBRbDZDBqq08jC9co+G9w=";
           };
         }
+
+        {
+          name = "zsh-history-substring-search";
+          file = "zsh-history-substring-search.zsh";
+          src = pkgs.fetchFromGitHub {
+            owner = "zsh-users";
+            repo = "zsh-history-substring-search";
+            rev = "87ce96b1862928d84b1afe7c173316614b30e301";
+            hash = "sha256-1+w0AeVJtu1EK5iNVwk3loenFuIyVlQmlw8TWliHZGI=";
+          };
+        }
       ];
 
       initExtra = ''
         bindkey "^H" backward-delete-char
         bindkey "^?" backward-delete-char
+
+        bindkey "$terminfo[kcuu1]" history-substring-search-up
+        bindkey "$terminfo[kcud1]" history-substring-search-down
+        bindkey -M vicmd 'k' history-substring-search-up
+        bindkey -M vicmd 'j' history-substring-search-down
+
         zstyle ':completion:*' menu select
         setopt interactivecomments
 
@@ -108,6 +126,8 @@ in
 
       envExtra = ''
         export KEYTIMEOUT=1
+        export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=magenta,bold'
+        export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=red,bold'
       '';
     };
   };

@@ -35,6 +35,7 @@
       };
       zls.enable = true;
       volar.enable = true;
+      bashls.enable = true;
     };
 
     keymaps = {

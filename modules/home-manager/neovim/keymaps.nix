@@ -13,6 +13,9 @@
       key = "<esc>";
       action = "<cmd>nohlsearch<cr>";
       mode = "n";
+      options = {
+        remap = false;
+      };
     }
 
     # Disable arrows movement
@@ -20,21 +23,33 @@
       key = "<left>";
       action = ''<cmd>echo "tolol"<cr>'';
       mode = "n";
+      options = {
+        remap = false;
+      };
     }
     {
       key = "<right>";
       action = ''<cmd>echo "tolol"<cr>'';
       mode = "n";
+      options = {
+        remap = false;
+      };
     }
     {
       key = "<up>";
       action = ''<cmd>echo "tolol"<cr>'';
       mode = "n";
+      options = {
+        remap = false;
+      };
     }
     {
       key = "<down>";
       action = ''<cmd>echo "tolol"<cr>'';
       mode = "n";
+      options = {
+        remap = false;
+      };
     }
 
     # Base64

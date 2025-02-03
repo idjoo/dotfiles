@@ -14,9 +14,30 @@
     };
 
     settings = {
+      disable_insert_on_commit = true;
+
+      graph_style = "unicode";
+
+      ignored_settings = [
+        "NeogitPushPopup--force"
+        "NeogitCommitPopup--allow-empty"
+        "NeogitRevertPopup--no-edit"
+      ];
+
+      commit_editor = {
+        kind = "floating";
+      };
+
       integrations = {
         diffview = true;
         telescope = true;
+      };
+
+      mappings = {
+        popup = {
+          w = false;
+          W = "WorktreePopup";
+        };
       };
     };
   };

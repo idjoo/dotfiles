@@ -58,15 +58,15 @@
       };
 
       sources = [
-        { name = "buffer"; }
+        { name = "nvim_lsp"; }
+        { name = "nvim_lua"; }
         { name = "calc"; }
         { name = "conventionalcommits"; }
         { name = "emoji"; }
-        { name = "nvim_lsp"; }
-        { name = "nvim_lua"; }
-        { name = "path"; }
         { name = "luasnip"; }
         { name = "render-markdown"; }
+        { name = "path"; }
+        { name = "buffer"; }
       ];
     };
   };
