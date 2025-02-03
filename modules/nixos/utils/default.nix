@@ -27,36 +27,39 @@ in
 
     environment.systemPackages = with pkgs; [
       # archive
-      zip
       unzip
+      zip
 
       # clipboard
-      xsel
       xclip
+      xsel
 
       # nix
-      nurl
       nix-init
       nix-output-monitor
+      nurl
 
       # desktop app
-      telegram-desktop
-      monero-gui
-      zathura
       dbeaver-bin
+      monero-gui
       remmina
-      rclone
+      telegram-desktop
 
       # others
-      ripgrep
+      bazel
+      bottles
       fd
-      jq
-      p7zip
-      kubectl
-      sqlite
-      openssl
+      git-filter-repo
       gpclient
+      jq
+      kubectl
       openconnect
+      openssl
+      p7zip
+      rclone
+      ripgrep
+      sqlite
+      zathura
 
       # custom
       android-unpinner

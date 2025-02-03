@@ -27,23 +27,23 @@
         }
       ];
     };
+  };
 
-    extensions = {
-      dap-ui = {
-        enable = true;
-      };
+  programs.nixvim.plugins = {
+    dap-ui = {
+      enable = true;
+    };
 
-      dap-python = {
-        enable = true;
-      };
+    dap-python = {
+      enable = true;
+    };
 
-      dap-go = {
-        enable = true;
-      };
+    dap-go = {
+      enable = true;
+    };
 
-      dap-virtual-text = {
-        enable = true;
-      };
+    dap-virtual-text = {
+      enable = true;
     };
   };
 
