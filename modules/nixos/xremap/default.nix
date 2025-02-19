@@ -50,6 +50,7 @@ in
               "CapsLock-h" = "Left";
               "CapsLock-j" = "Down";
               "CapsLock-l" = "Right";
+              "CapsLock-p" = "C-Shift-v";
             };
           }
         ];
