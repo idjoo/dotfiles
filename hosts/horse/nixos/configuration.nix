@@ -99,7 +99,7 @@
   };
 
   networking.extraHosts = ''
-    34.101.209.86 chatmalika.kai.id api.chatmalika.kai.id
+    34.101.209.86 chatmalika.kai.id
   '';
 
   # time zone

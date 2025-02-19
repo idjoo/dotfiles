@@ -36,6 +36,7 @@
       zls.enable = true;
       volar.enable = true;
       bashls.enable = true;
+      dockerls.enable = true;
     };
 
     keymaps = {

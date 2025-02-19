@@ -41,7 +41,7 @@ in
         c = "${pkgs.libqalculate}/bin/qalc";
 
         # git
-        lg = "nvim +Neogit";
+        lg = "lazygit";
 
         # nix
         nix-shell = "${pkgs.nix-output-monitor}/bin/nom-shell --command zsh";
@@ -61,6 +61,11 @@ in
         # gcloud
         gp = "gcloud config set project \$(gcloud projects list --format='value(projectId)' | ${pkgs.fzf}/bin/fzf --height=25% --layout=reverse --border)";
         ga = "gcloud config set account \$(gcloud auth list --format='value(account)' | ${pkgs.fzf}/bin/fzf --height=25% --layout=reverse --border)";
+
+        # tmux
+        t = "${pkgs.tmux}/bin/tmux";
+        tn = "${pkgs.tmux}/bin/tmux new";
+        ta = "${pkgs.tmux}/bin/tmux attach";
       };
 
       plugins = [
