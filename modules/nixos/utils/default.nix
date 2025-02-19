@@ -16,7 +16,8 @@ in
     programs.nix-ld.enable = true;
     programs.nix-ld.libraries = with pkgs; [
       zlib
-      libgcc
+      gcc
+      glibc
     ];
 
     services.xrdp.enable = true;
@@ -60,6 +61,7 @@ in
       ripgrep
       sqlite
       zathura
+      gh
 
       # custom
       android-unpinner
