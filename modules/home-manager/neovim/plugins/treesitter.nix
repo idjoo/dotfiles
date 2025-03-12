@@ -28,9 +28,12 @@ in
           enable = true;
 
           settings = {
-            auto_install = true;
+            auto_install = false;
 
-            ensure_installed = "all";
+            ensure_installed = [
+              "python"
+              "javascript"
+            ];
 
             highlight = {
               enable = true;
