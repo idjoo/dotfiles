@@ -17,7 +17,6 @@ in
       # archive
       unzip
       zip
-      openssh
 
       # nix
       nix-init
