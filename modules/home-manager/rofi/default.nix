@@ -39,7 +39,9 @@ in
           "${config.xdg.dataHome}/pass"
         ];
 
-        extraConfig = "";
+        extraConfig = ''
+          default_user=":filename"
+        '';
       };
 
       theme =
