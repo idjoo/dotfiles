@@ -1,6 +1,7 @@
 {
   inputs,
   outputs,
+  pkgs,
   ...
 }:
 
@@ -19,6 +20,8 @@
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
+
+  user.shell = "${pkgs.zsh}/bin/zsh";
 
   modules = {
     android-integration.enable = true;
