@@ -23,6 +23,15 @@
 
   user.shell = "${pkgs.zsh}/bin/zsh";
 
+  terminal = {
+    font = "${pkgs.nerd-fonts.roboto-mono}/share/fonts/truetype/NerdFonts/RobotoMono/RobotoMonoNerdFontMono-Regular.ttf";
+    colors = {
+      foreground = "#c6d0f5";
+      background = "#293329";
+      cursor = "#f2d5c7";
+    };
+  };
+
   modules = {
     android-integration.enable = true;
     utils.enable = true;
