@@ -74,6 +74,8 @@
 
       homeManagerModules = import ./modules/home-manager;
 
+      nixOnDroidModules = import ./modules/nix-on-droid;
+
       nixosConfigurations = {
         ox = nixpkgs.lib.nixosSystem {
           specialArgs = {
@@ -104,6 +106,16 @@
       };
 
       nixOnDroidConfigurations = {
+        monkey = nix-on-droid.lib.nixOnDroidConfiguration {
+          pkgs = import nixpkgs { system = "aarch64-linux"; };
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            ./hosts/monkey/config.nix
+          ];
+        };
+
         rabbit = nix-on-droid.lib.nixOnDroidConfiguration {
           pkgs = import nixpkgs { system = "aarch64-linux"; };
           extraSpecialArgs = {
