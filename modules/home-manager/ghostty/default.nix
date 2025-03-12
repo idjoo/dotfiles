@@ -17,8 +17,6 @@ in
     programs.ghostty = {
       enable = cfg.enable;
 
-      enableZshIntegration = true;
-
       clearDefaultKeybinds = false;
 
       settings = {

@@ -13,6 +13,8 @@ in
     enable = mkEnableOption "zsh";
   };
   config = mkIf cfg.enable {
+    home.shell.enableZshIntegration = true;
+
     programs.zsh = {
       enable = cfg.enable;
 

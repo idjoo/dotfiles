@@ -379,7 +379,7 @@ in
 
           settings = profile-settings;
 
-          extensions = profile-extensions;
+          extensions.packages = profile-extensions;
 
           search = {
             default = "DuckDuckGo";
@@ -395,7 +395,7 @@ in
 
           settings = profile-settings;
 
-          extensions = profile-extensions;
+          extensions.packages = profile-extensions;
 
           search = {
             default = "DuckDuckGo";
@@ -411,7 +411,7 @@ in
 
           settings = profile-settings;
 
-          extensions = profile-extensions;
+          extensions.packages = profile-extensions;
 
           search = {
             default = "DuckDuckGo";
@@ -427,7 +427,7 @@ in
 
           settings = profile-settings;
 
-          extensions = profile-extensions;
+          extensions.packages = profile-extensions;
 
           search = {
             default = "DuckDuckGo";

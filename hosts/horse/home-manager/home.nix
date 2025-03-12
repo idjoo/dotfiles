@@ -65,6 +65,7 @@
     cava.enable = true;
     fzf.enable = true;
     direnv.enable = true;
+    zoxide.enable = true;
 
     # prog lang
     go.enable = true;
