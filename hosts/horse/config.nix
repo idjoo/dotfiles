@@ -12,7 +12,7 @@
 
     inputs.home-manager.nixosModules.default
 
-    ./hardware-configuration.nix
+    ./hardware-config.nix
   ];
 
   nixpkgs = {
@@ -192,7 +192,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     users = {
-      ${outputs.username} = import ../home-manager/home.nix;
+      ${outputs.username} = import ./home.nix;
     };
   };
 
