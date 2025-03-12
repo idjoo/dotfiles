@@ -31,6 +31,7 @@ in
             auto_install = false;
 
             ensure_installed = [
+              "nix"
               "python"
               "javascript"
             ];
