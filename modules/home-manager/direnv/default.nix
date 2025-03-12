@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  outputs,
   ...
 }:
 with lib;
@@ -14,7 +15,8 @@ in
   config = mkIf cfg.enable {
     programs.direnv = {
       enable = cfg.enable;
-      nix-direnv.enable = true;
+
+      nix-direnv.enable = cfg.enable;
 
       config = {
         global = {
@@ -23,7 +25,7 @@ in
 
         whitelist = {
           prefix = [
-            "/home/idjo"
+            "/home/${outputs.username}"
           ];
         };
       };
