@@ -1,10 +1,7 @@
 {
   inputs,
   outputs,
-config,
-lib,
-pkgs,
-...
+  ...
 }:
 
 {
@@ -24,6 +21,7 @@ pkgs,
   '';
 
   modules = {
+    android-integration.enable = true;
     utils.enable = true;
   };
 
