@@ -42,6 +42,7 @@
     extraSpecialArgs = {
       inherit inputs outputs;
     };
+    backupFileExtension = "hm.bak";
   };
 
   # Set your time zone
