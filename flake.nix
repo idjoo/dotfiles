@@ -91,7 +91,7 @@
             inherit inputs outputs;
           };
           modules = [
-            ./hosts/horse/nixos/configuration.nix
+            ./hosts/horse/config.nix
           ];
         };
 
