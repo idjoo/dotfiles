@@ -27,5 +27,6 @@
     ./urxvt
     ./wezterm
     ./zsh
+    ./zoxide
   ];
 }
