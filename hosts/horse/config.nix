@@ -26,7 +26,8 @@
 
     config = {
       allowUnfree = true;
-      allowUnfreePredicate = true;
+      allowUnfreePredicate = (pkg: true);
+      enableParallelBuildingByDefault = true;
     };
   };
 
