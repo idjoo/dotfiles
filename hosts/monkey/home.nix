@@ -36,7 +36,7 @@
     ssh.enable = true;
     tmux.enable = true;
     #fzf.enable = true;
-    direnv.enable = true;
+    #direnv.enable = true;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
