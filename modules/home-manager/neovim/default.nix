@@ -10,6 +10,7 @@ in
 {
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
+
     ./autocommands.nix
     ./options.nix
     ./keymaps.nix
