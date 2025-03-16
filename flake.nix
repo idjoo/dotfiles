@@ -52,14 +52,16 @@
       inherit (self) outputs;
 
       lib = nixpkgs.lib;
-      forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
       pkgsFor = lib.genAttrs (import systems) (
         system:
         import nixpkgs {
           inherit system;
-          config.allowUnfree = true;
+          config = {
+            allowUnfreePredicate = (pkg: true);
+          };
         }
       );
+      forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
     in
     {
       username = "idjo";
