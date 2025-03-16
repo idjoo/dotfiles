@@ -17,18 +17,17 @@
   # Read the changelog before changing this value
   system.stateVersion = "24.05";
 
-  nixpkgs = {
-    overlays = [
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.stable-packages
-    ];
+  # nixpkgs = {
+  #   overlays = [
+  #     outputs.overlays.additions
+  #     outputs.overlays.modifications
+  #     outputs.overlays.stable-packages
+  #   ];
 
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (pkg: true);
-    };
-  };
+  #   config = {
+  #     allowUnfreePredicate = (pkg: true);
+  #   };
+  # };
 
   nix =
     let
