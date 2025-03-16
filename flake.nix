@@ -67,15 +67,11 @@
       username = "idjo";
 
       packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; });
-
       formatter = forEachSystem (pkgs: pkgs.nixfmt-rfc-style);
-
       overlays = import ./overlays { inherit inputs; };
 
       nixosModules = import ./modules/nixos;
-
       homeManagerModules = import ./modules/home-manager;
-
       nixOnDroidModules = import ./modules/nix-on-droid;
 
       nixosConfigurations = {
