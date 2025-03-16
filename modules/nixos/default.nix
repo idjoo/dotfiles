@@ -5,6 +5,7 @@
   imports = [
     ./comma
     ./nh
+    ./nix
     ./pipewire
     ./rclone
     ./ssh
