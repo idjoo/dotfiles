@@ -48,6 +48,18 @@
         enable = true;
       };
     };
+
+    printing = {
+      enable = true;
+      drivers = [ pkgs.hplipWithPlugin ];
+    };
+
+    # printing auto discovery
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
   };
 
   # firewall
