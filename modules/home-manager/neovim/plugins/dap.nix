@@ -9,21 +9,16 @@
           name = "FastAPI";
           type = "debugpy";
           request = "launch";
-          module = "uvicorn";
-          args = {
-            __raw = ''
-              function()
-                return {
-                  vim.fn.input(
-                    'Module: ',
-                    'app:app',
-                    'file'
-                  ),
-                  '--reload',
-                }
-              end
-            '';
-          };
+          module = "fastapi";
+          args.__raw = ''
+            function()
+              return {
+                'run',
+                '--port=8000',
+                '--reload',
+              }
+            end
+          '';
         }
       ];
     };
