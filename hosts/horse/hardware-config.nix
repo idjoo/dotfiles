@@ -42,6 +42,32 @@
   # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  hardware.graphics.enable = true;
+
+  hardware = {
+    cpu = {
+      amd = {
+        updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+      };
+    };
+
+    graphics = {
+      enable = true;
+    };
+
+    printers = {
+      ensurePrinters = [
+        {
+          name = "HP_LaserJet_P1006";
+          location = "Home";
+          deviceUri = "usb://HP/LaserJet%20P1006?serial=AC1E6EM";
+          model = "drv:///hp/hpcups.drv/hp-laserjet_p1006.ppd";
+          ppdOptions = {
+            PageSize = "A4";
+          };
+        }
+      ];
+      ensureDefaultPrinter = "HP_LaserJet_P1006";
+    };
+  };
+
 }
