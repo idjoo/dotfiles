@@ -58,8 +58,9 @@
       };
 
       sources = [
-        { name = "nvim_lsp"; }
         { name = "nvim_lua"; }
+        { name = "nvim_lsp"; }
+        { name = "dap"; }
         { name = "calc"; }
         { name = "conventionalcommits"; }
         { name = "emoji"; }
