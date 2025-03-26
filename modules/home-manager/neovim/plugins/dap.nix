@@ -6,7 +6,7 @@
     configurations = {
       python = [
         {
-          name = "FastAPI";
+          name = "fastapi";
           type = "debugpy";
           request = "launch";
           module = "fastapi";
@@ -27,13 +27,46 @@
   programs.nixvim.plugins = {
     dap-ui = {
       enable = true;
+
+      settings = {
+        layouts = [
+          {
+            elements = [
+              {
+                id = "scopes";
+                size = 0.25;
+              }
+              {
+                id = "breakpoints";
+                size = 0.25;
+              }
+              {
+                id = "stacks";
+                size = 0.25;
+              }
+              {
+                id = "watches";
+                size = 0.25;
+              }
+            ];
+            position = "left";
+            size = 40;
+          }
+          {
+            elements = [
+              {
+                id = "repl";
+                size = 1;
+              }
+            ];
+            position = "right";
+            size = 40;
+          }
+        ];
+      };
     };
 
     dap-python = {
-      enable = true;
-    };
-
-    dap-go = {
       enable = true;
     };
 
