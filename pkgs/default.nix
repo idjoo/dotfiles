@@ -5,4 +5,5 @@ pkgs: {
   android-unpinner = pkgs.callPackage ./android-unpinner { };
   dank-mono-nerdfont = pkgs.callPackage ./dank-mono-nerdfont { inherit pkgs; };
   httpgenerator = pkgs.callPackage ./httpgenerator { };
+  mcphub-nvim = pkgs.callPackage ./mcphub-nvim { inherit pkgs; };
 }

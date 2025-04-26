@@ -11,8 +11,8 @@
         cmd = [ "ConformInfo" ];
         keys = [
           {
-            __unkeyed-1 = "<leader>bf";
-            __unkeyed-3 = {
+            __unkeyed-0 = "<leader>bf";
+            __unkeyed-1 = {
               __raw = # lua
                 ''
                   function() require("conform").format({ async = true, lsp_format = "fallback" }) end
@@ -52,6 +52,11 @@
         html = [ "prettierd" ];
         css = [ "prettierd" ];
         rust = [ "rustfmt" ];
+        python = [
+          "ruff_format"
+          "ruff_organize_imports"
+          "ruff_fix"
+        ];
 
         "_" = [ "trim_whitespace" ];
       };
@@ -107,6 +112,18 @@
 
         rustfmt = {
           command = lib.getExe pkgs.rustfmt;
+        };
+
+        ruff_fix = {
+          command = lib.getExe pkgs.ruff;
+        };
+
+        ruff_format = {
+          command = lib.getExe pkgs.ruff;
+        };
+
+        ruff_organize_imports = {
+          command = lib.getExe pkgs.ruff;
         };
       };
     };

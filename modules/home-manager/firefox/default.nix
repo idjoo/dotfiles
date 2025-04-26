@@ -85,7 +85,8 @@ let
     "media.peerconnection.ice.default_address_only" = true;
 
     # Use Mozilla geolocation service instead of Google
-    "geo.provider.network.url" = "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
+    "geo.provider.network.url" =
+      "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
 
     # Disable password manager
     # Removed: "signon.rememberSignons" = false; // Covered by policies.PasswordManagerEnabled
@@ -103,81 +104,84 @@ let
     "browser.sessionstore.max_windows_undo" = 3;
   };
 
-  profile-bookmarks = [
-    {
-      name = "Google Cloud Console";
-      url = "https://console.cloud.google.com";
-      tags = [
-        "gcp"
-        "google"
-      ];
-    }
-    {
-      name = "Google Mail";
-      url = "https://mail.google.com";
-      tags = [
-        "google"
-      ];
-    }
-    {
-      name = "Google Chat";
-      url = "https://chat.google.com";
-      tags = [
-        "google"
-      ];
-    }
-    {
-      name = "Google Calendar";
-      url = "https://calendar.google.com";
-      tags = [
-        "google"
-      ];
-    }
-    {
-      name = "Playground Vertex AI";
-      url = "https://console.cloud.google.com/vertex-ai/studio/chat?project=lv-playground-genai";
-      tags = [
-        "gcp"
-        "google"
-      ];
-    }
-    {
-      name = "WhatsApp";
-      url = "https://web.whatsapp.com";
-      tags = [
-        "messaging"
-        "social"
-      ];
-    }
-    {
-      name = "Github";
-      url = "https://github.com";
-      tags = [
-        "social"
-      ];
-    }
-    {
-      name = "NixOS Packages";
-      url = "https://search.nixos.org/packages?channel=unstable";
-      tags = [
-        "nixos"
-      ];
-    }
-    {
-      name = "NixOS Options";
-      url = "https://search.nixos.org/options?channel=unstable";
-      tags = [
-        "nixos"
-      ];
-    }
-    {
-      name = "NixVim";
-      url = "https://nix-community.github.io/nixvim/index.html";
-      tags = [
-        "nixos"
-      ];
-    }
-  ];
+  profile-bookmarks = {
+    force = true;
+    settings = [
+      {
+        name = "Google Cloud Console";
+        url = "https://console.cloud.google.com";
+        tags = [
+          "gcp"
+          "google"
+        ];
+      }
+      {
+        name = "Google Mail";
+        url = "https://mail.google.com";
+        tags = [
+          "google"
+        ];
+      }
+      {
+        name = "Google Chat";
+        url = "https://chat.google.com";
+        tags = [
+          "google"
+        ];
+      }
+      {
+        name = "Google Calendar";
+        url = "https://calendar.google.com";
+        tags = [
+          "google"
+        ];
+      }
+      {
+        name = "Playground Vertex AI";
+        url = "https://console.cloud.google.com/vertex-ai/studio/chat?project=lv-playground-genai";
+        tags = [
+          "gcp"
+          "google"
+        ];
+      }
+      {
+        name = "WhatsApp";
+        url = "https://web.whatsapp.com";
+        tags = [
+          "messaging"
+          "social"
+        ];
+      }
+      {
+        name = "Github";
+        url = "https://github.com";
+        tags = [
+          "social"
+        ];
+      }
+      {
+        name = "NixOS Packages";
+        url = "https://search.nixos.org/packages?channel=unstable";
+        tags = [
+          "nixos"
+        ];
+      }
+      {
+        name = "NixOS Options";
+        url = "https://search.nixos.org/options?channel=unstable";
+        tags = [
+          "nixos"
+        ];
+      }
+      {
+        name = "NixVim";
+        url = "https://nix-community.github.io/nixvim/index.html";
+        tags = [
+          "nixos"
+        ];
+      }
+    ];
+  };
 
   profile-extensions = with pkgs.nur.repos.rycee.firefox-addons; [
     ublock-origin
@@ -382,8 +386,8 @@ in
           extensions.packages = profile-extensions;
 
           search = {
-            default = "DuckDuckGo";
-            privateDefault = "DuckDuckGo";
+            default = "ddg";
+            privateDefault = "ddg";
             force = true;
           };
         };
@@ -398,8 +402,8 @@ in
           extensions.packages = profile-extensions;
 
           search = {
-            default = "DuckDuckGo";
-            privateDefault = "DuckDuckGo";
+            default = "ddg";
+            privateDefault = "ddg";
             force = true;
           };
         };
@@ -414,8 +418,8 @@ in
           extensions.packages = profile-extensions;
 
           search = {
-            default = "DuckDuckGo";
-            privateDefault = "DuckDuckGo";
+            default = "ddg";
+            privateDefault = "ddg";
             force = true;
           };
         };
@@ -430,8 +434,8 @@ in
           extensions.packages = profile-extensions;
 
           search = {
-            default = "DuckDuckGo";
-            privateDefault = "DuckDuckGo";
+            default = "ddg";
+            privateDefault = "ddg";
             force = true;
           };
         };
