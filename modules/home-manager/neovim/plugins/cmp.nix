@@ -7,7 +7,9 @@
 
   programs.nixvim.plugins.cmp = {
     enable = true;
+
     autoEnableSources = true;
+
     settings = {
       snippet = {
         expand = # lua
