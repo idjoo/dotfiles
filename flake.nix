@@ -38,6 +38,10 @@
       url = "github:xremap/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    mcp-hub = {
+      url = "github:ravitemer/mcp-hub";
+    };
   };
 
   outputs =

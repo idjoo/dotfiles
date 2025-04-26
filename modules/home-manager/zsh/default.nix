@@ -114,7 +114,7 @@ in
         }
       ];
 
-      initExtra = ''
+      initContent = ''
         bindkey "^H" backward-delete-char
         bindkey "^?" backward-delete-char
 
