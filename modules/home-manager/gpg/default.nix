@@ -25,7 +25,9 @@ in
     services.gpg-agent = {
       enable = cfg.enable;
       enableSshSupport = false;
-      pinentryPackage = pkgs.pinentry-rofi;
+      pinentry = {
+        package = pkgs.pinentry-rofi;
+      };
     };
   };
 }

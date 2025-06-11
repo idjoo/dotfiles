@@ -71,6 +71,7 @@
 
   networking.extraHosts = ''
     34.101.209.86 chatmalika.kai.id
+    127.0.0.1 sukha.galeri24.co.id
   '';
 
   # time zone
@@ -126,7 +127,6 @@
     google-chrome
     telegram-desktop
     hicolor-icon-theme
-    gpclient
   ];
 
   # fonts
