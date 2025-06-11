@@ -40,7 +40,9 @@
         c = [ "clang-format" ];
         cpp = [ "clang-format" ];
         javascript = [ "prettierd" ];
+        typescript = [ "prettierd" ];
         javascriptreact = [ "prettierd" ];
+        markdown = [ "prettierd" ];
         sh = [
           "shellcheck"
           "shellharden"
