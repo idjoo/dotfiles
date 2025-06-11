@@ -114,26 +114,32 @@ in
         }
       ];
 
-      initContent = ''
-        bindkey "^H" backward-delete-char
-        bindkey "^?" backward-delete-char
+      initContent = # bash
+        ''
+          bindkey "^H" backward-delete-char
+          bindkey "^?" backward-delete-char
 
-        bindkey "$terminfo[kcuu1]" history-substring-search-up
-        bindkey "$terminfo[kcud1]" history-substring-search-down
-        bindkey -M vicmd 'k' history-substring-search-up
-        bindkey -M vicmd 'j' history-substring-search-down
+          bindkey "$terminfo[kcuu1]" history-substring-search-up
+          bindkey "$terminfo[kcud1]" history-substring-search-down
+          bindkey -M vicmd 'k' history-substring-search-up
+          bindkey -M vicmd 'j' history-substring-search-down
 
-        zstyle ':completion:*' menu select
-        setopt interactivecomments
+          zstyle ':completion:*' menu select
+          setopt interactivecomments
 
-        ${pkgs.xorg.xset}/bin/xset r rate 200 50
-      '';
+          ${pkgs.xorg.xset}/bin/xset r rate 200 50
 
-      envExtra = ''
-        export KEYTIMEOUT=1
-        export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=magenta,bold'
-        export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=red,bold'
-      '';
+          export GEMINI_API_KEY=$(gcloud auth print-access-token --account=adrianus.vian.habirowo@devoteam.com --project=lv-playground-genai) 
+
+          ${pkgs.kitty.kitten}/bin/kitten icat ~/pictures/luv-with-monkey.jpg
+        '';
+
+      envExtra = # bash
+        ''
+          export KEYTIMEOUT=1
+          export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=magenta,bold'
+          export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=red,bold'
+        '';
     };
   };
 }

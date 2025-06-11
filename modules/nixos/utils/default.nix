@@ -62,6 +62,10 @@ in
       sqlite
       zathura
       gh
+      oci-cli
+      docker-buildx
+      code-cursor
+      nodejs
 
       # custom
       android-unpinner

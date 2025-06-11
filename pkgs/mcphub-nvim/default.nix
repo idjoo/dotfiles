@@ -6,13 +6,13 @@
 
 pkgs.vimUtils.buildVimPlugin rec {
   pname = "mcphub-nvim";
-  version = "4.9.0";
+  version = "5.4.0";
 
   src = fetchFromGitHub {
     owner = "ravitemer";
     repo = "mcphub.nvim";
     rev = "v${version}";
-    hash = "sha256-MXVpJAofowHdtRT+ae9u6lt0mDig/NRCeSoWBo67QMQ=";
+    hash = "sha256-XOnlLgK67mOzAdm+Y+8oR6TY9q7EvUT7MQfk3fLKAqM=";
   };
 
   meta = {
