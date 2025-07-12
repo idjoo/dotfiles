@@ -5,12 +5,16 @@
     settings = {
       provider = "vertex";
 
-      vertex = {
-        endpoint = "https://us-central1-aiplatform.googleapis.com/v1/projects/lv-playground-genai/locations/us-central1/publishers/google/models";
-        model = "gemini-2.5-flash-preview-04-17";
-        timeout = 30000;
-        temperature = 0;
-        max_tokens = 20480;
+      providers = {
+        vertex = {
+          endpoint = "https://us-central1-aiplatform.googleapis.com/v1/projects/lv-playground-genai/locations/us-central1/publishers/google/models";
+          model = "gemini-2.5-flash";
+          extra_request_body = {
+            timeout = 30000;
+            temperature = 0;
+            max_tokens = 20480;
+          };
+        };
       };
 
       # system_prompt = {

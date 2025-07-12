@@ -40,6 +40,16 @@ in
               };
             };
           }
+
+          {
+            name = "roblox";
+            remap = {
+              "Shift_R" = "Shift_L";
+            };
+            application = {
+              only = [ "sober.org.vinegarhq.Sober" ];
+            };
+          }
         ];
 
         keymap = [

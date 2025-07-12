@@ -106,6 +106,8 @@
     videoDrivers = [ "amdgpu" ];
   };
 
+  services.logind.lidSwitchExternalPower = "ignore";
+
   # user accounts
   users.users.${outputs.username} = {
     isNormalUser = true;

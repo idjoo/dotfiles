@@ -3,6 +3,7 @@
 {
   # List your module files here
   imports = [
+    ./atuin
     ./btop
     ./cava
     ./direnv
@@ -18,6 +19,7 @@
     ./herbstluftwm
     ./lazygit
     ./neovim
+    ./nushell
     ./password-store
     ./polybar
     ./qutebrowser

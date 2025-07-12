@@ -12,6 +12,7 @@
     # ...
     # });
     mcp-hub = inputs.mcp-hub.packages.${prev.system}.default;
+    mcphub-nvim = inputs.mcphub-nvim.packages.${prev.system}.default;
   };
 
   stable-packages = final: _prev: {
