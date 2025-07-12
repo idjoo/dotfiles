@@ -13,6 +13,8 @@ in
     enable = mkEnableOption "zsh";
   };
   config = mkIf cfg.enable {
+    home.shell.enableZshIntegration = true;
+
     programs.zsh = {
       enable = cfg.enable;
 
@@ -39,6 +41,7 @@ in
         rebuild = "${pkgs.nh}/bin/nh os switch";
         n = "nvim ${config.home.homeDirectory}/note.md";
         c = "${pkgs.libqalculate}/bin/qalc";
+        vim = "nvim";
 
         # git
         lg = "lazygit";
@@ -59,8 +62,8 @@ in
         kn = "${pkgs.kubectx}/bin/kubens";
 
         # gcloud
-        gp = "gcloud config set project \$(gcloud projects list --format='value(projectId)' | ${pkgs.fzf}/bin/fzf --height=25% --layout=reverse --border)";
-        ga = "gcloud config set account \$(gcloud auth list --format='value(account)' | ${pkgs.fzf}/bin/fzf --height=25% --layout=reverse --border)";
+        gp = "gcloud projects list --format='value(projectId)' | ${pkgs.fzf}/bin/fzf --height=25% --layout=reverse --border | xargs -r gcloud config set project";
+        ga = "gcloud auth list --format='value(account)' | ${pkgs.fzf}/bin/fzf --height=25% --layout=reverse --border | xargs -r gcloud config set account";
 
         # tmux
         t = "${pkgs.tmux}/bin/tmux";
@@ -129,9 +132,7 @@ in
 
           ${pkgs.xorg.xset}/bin/xset r rate 200 50
 
-          export GEMINI_API_KEY=$(gcloud auth print-access-token --account=adrianus.vian.habirowo@devoteam.com --project=lv-playground-genai) 
-
-          ${pkgs.kitty.kitten}/bin/kitten icat ~/pictures/luv-with-monkey.jpg
+          ${pkgs.kitty.kitten}/bin/kitten icat --align left ~/pictures/luv-with-monkey.jpg
         '';
 
       envExtra = # bash

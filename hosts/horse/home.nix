@@ -15,9 +15,7 @@
     homeDirectory = "/home/${outputs.username}";
 
     shell = {
-      enableZshIntegration = true;
-      enableBashIntegration = false;
-      enableFishIntegration = false;
+      enableShellIntegration = false;
     };
 
     packages = with pkgs; [
@@ -42,6 +40,7 @@
 
     # shell
     zsh.enable = true;
+    nushell.enable = true;
 
     # editor
     neovim.enable = true;
@@ -72,6 +71,7 @@
     fzf.enable = true;
     direnv.enable = true;
     zoxide.enable = true;
+    atuin.enable = true;
 
     # prog lang
     go.enable = true;
