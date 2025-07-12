@@ -35,48 +35,72 @@
       '';
   };
 
-  home = {
-    file =
-      let
-        mcpServers = # json
-          ''
-            {
-              "mcpServers": {
-                "smartfren": {
-                  "command": "${pkgs.uv}/bin/uv",
-                  "args": [
-                    "--directory",
-                    "${config.home.homeDirectory}/documents/smartfren/chatbot/id-smartfren-ccai-mcp",
-                    "run",
-                    "stdio"
-                  ]
-                },
-                "smartfren-local": {
-                  "url": "http://localhost:8080/mcp/"
-                },
-                "smartfren-dev": {
-                  "url": "https://sf-mcp-314894585051.asia-southeast2.run.app/mcp/"
-                },
-                "whatsapp": {
-                  "command": "${pkgs.uv}/bin/uv",
-                  "args": [
-                    "--directory",
-                    "${config.home.homeDirectory}/documents/whatsapp-mcp/whatsapp-mcp-server",
-                    "run",
-                    "main.py"
-                  ]
-                },
-                "context7": {  
-                  "command": "${pkgs.bun}/bin/bunx",  
-                  "args": ["-y", "@upstash/context7-mcp@latest"]  
-                }  
+  home =
+    let
+      mcpServers = # json
+        ''
+          {
+            "mcpServers": {
+              "smartfren": {
+                "command": "${pkgs.uv}/bin/uv",
+                "args": [
+                  "--directory",
+                  "${config.home.homeDirectory}/documents/smartfren/chatbot/id-smartfren-ccai-mcp",
+                  "run",
+                  "stdio"
+                ]
+              },
+              "smartfren-local": {
+                "url": "http://localhost:8080/mcp/"
+              },
+              "smartfren-dev": {
+                "url": "https://sf-mcp-314894585051.asia-southeast2.run.app/mcp/"
+              },
+              "whatsapp": {
+                "command": "${pkgs.uv}/bin/uv",
+                "args": [
+                  "--directory",
+                  "${config.home.homeDirectory}/documents/whatsapp-mcp/whatsapp-mcp-server",
+                  "run",
+                  "main.py"
+                ]
+              },
+              "context7": {
+                "command": "${pkgs.bun}/bin/bunx",
+                "args": ["-y", "@upstash/context7-mcp@latest"]
               }
             }
-          '';
-      in
-      {
+          }
+        '';
+    in
+    {
+      file = {
         ".config/mcphub/servers.json".text = mcpServers;
         ".cursor/mcp.json".text = builtins.replaceStrings [ "/mcp" ] [ "/sse" ] mcpServers;
       };
-  };
+
+      activation = {
+        updateGeminiSettings = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+          set -e
+          settings_file="${config.home.homeDirectory}/.gemini/settings.json"
+          mcp_servers_json='${mcpServers}'
+          mkdir -p "$(${pkgs.coreutils}/bin/dirname "$settings_file")"
+          if [ ! -f "$settings_file" ] || [ ! -s "$settings_file" ]; then
+            echo "{}" > "$settings_file"
+          fi
+          temp_file=$(${pkgs.coreutils}/bin/mktemp)
+          trap '${pkgs.coreutils}/bin/rm -f "$temp_file"' EXIT
+          if ${pkgs.jq}/bin/jq \
+            --argjson mcp_servers "$mcp_servers_json" \
+            '.mcpServers = $mcp_servers.mcpServers' \
+            "$settings_file" > "$temp_file";
+          then
+            ${pkgs.coreutils}/bin/mv "$temp_file" "$settings_file"
+          else
+            echo "Failed to update gemini settings with jq" >&2
+            exit 1
+          fi
+        '';
+      };
+    };
 }

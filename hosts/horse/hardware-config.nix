@@ -44,6 +44,8 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   hardware = {
+    xone.enable = true;
+
     cpu = {
       amd = {
         updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

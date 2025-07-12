@@ -4,18 +4,17 @@
 
     settings = {
       adapters = {
-        vertex = {
+        gemini = {
           __raw = # lua
             ''
               function()
                 return require("codecompanion.adapters").extend("gemini", {
-                  url = "https://us-central1-aiplatform.googleapis.com/v1/projects/lv-playground-genai/locations/us-central1/endpoints/openapi/chat/completions",
                   env = {
-                    api_key = "GEMINI_API_KEY",
+                    api_key = "cmd:pass google.com/adrianus.vian.habirowo@gws-id.one | grep -oP 'aistudio-api-key: \\K.*'",
                   },
                   schema = {
                     model = {
-                      default = "google/gemini-2.0-flash",
+                      default = "gemini-2.5-flash",
                     },
                   },
                 })
@@ -31,10 +30,10 @@
       };
       strategies = {
         agent = {
-          adapter = "vertex";
+          adapter = "gemini";
         };
         chat = {
-          adapter = "vertex";
+          adapter = "gemini";
           tools = {
             __raw = # lua
               ''

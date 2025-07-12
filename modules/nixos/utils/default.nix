@@ -26,6 +26,21 @@ in
 
     environment.localBinInPath = true;
 
+    xdg.portal = {
+      enable = true;
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+      ];
+      config = {
+        common = {
+          default = [
+            "gtk"
+          ];
+        };
+      };
+    };
+    services.flatpak.enable = true;
+
     environment.systemPackages = with pkgs; [
       # archive
       unzip
@@ -42,19 +57,15 @@ in
 
       # desktop app
       dbeaver-bin
-      monero-gui
-      remmina
-      telegram-desktop
+      libreoffice-qt6-fresh
+      discord
 
       # others
-      bazel
       bottles
       fd
       git-filter-repo
-      gpclient
       jq
       kubectl
-      openconnect
       openssl
       p7zip
       rclone
@@ -66,10 +77,11 @@ in
       docker-buildx
       code-cursor
       nodejs
+      gemini-cli
 
       # custom
-      android-unpinner
-      httpgenerator
+      # android-unpinner
+      # httpgenerator
     ];
   };
 }
