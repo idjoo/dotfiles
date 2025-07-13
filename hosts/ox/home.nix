@@ -9,13 +9,6 @@
   # You can import other home-manager modules here
   imports = [
     outputs.homeManagerModules
-
-    # Or modules exported from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModules.default
-    inputs.nixvim.homeManagerModules.nixvim
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
   ];
 
   home = {
@@ -27,9 +20,17 @@
   programs.git.enable = true;
 
   modules = {
-    zsh.enable = true;
     eza.enable = true;
-    nvim.enable = true;
+    lazygit.enable = true;
+    neovim.enable = true;
+    zsh.enable = true;
+    direnv.enable = true;
+    zoxide.enable = true;
+    atuin.enable = true;
+    git = {
+      enable = true;
+      email = "vian@idjo.cc";
+    };
   };
 
   # Nicely reload system units when changing configs
