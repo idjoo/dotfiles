@@ -18,8 +18,8 @@ let
   '';
 
   wallpaper = pkgs.fetchurl {
-    url = "https://ember.idjo.cc/images/wallpaper.png";
-    sha256 = "09f7fd058106437ff791cf97b5e408019622914f5f831358a44e5b108e5e5f99";
+    url = "https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg";
+    sha256 = "sha256-RqhRCDrgC/7oFu5UZ5nj5FHIib2yzbZ94SpGF54Tm08=";
   };
 in
 {
