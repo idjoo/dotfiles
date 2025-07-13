@@ -12,7 +12,7 @@
 
     inputs.home-manager.nixosModules.home-manager
 
-    ./hardware-configuration.nix
+    ./hardware-config.nix
   ];
 
   nixpkgs = {
@@ -53,12 +53,6 @@
         nix-path = config.nix.nixPath;
       };
 
-      gc = {
-        automatic = true;
-        dates = "weekly";
-        options = "--delete-older-than 7d";
-      };
-
       channel.enable = false;
 
       registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
@@ -82,6 +76,12 @@
   # services
   services = {
     openssh.enable = true;
+  };
+
+  services.odoo = {
+    enable = true;
+    addons = [ ];
+    autoInit = false;
   };
 
   # firewall
@@ -142,8 +142,7 @@
 
   # fonts
   fonts.packages = with pkgs; [
-    fira-code-nerdfont
-    terminus-nerdfont
+    nerd-fonts.roboto-mono
     font-awesome
   ];
 
@@ -157,19 +156,22 @@
   };
 
   modules = {
+    nh.enable = true;
     stylix.enable = true;
     tailscale.enable = true;
     utils.enable = true;
+    xremap.enable = true;
   };
 
   home-manager = {
+    backupFileExtension = "hm.bak";
     extraSpecialArgs = {
       inherit inputs outputs;
     };
     useGlobalPkgs = true;
     useUserPackages = true;
     users = {
-      ${outputs.username} = import ../home-manager/home.nix;
+      ${outputs.username} = import ./home.nix;
     };
   };
 
