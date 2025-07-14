@@ -46,6 +46,11 @@
     mcphub-nvim = {
       url = "github:ravitemer/mcphub.nvim";
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -70,6 +75,7 @@
         }
       );
       forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
+      rootPath = ./.;
     in
     {
       username = "idjo";
@@ -85,7 +91,7 @@
       nixosConfigurations = {
         ox = nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs outputs;
+            inherit inputs outputs rootPath;
           };
           modules = [
             ./hosts/ox/config.nix
@@ -94,7 +100,7 @@
 
         horse = nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs outputs;
+            inherit inputs outputs rootPath;
           };
           modules = [
             ./hosts/horse/config.nix
@@ -103,7 +109,7 @@
 
         tiger = nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs outputs;
+            inherit inputs outputs rootPath;
           };
           modules = [
             ./hosts/tiger/nixos/configuration.nix
@@ -115,7 +121,7 @@
         monkey = nix-on-droid.lib.nixOnDroidConfiguration {
           pkgs = import nixpkgs { system = "aarch64-linux"; };
           extraSpecialArgs = {
-            inherit inputs outputs;
+            inherit inputs outputs rootPath;
           };
           modules = [
             ./hosts/monkey/config.nix
@@ -125,7 +131,7 @@
         rabbit = nix-on-droid.lib.nixOnDroidConfiguration {
           pkgs = import nixpkgs { system = "aarch64-linux"; };
           extraSpecialArgs = {
-            inherit inputs outputs;
+            inherit inputs outputs rootPath;
           };
           modules = [
             ./hosts/rabbit/config.nix
