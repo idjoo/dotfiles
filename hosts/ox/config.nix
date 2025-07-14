@@ -81,7 +81,13 @@
   services.odoo = {
     enable = true;
     addons = [ ];
-    autoInit = false;
+    domain = "ox.wyvern-vector.ts.net";
+    autoInit = true;
+    autoInitExtraFlags = [ "--without-demo=all" ];
+
+    settings.options = {
+      addons_path = lib.concatMapStringsSep "," lib.escapeShellArg [ "/opt/odoo/addons/18.0" ];
+    };
   };
 
   # firewall
@@ -156,6 +162,7 @@
   };
 
   modules = {
+    comma.enable = true;
     nh.enable = true;
     stylix.enable = true;
     tailscale.enable = true;
