@@ -52,7 +52,7 @@
     dunst.enable = true;
 
     # browser
-    firefox.enable = true;
+    firefox.enable = false;
 
     # cli
     btop.enable = true;

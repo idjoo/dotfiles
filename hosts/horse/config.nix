@@ -156,6 +156,10 @@
     tailscale.enable = true;
     utils.enable = true;
     xremap.enable = true;
+    sops = {
+      enable = true;
+      # sshKey = "vian@idjo.cc.pem";
+    };
   };
 
   home-manager = {
