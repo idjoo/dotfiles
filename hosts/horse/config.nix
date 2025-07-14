@@ -156,6 +156,10 @@
     tailscale.enable = true;
     utils.enable = true;
     xremap.enable = true;
+    sops = {
+      enable = true;
+      # sshKey = "adrianus.vian.habirowo@devoteam.com.pem";
+    };
   };
 
   home-manager = {
