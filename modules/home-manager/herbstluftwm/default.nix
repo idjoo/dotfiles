@@ -26,6 +26,7 @@ in
   options.modules.herbstluftwm = {
     enable = mkEnableOption "herbstluftwm";
   };
+
   config = mkIf cfg.enable {
     xsession.windowManager.herbstluftwm = {
       enable = cfg.enable;
@@ -113,35 +114,6 @@ in
         XF86AudioPrev = "spawn ${pkgs.playerctl}/bin/playerctl previous";
 
         Print = "spawn ${pkgs.flameshot}/bin/flameshot gui";
-
-        #
-        #XF86Launch1 spawn rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xsel --clipboard"
-        #Control-Print spawn color-picker
-        #Mod4-p spawn rofi-pass
-        #Mod4-a spawn ani-cli --rofi --skip
-        #Mod4-b spawn rofi-bluetooth
-        #Mod4-e spawn rofi -show emoji -modi emoji
-        #
-        #Mod4-Print spawn screencast
-        #Mod1-Print spawn screencast -s
-        #Mod4-backslash spawn screencast-stop
-        #
-        ## lock screen
-        #Mod1-Shift-l spawn betterlockscreen --lock
-        #
-        ## splitting frames
-        ## create an empty frame at the specified direction
-        #Mod4-u split bottom 0.5
-        #Mod4-o split right 0.5
-        ## let the current frame explode into subframes
-        #Mod4-Control-space split explode
-        #
-        ## resizing frames and floating clients
-        #resizestep=0.01
-        #Mod1-h resize left +"$resizestep"
-        #Mod1-j resize down +"$resizestep"
-        #Mod1-k resize up +"$resizestep"
-        #Mod1-l resize right +"$resizestep"
       };
 
       mousebinds = {
