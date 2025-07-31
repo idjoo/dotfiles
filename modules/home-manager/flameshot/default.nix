@@ -21,7 +21,7 @@ in
           savePathFixed = false;
           uiColor = "#${config.lib.stylix.colors.base01}";
           contrastUiColor = "#${config.lib.stylix.colors.base02}";
-          drawColor = "#${config.lib.stylix.colors.base03}";
+          drawColor = "#${config.lib.stylix.colors.base08}";
           disabledTrayIcon = true;
           showStartupLaunchMessage = false;
           saveAsFileExtension = ".png";

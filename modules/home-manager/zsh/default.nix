@@ -130,9 +130,10 @@ in
           zstyle ':completion:*' menu select
           setopt interactivecomments
 
-          ${pkgs.xorg.xset}/bin/xset r rate 200 50
+          [[ ! -z "$DISPLAY" ]] && ${pkgs.xorg.xset}/bin/xset r rate 200 50
 
-          ${pkgs.kitty.kitten}/bin/kitten icat --align left ~/pictures/luv-with-monkey.jpg
+          ${pkgs.kitty.kitten}/bin/kitten icat --detect-support > /dev/null 2&>1 \
+            && ${pkgs.kitty.kitten}/bin/kitten icat --align left ~/pictures/luv-with-monkey.jpg
         '';
 
       envExtra = # bash
