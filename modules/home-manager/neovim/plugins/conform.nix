@@ -59,6 +59,7 @@
           "ruff_organize_imports"
           "ruff_fix"
         ];
+        sql = [ "sqlfluff" ];
 
         "_" = [ "trim_whitespace" ];
       };
@@ -126,6 +127,10 @@
 
         ruff_organize_imports = {
           command = lib.getExe pkgs.ruff;
+        };
+
+        sqlfluff = {
+          command = lib.getExe pkgs.sqlfluff;
         };
       };
     };
