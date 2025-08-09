@@ -53,6 +53,7 @@
 
     # browser
     firefox.enable = false;
+    zen-browser.enable = true;
 
     # cli
     btop.enable = true;
