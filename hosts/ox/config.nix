@@ -78,18 +78,6 @@
     openssh.enable = true;
   };
 
-  services.odoo = {
-    enable = true;
-    addons = [ ];
-    domain = "ox.wyvern-vector.ts.net";
-    autoInit = true;
-    autoInitExtraFlags = [ "--without-demo=all" ];
-
-    settings.options = {
-      addons_path = lib.concatMapStringsSep "," lib.escapeShellArg [ "/opt/odoo/addons/18.0" ];
-    };
-  };
-
   # firewall
   networking.firewall = {
     enable = false;
@@ -127,6 +115,8 @@
 
     displayManager.startx.enable = true;
   };
+
+  services.copyparty.enable = true;
 
   # user accounts
   users.users.${outputs.username} = {
