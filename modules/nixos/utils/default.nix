@@ -80,7 +80,7 @@ in
       gemini-cli
 
       # custom
-      # android-unpinner
+      android-unpinner
       # httpgenerator
     ];
   };

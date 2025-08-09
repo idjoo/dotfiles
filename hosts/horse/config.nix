@@ -145,6 +145,9 @@
     docker.enable = true;
   };
 
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   modules = {
     comma.enable = true;
     nh.enable = true;
