@@ -7,7 +7,7 @@
 
 python3.pkgs.buildPythonApplication {
   pname = "android-unpinner";
-  version = "unstable-2024-09-02";
+  version = "unstable-2025-08-07";
   pyproject = true;
 
   meta = {
@@ -19,8 +19,8 @@ python3.pkgs.buildPythonApplication {
   src = fetchFromGitHub {
     owner = "mitmproxy";
     repo = "android-unpinner";
-    rev = "2bc31d94c3fe296457e2d7bf2120220de16ca839";
-    hash = "sha256-6EHd0CkJ1zlnjWUjDvYaehv3IfqlryKzOsxglPoZiog=";
+    rev = "27652d3940dec2c9afd9a78e57bf77a3d79a7d00";
+    hash = "sha256-A88GJoS3jYjW5dxxsN+2spu1xM+8OQopZukeKvZGRjE=";
   };
 
   nativeBuildInputs = [
@@ -34,6 +34,7 @@ python3.pkgs.buildPythonApplication {
 
   dependencies = [
     python3.pkgs.rich-click
+    python3.pkgs.typing-extensions
     pkgs.bionic
   ];
 

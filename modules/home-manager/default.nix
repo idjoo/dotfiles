@@ -28,6 +28,7 @@
     ./tmux
     ./urxvt
     ./wezterm
+    ./zen-browser
     ./zsh
     ./zoxide
   ];
