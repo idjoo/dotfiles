@@ -131,9 +131,6 @@ in
           setopt interactivecomments
 
           [[ ! -z "$DISPLAY" ]] && ${pkgs.xorg.xset}/bin/xset r rate 200 50
-
-          ${pkgs.kitty.kitten}/bin/kitten icat --detect-support > /dev/null 2&>1 \
-            && ${pkgs.kitty.kitten}/bin/kitten icat --align left ~/pictures/luv-with-monkey.jpg
         '';
 
       envExtra = # bash
