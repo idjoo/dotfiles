@@ -20,12 +20,6 @@ in
   config = mkIf cfg.enable {
     sops = {
       age.keyFile = "/home/${outputs.username}/.config/sops/age/keys.txt";
-
-      # secrets = {
-      #   gpg = {
-      #     path = "../../../secrets/gpg/vian@idjo.cc.asc";
-      #   };
-      # };
     };
   };
 }

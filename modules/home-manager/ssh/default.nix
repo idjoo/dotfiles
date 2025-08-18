@@ -21,7 +21,7 @@ in
     programs.keychain = {
       enable = true;
       keys = [
-        "vian@idjo.cc"
+        "id_ed25519"
       ];
     };
   };

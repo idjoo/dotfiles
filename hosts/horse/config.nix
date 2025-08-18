@@ -161,7 +161,6 @@
     xremap.enable = true;
     sops = {
       enable = true;
-      # sshKey = "vian@idjo.cc.pem";
     };
   };
 
