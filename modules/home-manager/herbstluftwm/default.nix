@@ -113,7 +113,7 @@ in
         XF86AudioNext = "spawn ${pkgs.playerctl}/bin/playerctl next";
         XF86AudioPrev = "spawn ${pkgs.playerctl}/bin/playerctl previous";
 
-        Print = "spawn ${pkgs.flameshot}/bin/flameshot gui";
+        Print = "spawn ${pkgs.flameshot}/bin/flameshot gui 2>/tmp/flameshot.log 1>/tmp/flameshot.log";
       };
 
       mousebinds = {

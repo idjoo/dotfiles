@@ -161,7 +161,6 @@
     xremap.enable = true;
     sops = {
       enable = true;
-      # sshKey = "adrianus.vian.habirowo@devoteam.com.pem";
     };
   };
 
