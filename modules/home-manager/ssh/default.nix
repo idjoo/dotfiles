@@ -21,7 +21,7 @@ in
     programs.keychain = {
       enable = true;
       keys = [
-        "adrianus.vian.habirowo@devoteam.com"
+        "id_ed25519"
       ];
     };
   };

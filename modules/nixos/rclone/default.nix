@@ -29,7 +29,7 @@ in
       export_formats = docx,xlsx,pptx,svg
     '';
 
-    fileSystems."/home/idjo/documents/drive/my-drive" = {
+    fileSystems."/mnt/drive/my-drive" = {
       device = "gdrive:/";
       fsType = "rclone";
       options = [
@@ -43,7 +43,7 @@ in
       ];
     };
 
-    fileSystems."/home/idjo/documents/drive/shared-with-me" = {
+    fileSystems."/mnt/drive/shared-with-me" = {
       device = "gdrive-shared:/";
       fsType = "rclone";
       options = [
