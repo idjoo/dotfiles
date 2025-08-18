@@ -116,8 +116,6 @@
     displayManager.startx.enable = true;
   };
 
-  services.copyparty.enable = true;
-
   # user accounts
   users.users.${outputs.username} = {
     isNormalUser = true;
