@@ -37,6 +37,7 @@ in
               "CapsLock" = {
                 alone = [ "Esc" ];
                 held = [ "CapsLock" ];
+                free_held = true;
               };
             };
           }

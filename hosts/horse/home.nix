@@ -73,6 +73,7 @@
     direnv.enable = true;
     zoxide.enable = true;
     atuin.enable = true;
+    sops.enable = true;
 
     # prog lang
     go.enable = true;
