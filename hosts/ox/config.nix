@@ -4,6 +4,7 @@
   lib,
   config,
   pkgs,
+  rootPath,
   ...
 }:
 {
@@ -161,7 +162,8 @@
   home-manager = {
     backupFileExtension = "hm.bak";
     extraSpecialArgs = {
-      inherit inputs outputs;
+      inherit inputs outputs rootPath;
+      inherit (config.networking) hostName;
     };
     useGlobalPkgs = true;
     useUserPackages = true;

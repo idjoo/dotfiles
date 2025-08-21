@@ -145,7 +145,7 @@ in
           modules = {
             left = "distro date xwindow";
             center = "hlwm";
-            right = "bluetooth backlight pipewire cpu memory temperature wireless battery";
+            right = "backlight pipewire cpu memory temperature wireless battery";
           };
         };
 
@@ -187,11 +187,11 @@ in
           tail = true;
         };
 
-        "module/bluetooth" = {
-          type = "custom/script";
-          exec = "${pkgs.rofi-bluetooth}/bin/rofi-bluetooth --status";
-          interval = 1;
-        };
+        # "module/bluetooth" = {
+        #   type = "custom/script";
+        #   exec = "${pkgs.rofi-bluetooth}/bin/rofi-bluetooth --status";
+        #   interval = 1;
+        # };
 
         "module/backlight" = {
           type = "internal/backlight";
