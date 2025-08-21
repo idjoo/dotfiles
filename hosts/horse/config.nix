@@ -2,6 +2,8 @@
   inputs,
   outputs,
   pkgs,
+  config,
+  rootPath,
   ...
 }:
 {
@@ -159,15 +161,14 @@
     tailscale.enable = true;
     utils.enable = true;
     xremap.enable = true;
-    sops = {
-      enable = true;
-    };
+    sops.enable = false;
   };
 
   home-manager = {
     backupFileExtension = "hm.bak";
     extraSpecialArgs = {
-      inherit inputs outputs;
+      inherit inputs outputs rootPath;
+      inherit (config.networking) hostName;
     };
     useGlobalPkgs = true;
     useUserPackages = true;

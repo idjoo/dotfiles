@@ -25,6 +25,7 @@
     ./qutebrowser
     ./rofi
     ./ssh
+    ./sops
     ./tmux
     ./urxvt
     ./wezterm

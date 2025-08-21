@@ -4,6 +4,7 @@
   lib,
   config,
   rootPath,
+  hostName,
   ...
 }:
 with lib;
@@ -15,11 +16,11 @@ let
       horse = "devoteam";
       ox = "idjo";
     }
-    ."${config.networking.hostName}";
+    ."${hostName}";
 in
 {
   imports = [
-    inputs.sops-nix.nixosModules.sops
+    inputs.sops-nix.homeManagerModules.sops
   ];
 
   options.modules.sops = {
@@ -36,12 +37,10 @@ in
       };
 
       secrets."sshKeys/${sshKey}/id_ed25519" = {
-        owner = "${outputs.username}";
         mode = "0600";
       };
 
       secrets."sshKeys/${sshKey}/id_ed25519.pub" = {
-        owner = "${outputs.username}";
         mode = "0644";
       };
     };
