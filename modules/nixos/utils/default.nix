@@ -11,6 +11,8 @@ in
 {
   options.modules.utils = {
     enable = mkEnableOption "utils";
+    gui.enable = mkEnableOption "utils.gui";
+    custom.enable = mkEnableOption "utils.custom";
   };
   config = mkIf cfg.enable {
     programs.nix-ld.enable = true;
@@ -41,47 +43,59 @@ in
     };
     services.flatpak.enable = true;
 
-    environment.systemPackages = with pkgs; [
-      # archive
-      unzip
-      zip
+    environment.systemPackages =
+      with pkgs;
+      [
+        # archive
+        unzip
+        zip
 
-      # clipboard
-      xclip
-      xsel
+        # clipboard
+        xclip
+        xsel
 
-      # nix
-      nix-init
-      nix-output-monitor
-      nurl
+        # nix
+        nix-init
+        nix-output-monitor
+        nurl
 
-      # desktop app
-      dbeaver-bin
-      libreoffice-qt6-fresh
-      discord
-
-      # others
-      bottles
-      fd
-      git-filter-repo
-      jq
-      kubectl
-      openssl
-      p7zip
-      rclone
-      ripgrep
-      sqlite
-      zathura
-      gh
-      oci-cli
-      docker-buildx
-      code-cursor
-      nodejs
-      gemini-cli
-
-      # custom
-      android-unpinner
-      # httpgenerator
-    ];
+        # others
+        bottles
+        fd
+        git-filter-repo
+        jq
+        kubectl
+        openssl
+        p7zip
+        rclone
+        ripgrep
+        sqlite
+        zathura
+        gh
+        oci-cli
+        docker-buildx
+        code-cursor
+        nodejs
+        gemini-cli
+        vscode
+        uv
+      ]
+      ++ (optionals cfg.gui.enable (
+        with pkgs;
+        [
+          # desktop app
+          dbeaver-bin
+          libreoffice-qt6-fresh
+          discord
+        ]
+      ))
+      ++ (optionals cfg.custom.enable (
+        with pkgs;
+        [
+          # custom
+          android-unpinner
+          httpgenerator
+        ]
+      ));
   };
 }
