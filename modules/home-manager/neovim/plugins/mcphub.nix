@@ -50,11 +50,12 @@
                   "stdio"
                 ]
               },
-              "smartfren-local": {
-                "url": "http://localhost:8080/mcp/"
-              },
-              "smartfren-dev": {
-                "url": "https://sf-mcp-314894585051.asia-southeast2.run.app/mcp/"
+              "bigquery": {
+                "command": "toolbox",
+                "args": [
+                  "--prebuilt=bigquery",
+                  "--stdio"
+                ]
               },
               "whatsapp": {
                 "command": "${pkgs.uv}/bin/uv",
