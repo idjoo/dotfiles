@@ -159,9 +159,12 @@
     ssh.enable = true;
     stylix.enable = true;
     tailscale.enable = true;
-    utils.enable = true;
+    utils = {
+      enable = true;
+      gui.enable = true;
+      custom.enable = false;
+    };
     xremap.enable = true;
-    sops.enable = false;
   };
 
   home-manager = {
