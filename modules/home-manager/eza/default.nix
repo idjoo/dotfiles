@@ -19,6 +19,7 @@ in
       icons = "auto";
 
       extraOptions = [
+        "--group"
         "--group-directories-first"
         "--color=always"
       ];
