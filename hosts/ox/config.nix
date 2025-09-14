@@ -156,8 +156,17 @@
     recommendedProxySettings = true;
 
     virtualHosts."os.wyvern-vector.ts.net" = {
-      locations."~ /whatsapp/(.*)" = {
+      locations."~ /api/whatsapp/(.*)" = {
         proxyPass = "http://127.0.0.1:8000/$1";
+      };
+
+      locations."~ /api/chatbot/(.*)" = {
+        proxyPass = "http://127.0.0.1:8001/$1";
+      };
+
+      locations."~ /chatbot/(.*)" = {
+        proxyPass = "http://127.0.0.1:8002/$1";
+        proxyWebsockets = true;
       };
     };
   };
@@ -169,6 +178,7 @@
     tailscale.enable = true;
     utils.enable = true;
     xremap.enable = true;
+    sops.enable = true;
   };
 
   home-manager = {
