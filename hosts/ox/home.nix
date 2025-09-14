@@ -37,6 +37,8 @@
     };
     lazygit.enable = true;
     neovim.enable = true;
+    sops.enable = true;
+    ssh.enable = true;
     tmux.enable = true;
     zoxide.enable = true;
     zsh.enable = true;
