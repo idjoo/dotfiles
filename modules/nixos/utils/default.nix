@@ -60,7 +60,6 @@ in
         nurl
 
         # others
-        bottles
         fd
         git-filter-repo
         jq
@@ -70,14 +69,11 @@ in
         rclone
         ripgrep
         sqlite
-        zathura
         gh
         oci-cli
         docker-buildx
-        code-cursor
         nodejs
         gemini-cli
-        vscode
         uv
       ]
       ++ (optionals cfg.gui.enable (
@@ -87,6 +83,10 @@ in
           dbeaver-bin
           libreoffice-qt6-fresh
           discord
+          bottles
+          code-cursor
+          vscode
+          zathura
         ]
       ))
       ++ (optionals cfg.custom.enable (
