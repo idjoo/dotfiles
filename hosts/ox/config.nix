@@ -176,7 +176,11 @@
     nh.enable = true;
     stylix.enable = true;
     tailscale.enable = true;
-    utils.enable = true;
+    utils = {
+      enable = true;
+      gui.enable = false;
+      custom.enable = false;
+    };
     xremap.enable = true;
     sops.enable = true;
   };
