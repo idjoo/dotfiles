@@ -71,6 +71,12 @@
         Service = {
           WorkingDirectory = "${config.home.homeDirectory}/documents/lumpang";
           ExecStart = "${config.home.homeDirectory}/documents/lumpang/.venv/bin/uvicorn api:app --port=8001";
+          Environment = [
+            "GOOGLE_APPLICATION_CREDENTIALS=sa.json"
+            "GOOGLE_CLOUD_PROJECT=lv-playground-genai"
+            "GOOGLE_CLOUD_LOCATION=us-central1"
+            "GOOGLE_GENAI_USE_VERTEXAI=TRUE"
+          ];
         };
       };
       lumpang-fe = {
