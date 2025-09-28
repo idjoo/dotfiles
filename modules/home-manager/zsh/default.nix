@@ -64,6 +64,7 @@ in
         # gcloud
         gp = "gcloud projects list --format='value(projectId)' | ${pkgs.fzf}/bin/fzf --height=25% --layout=reverse --border | xargs -r gcloud config set project";
         ga = "gcloud auth list --format='value(account)' | ${pkgs.fzf}/bin/fzf --height=25% --layout=reverse --border | xargs -r gcloud config set account";
+        gcurl = "curl -H \"Authorization: Bearer $(gcloud auth print-access-token)\"";
 
         # tmux
         t = "${pkgs.tmux}/bin/tmux";
