@@ -120,8 +120,7 @@ in
 
       initContent = # bash
         ''
-          bindkey "^H" backward-delete-char
-          bindkey "^?" backward-delete-char
+          bindkey '^[^?' backward-delete-word
 
           bindkey "$terminfo[kcuu1]" history-substring-search-up
           bindkey "$terminfo[kcud1]" history-substring-search-down
