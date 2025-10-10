@@ -23,7 +23,17 @@
       gopls.enable = true;
       clangd.enable = true;
       terraformls.enable = true;
-      ts_ls.enable = true;
+      tsgo = {
+        enable = true;
+        # config = {
+        #   filetypes = [
+        #     "ts"
+        #     "tsx"
+        #     "js"
+        #     "jsx"
+        #   ];
+        # };
+      };
       jsonls.enable = true;
       yamlls.enable = true;
       jdtls.enable = true;
