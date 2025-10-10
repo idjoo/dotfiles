@@ -91,6 +91,18 @@
           ExecStart = "${config.home.homeDirectory}/documents/lumpang/.venv/bin/streamlit run --browser.gatherUsageStats=false --server.port=8002 ui.py";
         };
       };
+      betting-calculator = {
+        Unit = {
+          Description = "Betting Calculator";
+        };
+        Install = {
+          WantedBy = [ "default.target" ];
+        };
+        Service = {
+          WorkingDirectory = "${config.home.homeDirectory}/documents/betting/betting-calculator";
+          ExecStart = "${pkgs.caddy}/bin/caddy run --config ${config.home.homeDirectory}/documents/betting/betting-calculator/Caddyfile";
+        };
+      };
     };
   };
 
