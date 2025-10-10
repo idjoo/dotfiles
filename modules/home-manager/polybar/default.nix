@@ -78,21 +78,14 @@ let
   '';
 
   pipewire = pkgs.writeShellScriptBin "pipewire.sh" ''
-    VOLUME=$(${pkgs.pamixer}/bin/pamixer --get-volume-human)
+    VOLUME_HUMAN=$(${pkgs.pamixer}/bin/pamixer --get-volume-human)
+    [ "$VOLUME_HUMAN" == "muted" ] && echo "🔇 $VOLUME_HUMAN" && exit 0
 
-    case $1 in
-      "--up")
-        ${pkgs.pamixer}/bin/pamixer --increase 10
-        ;;
-      "--down")
-        ${pkgs.pamixer}/bin/pamixer --decrease 10
-        ;;
-      "--mute")
-        ${pkgs.pamixer}/bin/pamixer --toggle-mute
-        ;;
-      *)
-        echo "''${VOLUME}"
-    esac
+    VOLUME=$(${pkgs.pamixer}/bin/pamixer --get-volume)
+    [ "$VOLUME" -ge 67 ] && echo "🔊 $VOLUME%" && exit 0
+    [ "$VOLUME" -ge 34 ] && echo "🔉 $VOLUME%" && exit 0
+    [ "$VOLUME" -ge 1  ] && echo "🔈 $VOLUME%" && exit 0
+    [ "$VOLUME" -eq 0  ] && echo "🔈 $VOLUME%" && exit 0
   '';
 in
 {
@@ -140,6 +133,7 @@ in
             "FiraCode Nerd Font:pixelsize=13;2"
             "Font Awesome 6 Free"
             "Font Awesome 6 Brands"
+            "Noto Color Emoji:scale=10"
           ];
 
           modules = {
@@ -166,13 +160,11 @@ in
           interval = 5;
           date = "%A, %d-%b-%y";
           time = "%H:%M";
-          label = " %date% %time% ";
+          label = "%date% %time%";
           format = {
-            prefix = {
-              text = "  ";
-              foreground = "#${config.lib.stylix.colors.base0D}";
-            };
+            text = "🗓️ <label>";
             background = "#${config.lib.stylix.colors.base02}";
+            padding = 1;
           };
         };
 
@@ -197,13 +189,9 @@ in
           type = "internal/backlight";
           use.actual-brightness = true;
           label = "%percentage%%";
-
           format = {
-            text = "<label>";
-            prefix = {
-              text = "󰃠 ";
-              foreground = "#${config.lib.stylix.colors.base0A}";
-            };
+            text = "🌞 <label>";
+            padding = 1;
           };
         };
 
@@ -213,17 +201,18 @@ in
           label = "%output%";
           interval = 2;
           format = {
-            prefix = {
-              text = "  ";
-              foreground = "#${config.lib.stylix.colors.base0B}";
-            };
+            text = "<label>";
+            padding = 1;
           };
         };
 
         "module/cpu" = {
           type = "internal/cpu";
           interval = 0.5;
-          format = "<ramp-load> <label>";
+          format = {
+            text = "<ramp-load> <label>";
+            padding = 1;
+          };
           ramp.load = {
             text = [
               "▁"
@@ -243,10 +232,11 @@ in
           type = "internal/memory";
           interval = 2;
           label = "%percentage_used%%";
+          format.padding = 1;
           format.prefix = {
             text = "󰍛  ";
             foreground = "#${config.lib.stylix.colors.base0D}";
-            font = 2;
+            font = 3;
           };
         };
 
@@ -258,6 +248,7 @@ in
           format = {
             text = "<ramp> <label>";
             warn = "<ramp> <label-warn>";
+            padding = 1;
           };
 
           label = {
@@ -290,6 +281,7 @@ in
               text = "<label-disconnected>";
               foregound = "#${config.lib.stylix.colors.base0F}";
             };
+            padding = 1;
           };
 
           label = {
@@ -301,7 +293,7 @@ in
           };
 
           ramp.signal = {
-            text = [ " " ];
+            text = [ "🛜" ];
             foreground = "#${config.lib.stylix.colors.base0F}";
           };
         };
@@ -320,6 +312,7 @@ in
               text = "";
               foreground = "#${config.lib.stylix.colors.base0B}";
             };
+            padding = 1;
           };
 
           animation = {
