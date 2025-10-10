@@ -168,6 +168,10 @@
         proxyPass = "http://127.0.0.1:8002/$1";
         proxyWebsockets = true;
       };
+
+      locations."/betting-calculator/" = {
+        proxyPass = "http://127.0.0.1:8003/";
+      };
     };
   };
 
