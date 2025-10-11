@@ -108,7 +108,7 @@
     videoDrivers = [ "amdgpu" ];
   };
 
-  services.logind.lidSwitchExternalPower = "ignore";
+  services.logind.settings.Login.HandleLidSwitchExternalPower = "ignore";
 
   # user accounts
   users.users.${outputs.username} = {

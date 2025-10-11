@@ -150,6 +150,8 @@
     };
   };
 
+  services.logind.settings.Login.HandleLidSwitchExternalPower = "ignore";
+
   services.nginx = {
     enable = true;
 
