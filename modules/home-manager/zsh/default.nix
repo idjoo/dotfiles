@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  outputs,
   ...
 }:
 with lib;
@@ -70,6 +71,10 @@ in
         t = "${pkgs.tmux}/bin/tmux";
         tn = "${pkgs.tmux}/bin/tmux new";
         ta = "${pkgs.tmux}/bin/tmux attach";
+
+        # ssh
+        horse = "TERM=xterm-256color ${pkgs.openssh}/bin/ssh ${outputs.username}@horse";
+        ox = "TERM=xterm-256color ${pkgs.openssh}/bin/ssh ${outputs.username}@ox";
       };
 
       plugins = [
