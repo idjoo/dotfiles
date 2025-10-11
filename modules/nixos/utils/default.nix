@@ -85,7 +85,6 @@ in
           discord
           bottles
           code-cursor
-          vscode
           zathura
         ]
       ))
