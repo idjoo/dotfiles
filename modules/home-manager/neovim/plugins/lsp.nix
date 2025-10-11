@@ -10,7 +10,6 @@
       nil_ls.enable = false;
       pylsp = {
         enable = true;
-
         settings = {
           plugins = {
             ruff = {
@@ -23,16 +22,17 @@
       gopls.enable = true;
       clangd.enable = true;
       terraformls.enable = true;
-      tsgo = {
+      tsgo.enable = true;
+      ts_ls = {
         enable = true;
-        # config = {
-        #   filetypes = [
-        #     "ts"
-        #     "tsx"
-        #     "js"
-        #     "jsx"
-        #   ];
-        # };
+        settings = {
+          filetypes = [
+            "ts"
+            "tsx"
+            "js"
+            "jsx"
+          ];
+        };
       };
       jsonls.enable = true;
       yamlls.enable = true;
