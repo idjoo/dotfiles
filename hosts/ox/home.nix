@@ -103,6 +103,34 @@
           ExecStart = "${pkgs.caddy}/bin/caddy run --config ${config.home.homeDirectory}/documents/betting/betting-calculator/Caddyfile";
         };
       };
+      betting-api = {
+        Unit = {
+          Description = "Betting API";
+        };
+        Install = {
+          WantedBy = [ "default.target" ];
+        };
+        Service = {
+          WorkingDirectory = "${config.home.homeDirectory}/documents/betting/betting-api";
+          ExecStart = "${config.home.homeDirectory}/documents/betting/betting-api/.venv/bin/app";
+        };
+      };
+      betting-dashboard = {
+        Unit = {
+          Description = "Betting Dashboard";
+        };
+        Install = {
+          WantedBy = [ "default.target" ];
+        };
+        Service = {
+          WorkingDirectory = "${config.home.homeDirectory}/documents/betting/betting-dashboard";
+          ExecStart = "${pkgs.bun}/bin/bun run start";
+          Environment = [
+            "API_URL=https://ox.wyvern-vector.ts.net/api/betting"
+            "NEXT_PUBLIC_API_URL=https://ox.wyvern-vector.ts.net/api/betting"
+          ];
+        };
+      };
     };
   };
 

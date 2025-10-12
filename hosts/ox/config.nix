@@ -172,7 +172,24 @@
       locations."/betting-calculator/" = {
         proxyPass = "http://127.0.0.1:8003/";
       };
+
+      locations."~ /api/betting/(.*)" = {
+        proxyPass = "http://127.0.0.1:8004/$1";
+      };
+
+      locations."/betting-dashboard/" = {
+        proxyPass = "http://127.0.0.1:8005/betting-dashboard/";
+      };
     };
+  };
+
+  services.postgresql = {
+    enable = true;
+    ensureDatabases = [ "betting" ];
+    authentication = pkgs.lib.mkOverride 10 ''
+      #type database  DBuser  auth-method
+      local all       all     trust
+    '';
   };
 
   modules = {
