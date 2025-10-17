@@ -42,6 +42,7 @@
     tmux.enable = true;
     zoxide.enable = true;
     zsh.enable = true;
+    password-store.enable = true;
   };
 
   systemd.user = {
