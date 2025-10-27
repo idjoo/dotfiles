@@ -22,7 +22,6 @@
       gopls.enable = true;
       clangd.enable = true;
       terraformls.enable = true;
-      tsgo.enable = true;
       ts_ls = {
         enable = true;
         settings = {
