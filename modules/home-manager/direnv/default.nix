@@ -26,6 +26,7 @@ in
         whitelist = {
           prefix = [
             "/home/${outputs.username}"
+            "/Users/${outputs.username}"
           ];
         };
       };
