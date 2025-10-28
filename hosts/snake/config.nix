@@ -48,6 +48,12 @@
     stylix.enable = true;
     tailscale.enable = true;
     homebrew.enable = true;
+
+    utils = {
+      enable = true;
+      gui.enable = false;
+      custom.enable = false;
+    };
   };
 
   # Keyboard Remap
