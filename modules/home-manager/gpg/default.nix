@@ -26,7 +26,7 @@ in
       enable = cfg.enable;
       enableSshSupport = false;
       pinentry = {
-        package = pkgs.pinentry-rofi;
+        #package = pkgs.pinentry-rofi;
       };
     };
   };

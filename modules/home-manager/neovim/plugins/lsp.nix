@@ -18,7 +18,7 @@
           };
         };
       };
-      csharp_ls.enable = true;
+      #csharp_ls.enable = true;
       gopls.enable = true;
       clangd.enable = true;
       terraformls.enable = true;
