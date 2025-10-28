@@ -13,6 +13,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid/testing";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -62,8 +67,9 @@
     {
       self,
       nixpkgs,
-      systems,
       nix-on-droid,
+      nix-darwin,
+      systems,
       ...
     }@inputs:
     let
@@ -91,6 +97,7 @@
 
       nixosModules = import ./modules/nixos;
       homeManagerModules = import ./modules/home-manager;
+      darwinModules = import ./modules/darwin;
       nixOnDroidModules = import ./modules/nix-on-droid;
 
       nixosConfigurations = {
@@ -118,6 +125,20 @@
           };
           modules = [
             ./hosts/tiger/nixos/configuration.nix
+          ];
+        };
+      };
+
+      darwinConfigurations = {
+        snake =  nix-darwin.lib.darwinSystem  {
+          specialArgs = {
+            inherit inputs outputs rootPath;
+          };
+          modules = [
+            ./hosts/snake/config.nix
+	    {
+	      system.configurationRevision = self.rev or self.dirtyRev or null;
+	    }
           ];
         };
       };

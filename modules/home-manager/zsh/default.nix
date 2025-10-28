@@ -44,9 +44,6 @@ in
         c = "${pkgs.libqalculate}/bin/qalc";
         vim = "nvim";
 
-        # git
-        lg = "lazygit";
-
         # nix
         nix-shell = "${pkgs.nix-output-monitor}/bin/nom-shell --command zsh";
 

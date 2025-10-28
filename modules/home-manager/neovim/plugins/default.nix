@@ -16,7 +16,6 @@
     ./lsp.nix
     ./lspsaga.nix
     ./lz-n.nix
-    ./mcphub.nix
     ./neogit.nix
     ./neoscroll.nix
     ./oil.nix

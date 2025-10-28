@@ -11,8 +11,9 @@ let
 
   sshKey =
     {
-      horse = "idjo";
       ox = "idjo";
+      horse = "idjo";
+      snake = "idjo";
     }
     ."${hostName}";
 in
