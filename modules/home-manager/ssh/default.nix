@@ -29,8 +29,14 @@ in
   config = mkIf cfg.enable {
     programs.ssh = {
       enable = cfg.enable;
-      addKeysToAgent = "yes";
-      forwardAgent = true;
+      enableDefaultConfig = false;
+
+      matchBlocks = {
+        "*" = {
+          addKeysToAgent = "yes";
+          forwardAgent = true;
+        };
+      };
     };
 
     programs.keychain = {

@@ -21,14 +21,12 @@ in
     programs.git = {
       enable = cfg.enable;
 
-      userName = "Adrianus Vian Habirowo";
-      userEmail = cfg.email;
+      settings = {
+        user = {
+          name = "Adrianus Vian Habirowo";
+          email = cfg.email;
+        };
 
-      diff-so-fancy = {
-        enable = true;
-      };
-
-      extraConfig = {
         init = {
           defaultBranch = "master";
         };
@@ -37,6 +35,11 @@ in
           rebase = true;
         };
       };
+    };
+
+    programs.diff-so-fancy = {
+      enable = true;
+      enableGitIntegration = true;
     };
   };
 }

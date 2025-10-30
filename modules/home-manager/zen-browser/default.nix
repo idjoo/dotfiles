@@ -2,6 +2,7 @@
   lib,
   config,
   inputs,
+  pkgs,
   ...
 }:
 with lib;
@@ -21,5 +22,7 @@ in
     programs.zen-browser = {
       enable = cfg.enable;
     };
+
+    stylix.targets.zen-browser.enable = false;
   };
 }

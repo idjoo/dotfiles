@@ -16,13 +16,13 @@
     ./lsp.nix
     ./lspsaga.nix
     ./lz-n.nix
+    ./mcphub.nix
     ./neogit.nix
     ./neoscroll.nix
     ./oil.nix
     ./render-markdown.nix
     ./rest.nix
     ./schemastore.nix
-    ./smear.nix
     ./spider.nix
     ./surround.nix
     ./telescope.nix
