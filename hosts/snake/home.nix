@@ -26,20 +26,19 @@
   };
 
   modules = {
-    # terminal
-    wezterm.enable = true;
+    # Terminal
+    ghostty.enable = true;
 
-    # shell
+    # Shell
     zsh.enable = true;
-    nushell.enable = true;
 
-    # editor
+    # Editor
     neovim.enable = true;
 
-    # browser
+    # Browser
     zen-browser.enable = true;
 
-    # cli
+    # CLIs
     btop.enable = true;
     eza.enable = true;
     git = {
@@ -51,15 +50,11 @@
     password-store.enable = true;
     ssh.enable = true;
     tmux.enable = true;
-    cava.enable = false;
     fzf.enable = true;
     direnv.enable = true;
     zoxide.enable = true;
     atuin.enable = true;
     sops.enable = true;
-
-    # prog lang
-    go.enable = false;
   };
 
   # Nicely reload system units when changing configs

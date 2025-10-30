@@ -1,6 +1,5 @@
 {
   inputs,
-  outputs,
   lib,
   config,
   rootPath,
@@ -34,7 +33,7 @@ in
       defaultSopsFormat = "yaml";
 
       age = {
-        keyFile = "/var/lib/age/key.txt";
+        keyFile = "${config.xdg.configHome}/age/keys.txt";
       };
 
       secrets."sshKeys/${sshKey}/id_ed25519" = {

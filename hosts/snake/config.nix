@@ -12,7 +12,19 @@
     inputs.home-manager.darwinModules.default
   ];
 
-  nix.settings.experimental-features = "nix-command flakes";
+  nixpkgs = {
+    overlays = [
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      outputs.overlays.stable-packages
+
+      inputs.nur.overlays.default
+    ];
+
+    config = {
+      allowUnfreePredicate = (pkg: true);
+    };
+  };
 
   # Hostname
   networking.hostName = "snake";
@@ -35,31 +47,40 @@
   ];
 
   # Packages
-  environment.systemPackages = with pkgs; [
-    nh
-  ];
-
-  # Modules
-  modules = {
-    aerospace.enable = true;
-    comma.enable = true;
-    nix.enable = true;
-    ssh.enable = true;
-    stylix.enable = true;
-    tailscale.enable = true;
-    homebrew.enable = true;
-
-    utils = {
-      enable = true;
-      gui.enable = false;
-      custom.enable = false;
-    };
-  };
+  environment.systemPackages = [ ];
 
   # Keyboard Remap
   system.keyboard = {
     enableKeyMapping = true;
     remapCapsLockToEscape = true;
+    swapLeftCommandAndLeftAlt = true;
+  };
+
+  # Disable Animation
+  system.defaults.universalaccess.reduceMotion = true;
+
+  # Trackpad
+  system.defaults.trackpad = {
+    Clicking = true;
+    Dragging = true;
+  };
+
+  # Modules
+  modules = {
+    aerospace.enable = true;
+    comma.enable = true;
+    homebrew.enable = true;
+    nix.enable = true;
+    podman.enable = true;
+    ssh.enable = true;
+    stylix.enable = true;
+    tailscale.enable = true;
+
+    utils = {
+      enable = true;
+      gui.enable = true;
+      custom.enable = false;
+    };
   };
 
   # Home Manager

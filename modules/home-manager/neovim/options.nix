@@ -33,7 +33,7 @@
     foldexpr = "nvim_treesitter#foldexpr()";
     foldenable = false;
 
-    guicursor = "n-v-c-i:block";
+    guicursor = "n-v-c:block,i-ci-ve:ver50,r-cr:hor20,o:hor50";
     wrap = false;
     scrolloff = 10;
     breakindent = true;

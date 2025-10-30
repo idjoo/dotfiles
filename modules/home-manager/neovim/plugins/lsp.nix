@@ -1,4 +1,9 @@
 {
+  lib,
+  pkgs,
+  ...
+}:
+{
   programs.nixvim.plugins.lsp = {
     enable = true;
 
@@ -18,7 +23,7 @@
           };
         };
       };
-      #csharp_ls.enable = true;
+      csharp_ls.enable = lib.mkIf pkgs.stdenv.isLinux true;
       gopls.enable = true;
       clangd.enable = true;
       terraformls.enable = true;

@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  outputs,
   ...
 }:
 with lib;
@@ -25,8 +24,7 @@ in
 
         whitelist = {
           prefix = [
-            "/home/${outputs.username}"
-            "/Users/${outputs.username}"
+            "${config.home.homeDirectory}"
           ];
         };
       };

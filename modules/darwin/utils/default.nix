@@ -40,6 +40,7 @@ in
         nodejs
         gemini-cli
         uv
+        pnpm
       ]
       ++ (optionals cfg.gui.enable (
         with pkgs;
@@ -47,7 +48,6 @@ in
           # desktop app
           dbeaver-bin
           code-cursor
-          zathura
         ]
       ))
       ++ (optionals cfg.custom.enable (

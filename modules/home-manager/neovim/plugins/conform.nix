@@ -42,6 +42,7 @@
         javascript = [ "prettierd" ];
         typescript = [ "prettierd" ];
         javascriptreact = [ "prettierd" ];
+        typescriptreact = [ "prettierd" ];
         markdown = [ "prettierd" ];
         sh = [
           "shellcheck"
