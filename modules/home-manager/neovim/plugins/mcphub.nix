@@ -6,25 +6,8 @@
       ''
         require("mcphub").setup({
           port = 3000,
-          config = vim.fn.expand("${config.home.homeDirectory}/.config/mcphub/servers.json"),
+          config = vim.fn.expand("${config.xdg.configHome}/mcphub/servers.json"),
           cmd = "${pkgs.mcp-hub}/bin/mcp-hub",
-
-          auto_approve = true,
-          auto_toggle_mcp_servers = true,
-
-          extensions = {
-            avante = {
-              enabled = true,
-              make_slash_commands = true,
-            },
-
-            codecompanion = {
-              show_result_in_chat = true,
-              make_vars = true,
-              make_slash_commands = true,
-            },
-          },
-
           log = {
             level = vim.log.levels.WARN,
             to_file = false,
@@ -41,34 +24,12 @@
         ''
           {
             "mcpServers": {
-              "smartfren": {
-                "command": "${pkgs.uv}/bin/uv",
-                "args": [
-                  "--directory",
-                  "${config.home.homeDirectory}/documents/smartfren/chatbot/id-smartfren-ccai-mcp",
-                  "run",
-                  "stdio"
-                ]
-              },
-              "bigquery": {
-                "command": "toolbox",
-                "args": [
-                  "--prebuilt=bigquery",
-                  "--stdio"
-                ]
-              },
-              "whatsapp": {
-                "command": "${pkgs.uv}/bin/uv",
-                "args": [
-                  "--directory",
-                  "${config.home.homeDirectory}/documents/whatsapp-mcp/whatsapp-mcp-server",
-                  "run",
-                  "main.py"
-                ]
-              },
               "context7": {
                 "command": "${pkgs.bun}/bin/bunx",
-                "args": ["-y", "@upstash/context7-mcp@latest"]
+                "args": [
+                  "-y",
+                  "@upstash/context7-mcp@latest"
+                ]
               }
             }
           }
@@ -76,8 +37,10 @@
     in
     {
       file = {
-        ".config/mcphub/servers.json".text = mcpServers;
-        ".cursor/mcp.json".text = builtins.replaceStrings [ "/mcp" ] [ "/sse" ] mcpServers;
+        "${config.xdg.configHome}/mcphub/servers.json".text = mcpServers;
+        "${config.home.homeDirectory}/.cursor/mcp.json".text =
+          builtins.replaceStrings [ "/mcp" ] [ "/sse" ]
+            mcpServers;
       };
 
       activation = {

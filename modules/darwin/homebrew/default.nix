@@ -32,7 +32,9 @@ in
       onActivation.cleanup = "uninstall";
 
       casks = [
+        "ghostty"
         "raycast"
+        "shottr"
       ];
     };
   };

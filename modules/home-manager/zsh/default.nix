@@ -39,7 +39,11 @@ in
 
       shellAliases = {
         reload = "source $ZDOTDIR/.zshrc";
-        rebuild = "${pkgs.nh}/bin/nh os switch";
+        rebuild =
+          if pkgs.stdenv.isDarwin then
+            "${pkgs.nh}/bin/nh darwin switch ~/Dotfiles"
+          else
+            "${pkgs.nh}/bin/nh os switch";
         n = "nvim ${config.home.homeDirectory}/note.md";
         c = "${pkgs.libqalculate}/bin/qalc";
         vim = "nvim";
@@ -141,6 +145,8 @@ in
           export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=magenta,bold'
           export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=red,bold'
         '';
+
+      setOptions = [ "NO_AUTO_REMOVE_SLASH"  "INTERACTIVE_COMMENTS" ];
     };
   };
 }
