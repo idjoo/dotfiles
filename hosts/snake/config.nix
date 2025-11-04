@@ -47,7 +47,9 @@
   ];
 
   # Packages
-  environment.systemPackages = [ ];
+  environment.systemPackages = [
+    pkgs.google-chrome
+  ];
 
   # Keyboard Remap
   system.keyboard = {

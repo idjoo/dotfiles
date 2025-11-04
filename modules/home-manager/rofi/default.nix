@@ -15,8 +15,8 @@ in
   config = mkIf cfg.enable {
     programs.rofi = {
       enable = cfg.enable;
-      location = "center";
 
+      location = "center";
       terminal = "${pkgs.ghostty}/bin/ghostty";
 
       extraConfig = {
