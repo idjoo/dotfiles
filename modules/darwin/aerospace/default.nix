@@ -75,7 +75,22 @@ in
           alt-tab = "workspace-back-and-forth";
           # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
           alt-shift-tab = "move-workspace-to-monitor --wrap-around next";
+
+          alt-w = "close";
         };
+
+        on-window-detected = [
+          {
+            check-further-callbacks = false;
+            "if".app-id = "com.mitchellh.ghostty";
+            run = [ "move-node-to-workspace 1" ];
+          }
+          {
+            check-further-callbacks = false;
+            "if".app-id = "app.zen-browser.zen";
+            run = [ "move-node-to-workspace 0" ];
+          }
+        ];
       };
     };
   };
