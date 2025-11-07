@@ -48,7 +48,7 @@
         installCargo = true;
       };
       zls.enable = true;
-      volar.enable = true;
+      vue_ls.enable = true;
       bashls.enable = true;
       dockerls.enable = true;
     };
