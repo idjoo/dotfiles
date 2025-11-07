@@ -72,9 +72,11 @@ in
         gh
         oci-cli
         docker-buildx
-        nodejs
         gemini-cli
         uv
+        bun
+        pnpm
+        nodejs
       ]
       ++ (optionals cfg.gui.enable (
         with pkgs;

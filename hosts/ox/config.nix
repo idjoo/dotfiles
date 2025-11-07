@@ -128,6 +128,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "docker"
     ];
     packages = [ ];
     shell = pkgs.zsh;
