@@ -35,6 +35,7 @@ in
         "ghostty"
         "raycast"
         "shottr"
+        "roblox"
       ];
     };
   };
