@@ -36,6 +36,7 @@ in
         "raycast"
         "shottr"
         "roblox"
+        "docker"
       ];
     };
   };

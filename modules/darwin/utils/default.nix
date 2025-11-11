@@ -41,6 +41,7 @@ in
         gemini-cli
         uv
         pnpm
+        skaffold
       ]
       ++ (optionals cfg.gui.enable (
         with pkgs;
