@@ -42,6 +42,7 @@ in
         uv
         pnpm
         skaffold
+        devbox
       ]
       ++ (optionals cfg.gui.enable (
         with pkgs;
