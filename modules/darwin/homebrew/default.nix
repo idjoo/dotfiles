@@ -36,7 +36,7 @@ in
         "raycast"
         "shottr"
         "roblox"
-        "docker"
+        "docker-desktop"
         "antigravity"
       ];
     };
