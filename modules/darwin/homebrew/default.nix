@@ -37,6 +37,7 @@ in
         "shottr"
         "roblox"
         "docker"
+        "antigravity"
       ];
     };
   };
