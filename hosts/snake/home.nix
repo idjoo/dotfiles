@@ -21,6 +21,7 @@
       (google-cloud-sdk.withExtraComponents [
         google-cloud-sdk.components.gke-gcloud-auth-plugin
         google-cloud-sdk.components.log-streaming
+        google-cloud-sdk.components.cloud-run-proxy
         google-cloud-sdk.components.run-compose
       ])
     ];
