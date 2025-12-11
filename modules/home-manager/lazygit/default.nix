@@ -98,10 +98,11 @@ in
                   fi
 
                   SELECTED_TYPE=\"{{.Form.Type}}\"
-                  COMMITS_TO_SUGGEST=3
+                  COMMITS_TO_SUGGEST=5
 
-                  GOOGLE_CLOUD_PROJECT=lv-playground-genai
-                  GOOGLE_CLOUD_LOCATION=global
+                  export CLOUDSDK_CORE_ACCOUNT=adrianus.vian.habirowo@devoteam.com
+                  export GOOGLE_CLOUD_PROJECT=lv-playground-genai
+                  export GOOGLE_CLOUD_LOCATION=global
                   gemini \"
                   You are an expert at writing Git commits. Your job is to write commit messages that follow the Conventional Commits format.
 
