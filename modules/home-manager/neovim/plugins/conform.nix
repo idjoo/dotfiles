@@ -56,9 +56,9 @@
         css = [ "prettierd" ];
         rust = [ "rustfmt" ];
         python = [
+          "ruff_fix"
           "ruff_format"
           "ruff_organize_imports"
-          "ruff_fix"
         ];
         sql = [ "sqlfluff" ];
 
