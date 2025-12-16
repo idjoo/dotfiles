@@ -10,9 +10,14 @@
     inlayHints = true;
 
     servers = {
+      # Lua
       lua_ls.enable = true;
+
+      # Nix
       nixd.enable = true;
       nil_ls.enable = false;
+
+      # Python
       pylsp = {
         enable = true;
         settings = {
@@ -23,6 +28,21 @@
           };
         };
       };
+
+      pyright = {
+        enable = true;
+        settings = {
+          pyright = {
+            disableOrganizeImports = true;
+          };
+          python = {
+            analysis = {
+              ignore = [ "*" ];
+            };
+          };
+        };
+      };
+
       csharp_ls.enable = lib.mkIf pkgs.stdenv.isLinux true;
       gopls.enable = true;
       clangd.enable = true;
