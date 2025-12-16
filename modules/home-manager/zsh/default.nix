@@ -47,6 +47,7 @@ in
         n = "nvim ${config.home.homeDirectory}/note.md";
         c = "${pkgs.libqalculate}/bin/qalc";
         vim = "nvim";
+        gemini = "env GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.gemini/sa.json GOOGLE_CLOUD_PROJECT=lv-playground-genai GOOGLE_CLOUD_LOCATION=global gemini";
 
         # nix
         nix-shell = "${pkgs.nix-output-monitor}/bin/nom-shell --command zsh";
@@ -146,7 +147,10 @@ in
           export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=red,bold'
         '';
 
-      setOptions = [ "NO_AUTO_REMOVE_SLASH"  "INTERACTIVE_COMMENTS" ];
+      setOptions = [
+        "NO_AUTO_REMOVE_SLASH"
+        "INTERACTIVE_COMMENTS"
+      ];
     };
   };
 }
