@@ -74,7 +74,7 @@ in
             hideContextPercentage = false;
           };
           hideFooter = false;
-          showMemoryUsage = true;
+          showMemoryUsage = false;
           showLineNumbers = true;
           showCitations = true;
           showModelInfoInChat = false;
