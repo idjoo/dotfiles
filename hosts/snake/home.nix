@@ -43,6 +43,7 @@
     # CLIs
     btop.enable = true;
     eza.enable = true;
+    gemini-cli.enable = true;
     git = {
       enable = true;
       email = "adrianus.vian.habirowo@devoteam.com";
