@@ -74,13 +74,10 @@ in
             hideContextPercentage = false;
           };
           hideFooter = false;
-          showMemoryUsage = false;
+          showMemoryUsage = true;
           showLineNumbers = true;
           showCitations = true;
           showModelInfoInChat = false;
-          useFullWidth = true;
-          useAlternateBuffer = false;
-          incrementalRendering = true;
           customWittyPhrases = [
             "Nanem Peju"
             "Ngulum Kontol"
@@ -93,7 +90,7 @@ in
           };
         };
         privacy = {
-          usageStatisticsEnabled = true;
+          usageStatisticsEnabled = false;
         };
         model = {
           name = "gemini-3-pro-preview";
