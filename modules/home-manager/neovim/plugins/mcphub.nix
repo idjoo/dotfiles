@@ -20,51 +20,17 @@
 
   home =
     let
-      mcpServers = # json
-        ''
-          {
-            "mcpServers": {
-              "context7": {
-                "command": "${pkgs.bun}/bin/bunx",
-                "args": [
-                  "-y",
-                  "@upstash/context7-mcp@latest"
-                ]
-              }
-            }
-          }
-        '';
+      mcpServers = {
+        mcpServers = config.modules.mcp-servers.servers;
+      };
+      mcpServersJson = builtins.toJSON mcpServers;
     in
     {
       file = {
-        "${config.xdg.configHome}/mcphub/servers.json".text = mcpServers;
+        "${config.xdg.configHome}/mcphub/servers.json".text = mcpServersJson;
         "${config.home.homeDirectory}/.cursor/mcp.json".text =
           builtins.replaceStrings [ "/mcp" ] [ "/sse" ]
-            mcpServers;
-      };
-
-      activation = {
-        updateGeminiSettings = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-          set -e
-          settings_file="${config.home.homeDirectory}/.gemini/settings.json"
-          mcp_servers_json='${mcpServers}'
-          mkdir -p "$(${pkgs.coreutils}/bin/dirname "$settings_file")"
-          if [ ! -f "$settings_file" ] || [ ! -s "$settings_file" ]; then
-            echo "{}" > "$settings_file"
-          fi
-          temp_file=$(${pkgs.coreutils}/bin/mktemp)
-          trap '${pkgs.coreutils}/bin/rm -f "$temp_file"' EXIT
-          if ${pkgs.jq}/bin/jq \
-            --argjson mcp_servers "$mcp_servers_json" \
-            '.mcpServers = $mcp_servers.mcpServers' \
-            "$settings_file" > "$temp_file";
-          then
-            ${pkgs.coreutils}/bin/mv "$temp_file" "$settings_file"
-          else
-            echo "Failed to update gemini settings with jq" >&2
-            exit 1
-          fi
-        '';
+            mcpServersJson;
       };
     };
 }
