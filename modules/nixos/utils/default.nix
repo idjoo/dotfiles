@@ -72,7 +72,6 @@ in
         gh
         oci-cli
         docker-buildx
-        gemini-cli
         uv
         bun
         pnpm
