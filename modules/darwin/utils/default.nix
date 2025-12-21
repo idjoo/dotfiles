@@ -38,7 +38,6 @@ in
         sqlite
         gh
         nodejs
-        gemini-cli
         uv
         pnpm
         skaffold
