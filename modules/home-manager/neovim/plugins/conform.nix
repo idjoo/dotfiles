@@ -32,7 +32,7 @@
     };
 
     settings = {
-      default_format_opts.lsp_format = "prefer";
+      default_format_opts.lsp_format = "fallback";
 
       formatters_by_ft = {
         nix = [ "nixfmt" ];
@@ -61,6 +61,7 @@
           "ruff_organize_imports"
         ];
         sql = [ "sqlfluff" ];
+        toml = [ "pyproject-fmt" ];
 
         "_" = [ "trim_whitespace" ];
       };
@@ -132,6 +133,11 @@
 
         sqlfluff = {
           command = lib.getExe pkgs.sqlfluff;
+        };
+
+        pyproject-fmt = {
+          command = "${pkgs.uv}/bin/uvx";
+          prepend_args = [ "pyproject-fmt" ];
         };
       };
     };

@@ -29,20 +29,6 @@
         };
       };
 
-      pyright = {
-        enable = true;
-        settings = {
-          pyright = {
-            disableOrganizeImports = true;
-          };
-          python = {
-            analysis = {
-              ignore = [ "*" ];
-            };
-          };
-        };
-      };
-
       csharp_ls.enable = lib.mkIf pkgs.stdenv.isLinux true;
       gopls.enable = true;
       clangd.enable = true;
