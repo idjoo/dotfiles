@@ -103,7 +103,7 @@ in
                   export GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.gemini/sa.json
                   export GOOGLE_CLOUD_PROJECT=lv-playground-genai
                   export GOOGLE_CLOUD_LOCATION=global
-                  gemini --model=gemini-2.5-flash \"
+                  gemini --model=gemini-3-flash-preview \"
                   You are an expert at writing Git commits. Your job is to write commit messages that follow the Conventional Commits format.
 
                   The user has selected: \$SELECTED_TYPE
