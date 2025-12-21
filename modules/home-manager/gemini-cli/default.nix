@@ -113,6 +113,11 @@ in
           };
           useRipgrep = true;
           autoAccept = true;
+
+          allowed = [
+            "run_shell_command(ls)"
+            "run_shell_command(git)"
+          ];
         };
         experimental = {
           enableAgents = true;
