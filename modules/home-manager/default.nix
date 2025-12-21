@@ -12,12 +12,14 @@
     ./firefox
     ./flameshot
     ./fzf
+    ./gemini-cli
     ./ghostty
     ./git
     ./go
     ./gpg
     ./herbstluftwm
     ./lazygit
+    ./mcp-servers
     ./neovim
     ./nushell
     ./password-store
