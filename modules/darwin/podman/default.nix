@@ -15,7 +15,7 @@ let
       repo = "nixpkgs";
       rev = "4db6d0ab3a62ea7149386a40eb23d1bd4f508e6e";
       sha256 = "sha256-kyw7744auSe+BdkLwFGyGbOHqxdE3p2hO6cw7KRLflw=";
-    }) { inherit (pkgs) system; })
+    }) { system = pkgs.stdenv.hostPlatform.system; })
     qemu
     ;
 
