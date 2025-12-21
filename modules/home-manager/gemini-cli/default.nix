@@ -23,6 +23,16 @@ in
         AGENTS = ./AGENTS.md;
       };
 
+      commands = {
+        "git/commit" = {
+          prompt = ''
+            Analyze workspace changes. Group related modifications into logical, atomic units.
+            Commit each unit separately using the Conventional Commits standard, ensuring high-quality, descriptive messages.
+          '';
+          description = "Smart atomic commits with Conventional Commits";
+        };
+      };
+
       settings = {
         context = {
           fileName = [ "AGENTS.md" ];
