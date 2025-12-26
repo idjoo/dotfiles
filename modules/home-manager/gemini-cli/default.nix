@@ -172,7 +172,10 @@ in
           autoAccept = true;
 
           allowed = [
+            "run_shell_command(cd)"
             "run_shell_command(ls)"
+            "run_shell_command(fd)"
+            "run_shell_command(rg)"
             "run_shell_command(git)"
           ];
         };
