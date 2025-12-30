@@ -143,6 +143,7 @@ in
             "Ngulum Kontol"
             "Nyepongin Kontol"
             "Jilatin Memek"
+            "Peras Tete"
           ];
           accessibility = {
             disableLoadingPhrases = false;
@@ -153,7 +154,7 @@ in
           usageStatisticsEnabled = false;
         };
         model = {
-          name = "gemini-3-pro-preview";
+          compressionThreshold = 0.75;
         };
         mcpServers = config.modules.mcp-servers.servers;
         security = {
@@ -177,6 +178,8 @@ in
             "run_shell_command(fd)"
             "run_shell_command(rg)"
             "run_shell_command(git)"
+            "query-docs"
+            "resolve-library-id"
           ];
         };
         experimental = {
