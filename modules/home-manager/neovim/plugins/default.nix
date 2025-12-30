@@ -1,10 +1,9 @@
 {
   imports = [
     ./autopairs.nix
-    # ./avante.nix
+    ./avante.nix
     ./barbar.nix
     ./cmp.nix
-    # ./codecompanion.nix
     ./colorizer.nix
     ./comment.nix
     ./conform.nix
