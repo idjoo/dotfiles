@@ -17,7 +17,9 @@ in
     programs.gemini-cli = {
       enable = cfg.enable;
 
-      defaultModel = "gemini-3-pro-preview";
+      package = pkgs.gemini-cli-bin;
+
+      defaultModel = "auto";
 
       context = {
         AGENTS = ./AGENTS.md;
@@ -158,6 +160,7 @@ in
         };
         mcpServers = config.modules.mcp-servers.servers;
         security = {
+          enablePermanentToolApproval = true;
           auth = {
             selectedType = "vertex-ai";
           };
@@ -178,12 +181,15 @@ in
             "run_shell_command(fd)"
             "run_shell_command(rg)"
             "run_shell_command(git)"
-            "query-docs"
-            "resolve-library-id"
           ];
         };
         experimental = {
           enableAgents = true;
+          extensionManagement = true;
+          extensionReloading = true;
+          jitContext = true;
+          codebaseInvestigatorSettings.enabled = true;
+          introspectionAgentSettings.enabled = true;
         };
       };
     };
