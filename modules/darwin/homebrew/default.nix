@@ -38,8 +38,6 @@ in
         "roblox"
         "docker-desktop"
         "antigravity"
-        "openmtp"
-        "android-file-transfer"
       ];
     };
   };
