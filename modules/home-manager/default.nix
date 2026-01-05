@@ -1,5 +1,6 @@
 # Add your reusable NixOS modules to this directory, on their own file (https://nixos.wiki/wiki/Module).
 # These should be stuff you would like to share with others, not your personal configurations.
+{ pkgs, ... }:
 {
   # List your module files here
   imports = [
@@ -35,4 +36,10 @@
     ./zsh
     ./zoxide
   ];
+
+  home.sessionVariables = {
+    PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
+    PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";
+    PLAYWRIGHT_HOST_PLATFORM_OVERRIDE = "ubuntu-24.04";
+  };
 }
