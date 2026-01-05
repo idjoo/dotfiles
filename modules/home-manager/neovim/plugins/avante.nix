@@ -13,7 +13,7 @@
 
       acp_providers = {
         "gemini-cli" = {
-          command = "${pkgs.gemini-cli-bin}/bin/gemini";
+          command = "${pkgs.gemini-cli}/bin/gemini";
           args = [ "--experimental-acp" ];
           env = {
             NODE_NO_WARNINGS = "1";
