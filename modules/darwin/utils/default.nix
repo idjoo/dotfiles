@@ -40,6 +40,7 @@ in
         nodejs
         uv
         pnpm
+        bun
         skaffold
         devbox
       ]
