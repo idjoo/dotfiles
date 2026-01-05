@@ -14,12 +14,18 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.shellAliases = {
+      gemini = ''
+        env \
+          GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.gemini/sa.json \
+          GOOGLE_CLOUD_PROJECT=lv-playground-genai \
+          GOOGLE_CLOUD_LOCATION=global \
+          ${pkgs.gemini-cli}/bin/gemini
+      '';
+    };
+
     programs.gemini-cli = {
       enable = cfg.enable;
-
-      package = pkgs.gemini-cli-bin;
-
-      defaultModel = "auto";
 
       context = {
         AGENTS = ./AGENTS.md;
@@ -156,6 +162,7 @@ in
           usageStatisticsEnabled = false;
         };
         model = {
+          name= "gemini-3-pro-preview";
           compressionThreshold = 0.75;
         };
         mcpServers = config.modules.mcp-servers.servers;
@@ -178,6 +185,9 @@ in
           allowed = [
             "run_shell_command(git)"
           ];
+          exclude = [
+            "save_memory"
+          ];
         };
         experimental = {
           enableAgents = true;
@@ -186,6 +196,7 @@ in
           jitContext = true;
           codebaseInvestigatorSettings.enabled = true;
           introspectionAgentSettings.enabled = true;
+          skills=true;
         };
       };
     };
