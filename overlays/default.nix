@@ -11,13 +11,13 @@
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
-    mcp-hub = inputs.mcp-hub.packages.${prev.system}.default;
-    mcphub-nvim = inputs.mcphub-nvim.packages.${prev.system}.default;
+    mcp-hub = inputs.mcp-hub.packages.${prev.stdenv.hostPlatform.system}.default;
+    mcphub-nvim = inputs.mcphub-nvim.packages.${prev.stdenv.hostPlatform.system}.default;
   };
 
   stable-packages = final: _prev: {
     stable = import inputs.nixpkgs-stable {
-      system = final.system;
+      system = final.stdenv.hostPlatform.system;
       config.allowUnfree = true;
     };
   };
