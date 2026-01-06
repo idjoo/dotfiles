@@ -18,6 +18,9 @@ in
       claude = ''
         env \
           CLAUDE_CODE_USE_VERTEX=1 \
+          ANTHROPIC_DEFAULT_OPUS_MODEL=claude-opus-4-5@20251101 \
+          ANTHROPIC_DEFAULT_SONNET_MODEL=claude-sonnet-4-5@20250929 \
+          ANTHROPIC_DEFAULT_HAIKU_MODEL=claude-haiku-4-5@20251001 \
           GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.claude/sa.json \
           GOOGLE_CLOUD_PROJECT=lv-playground-genai \
           CLOUD_ML_REGION=global \
@@ -26,6 +29,9 @@ in
       claude-kanban = ''
         env \
           CLAUDE_CODE_USE_VERTEX=1 \
+          ANTHROPIC_DEFAULT_OPUS_MODEL=claude-opus-4-5@20251101 \
+          ANTHROPIC_DEFAULT_SONNET_MODEL=claude-sonnet-4-5@20250929 \
+          ANTHROPIC_DEFAULT_HAIKU_MODEL=claude-haiku-4-5@20251001 \
           GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.claude/sa.json \
           GOOGLE_CLOUD_PROJECT=lv-playground-genai \
           CLOUD_ML_REGION=global \
@@ -38,20 +44,15 @@ in
       # MCP servers configuration
       mcpServers = config.modules.mcp-servers.servers;
 
-      # User-level CLAUDE.md memory file
+      # Global memory/instructions
       memory.source = ./CLAUDE.md;
 
-      # Directory-based configuration (prioritized over inline)
       commandsDir = ./commands;
-      agentsDir = ./agents;
-      rulesDir = ./rules;
-      skillsDir = ./skills;
-      hooksDir = ./hooks;
 
-      # Settings (JSON configuration fallback)
+      # Settings
       settings = {
         # Model configuration
-        model = "claude-opus-4-5@20251101";
+        model = "opus";
 
         # Session cleanup (default: 30 days)
         cleanupPeriodDays = 30;
@@ -71,7 +72,6 @@ in
 
         # Permission settings
         # Pre-allow common safe commands to avoid unnecessary prompts
-        # (Boris's tip #10: use /permissions to pre-allow safe commands)
         permissions = {
           defaultMode = "acceptEdits";
           allow = [
@@ -116,6 +116,10 @@ in
             "Bash(diff:*)"
             "Bash(which:*)"
             "Bash(type:*)"
+            "Bash(bq query:*)"
+            "Bash(ls:*)"
+            "Bash(find:*)"
+            "Bash(cat:*)"
           ];
           ask = [
             "Bash(rm:*)"
@@ -145,6 +149,16 @@ in
 
         # MCP server settings
         enableAllProjectMcpServers = true;
+
+        # Enable all installed plugins from claude-code-workflows marketplace
+        enabledPlugins = {
+          "context-management@claude-code-workflows" = true;
+          "python-development@claude-code-workflows" = true;
+          "javascript-typescript@claude-code-workflows" = true;
+          "backend-development@claude-code-workflows" = true;
+          "full-stack-orchestration@claude-code-workflows" = true;
+          "cloud-infrastructure@claude-code-workflows" = true;
+        };
       };
     };
   };
