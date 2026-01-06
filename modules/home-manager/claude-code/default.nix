@@ -21,7 +21,7 @@ in
           GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.claude/sa.json \
           GOOGLE_CLOUD_PROJECT=lv-playground-genai \
           CLOUD_ML_REGION=global \
-          ${pkgs.claude-code}/bin/claude'';
+          claude'';
     };
 
     programs.claude-code = {
@@ -135,22 +135,8 @@ in
           pr = "";
         };
 
-        # Sandbox settings
-        sandbox = {
-          enabled = false;
-          autoAllowBashIfSandboxed = true;
-          excludedCommands = [
-            "git"
-            "nix"
-            "docker"
-          ];
-          network = {
-            allowLocalBinding = true;
-          };
-        };
-
         # MCP server settings
-        enableAllProjectMcpServers = false;
+        enableAllProjectMcpServers = true;
       };
     };
   };
