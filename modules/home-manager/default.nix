@@ -10,6 +10,7 @@
     ./atuin
     ./btop
     ./cava
+    ./claude-code
     ./direnv
     ./dunst
     ./eza

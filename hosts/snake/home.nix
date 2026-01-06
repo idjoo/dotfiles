@@ -44,6 +44,7 @@
     btop.enable = true;
     eza.enable = true;
     gemini-cli.enable = true;
+    claude-code.enable = true;
     git = {
       enable = true;
       email = "vian@idjo.cc";
