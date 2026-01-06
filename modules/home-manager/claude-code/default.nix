@@ -22,6 +22,14 @@ in
           GOOGLE_CLOUD_PROJECT=lv-playground-genai \
           CLOUD_ML_REGION=global \
           claude'';
+
+      claude-kanban = ''
+        env \
+          CLAUDE_CODE_USE_VERTEX=1 \
+          GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.claude/sa.json \
+          GOOGLE_CLOUD_PROJECT=lv-playground-genai \
+          CLOUD_ML_REGION=global \
+          ${pkgs.bun}/bin/bunx vibe-kanban'';
     };
 
     programs.claude-code = {
