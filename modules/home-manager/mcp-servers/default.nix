@@ -22,24 +22,6 @@ with lib;
           "@upstash/context7-mcp@latest"
         ];
       };
-
-      gcloud = {
-        command = "${pkgs.bun}/bin/bunx";
-        args = [
-          "-y"
-          "@google-cloud/gcloud-mcp@latest"
-        ];
-      };
-
-      playwright = {
-        command = "${pkgs.bun}/bin/bunx";
-        args = [
-          "-y"
-          "@playwright/mcp@latest"
-          "--executable-path=${pkgs.playwright-driver.browsers}/chromium-${pkgs.playwright-driver.browsersJSON.chromium.revision}/chrome-linux/chrome"
-          "--caps=vision,pdf"
-        ];
-      };
     };
   };
 }
