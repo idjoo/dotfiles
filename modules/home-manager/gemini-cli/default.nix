@@ -20,8 +20,7 @@ in
           GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.gemini/sa.json \
           GOOGLE_CLOUD_PROJECT=lv-playground-genai \
           GOOGLE_CLOUD_LOCATION=global \
-          gemini
-      '';
+          gemini'';
     };
 
     programs.gemini-cli = {
