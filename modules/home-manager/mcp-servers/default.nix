@@ -31,15 +31,6 @@ with lib;
         ];
       };
 
-      in-memoria = {
-        command = "${pkgs.bun}/bin/bunx";
-        args = [
-          "-y"
-          "in-memoria"
-          "server"
-        ];
-      };
-
       playwright = {
         command = "${pkgs.bun}/bin/bunx";
         args = [
