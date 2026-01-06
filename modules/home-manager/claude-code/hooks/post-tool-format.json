@@ -1,0 +1,16 @@
+{
+  "hooks": [
+    {
+      "matcher": {
+        "type": "tool_result",
+        "tool_name": ["Edit", "Write", "NotebookEdit"]
+      },
+      "hooks": [
+        {
+          "type": "command",
+          "command": "/Users/idjo/Dotfiles/modules/home-manager/claude-code/hooks/format-file.sh \"$CLAUDE_FILE_PATH\""
+        }
+      ]
+    }
+  ]
+}
