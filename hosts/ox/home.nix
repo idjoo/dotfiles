@@ -43,6 +43,8 @@
     zoxide.enable = true;
     zsh.enable = true;
     password-store.enable = true;
+    claude-code.enable = true;
+    gemini-cli.enable = true;
   };
 
   systemd.user = {
