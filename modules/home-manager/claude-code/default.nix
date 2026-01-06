@@ -62,14 +62,64 @@ in
         };
 
         # Permission settings
+        # Pre-allow common safe commands to avoid unnecessary prompts
+        # (Boris's tip #10: use /permissions to pre-allow safe commands)
         permissions = {
           defaultMode = "acceptEdits";
           allow = [
+            # Version control
             "Bash(git:*)"
+            "Bash(gh:*)"
+            # Package managers (read-only operations)
+            "Bash(npm list:*)"
+            "Bash(npm info:*)"
+            "Bash(pnpm list:*)"
+            "Bash(yarn list:*)"
+            # Build tools
+            "Bash(make:*)"
+            "Bash(cargo build:*)"
+            "Bash(cargo test:*)"
+            "Bash(cargo check:*)"
+            "Bash(cargo clippy:*)"
+            "Bash(go build:*)"
+            "Bash(go test:*)"
+            # Nix ecosystem
+            "Bash(nix:*)"
+            "Bash(nixfmt:*)"
+            "Bash(statix:*)"
+            "Bash(home-manager:*)"
+            "Bash(darwin-rebuild:*)"
+            # Linters and formatters
+            "Bash(eslint:*)"
+            "Bash(prettier:*)"
+            "Bash(shfmt:*)"
+            # Python ecosystem (uv + ruff)
+            "Bash(python:*)"
+            "Bash(python3:*)"
+            "Bash(uv:*)"
+            "Bash(ruff:*)"
+            "Bash(pytest:*)"
+            # Common utilities
+            "Bash(jq:*)"
+            "Bash(yq:*)"
+            "Bash(wc:*)"
+            "Bash(sort:*)"
+            "Bash(uniq:*)"
+            "Bash(diff:*)"
+            "Bash(which:*)"
+            "Bash(type:*)"
           ];
           ask = [
             "Bash(rm:*)"
             "Bash(sudo:*)"
+            "Bash(npm install:*)"
+            "Bash(npm run:*)"
+            "Bash(pnpm install:*)"
+            "Bash(yarn install:*)"
+            # Python package installation (modifies environment)
+            "Bash(uv add:*)"
+            "Bash(uv remove:*)"
+            "Bash(uv sync:*)"
           ];
           deny = [
             "Read(./.env)"
