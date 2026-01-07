@@ -2,12 +2,12 @@
 
 ## Quick Reference
 
-| Directive       | When                 | Tool                             |
-| --------------- | -------------------- | -------------------------------- |
-| **Parallelize** | 3+ independent items | `Task` subagents in ONE message  |
-| **Track**       | Multi-step work      | `TodoWrite` (planning only)      |
-| **Execute**     | Each todo item       | `Task` per todo (parallel)       |
-| **Explore**     | Codebase research    | `Task(subagent_type="Explore")`  |
+| Scenario              | Parallel? | Tool                            |
+| --------------------- | --------- | ------------------------------- |
+| **Plan Execution**    | ALWAYS    | `Task` per todo in ONE message  |
+| **Shell Commands**    | ALWAYS    | `Task` per command in ONE msg   |
+| **Codebase Explore**  | ALWAYS    | `Task(subagent_type="Explore")` |
+| **Everything Else**   | NO        | Work sequentially               |
 
 ---
 
@@ -22,16 +22,18 @@ Task      = EXECUTION TOOL (do the actual work)
 CRITICAL: After creating todos, execute them via Task agents!
 ```
 
-### 2. Parallel by Default
+### 2. Parallel ONLY for These Cases
 
 ```
-Before ANY action: "Can this be split into parallel Tasks?"
-├── YES → Parallelize (no permission needed)
-├── UNCERTAIN → Parallelize (err on side of parallelism)
-└── NO (explicit dependency) → Document why, proceed sequentially
+┌─────────────────────────────────────────────────────────────┐
+│  MUST PARALLELIZE (no exceptions):                          │
+│  ├── Plan Execution: All independent todos → parallel Tasks │
+│  ├── Shell Commands: Multiple commands → parallel Tasks     │
+│  └── Exploration: Always delegate to Explore agent          │
+│                                                              │
+│  EVERYTHING ELSE: Work sequentially (default mode)          │
+└─────────────────────────────────────────────────────────────┘
 ```
-
-**Sequential is a failure mode.** Use it only when Step B requires output from Step A.
 
 ### 3. The Execution Hierarchy
 
@@ -47,9 +49,64 @@ Before ANY action: "Can this be split into parallel Tasks?"
 
 ---
 
+## Mandatory Parallel Cases
+
+### 1. Plan Execution (ALWAYS PARALLEL)
+
+When executing todos from a plan, launch ALL independent Task agents in ONE message:
+
+```javascript
+// ✅ CORRECT - Execute plan todos via parallel Task agents
+TodoWrite([...todos...])  // Plan first
+// Then in ONE message:
+Task("Fix auth bug", prompt="Fix the auth bug in...", "general-purpose")
+Task("Update tests", prompt="Update tests for...", "general-purpose")
+Task("Update docs", prompt="Update documentation...", "general-purpose")
+// Mark todos complete as Tasks return
+```
+
+```javascript
+// ❌ WRONG - Creating todos then doing work inline sequentially
+TodoWrite([...todos...])
+// Then doing each task yourself one by one...
+```
+
+### 2. Shell Commands (ALWAYS PARALLEL)
+
+Multiple independent shell commands MUST run as parallel Task agents:
+
+```javascript
+// ✅ CORRECT - Task subagents run in TRUE parallel
+Task("Delete table1", "bq rm project:dataset.table1", "general-purpose")
+Task("Delete table2", "bq rm project:dataset.table2", "general-purpose")
+Task("Delete table3", "bq rm project:dataset.table3", "general-purpose")
+// All in ONE message
+```
+
+```javascript
+// ❌ WRONG - Bash is sequential even with multiple calls
+bq rm table1 && bq rm table2 && bq rm table3
+```
+
+### 3. Exploration (ALWAYS DELEGATE)
+
+Always delegate exploration to the Explore agent:
+
+```javascript
+// ✅ CORRECT - Delegate to explorer
+Task(subagent_type="Explore", prompt="Find all auth-related code and patterns")
+```
+
+```javascript
+// ❌ WRONG - Sequential exploration
+Grep("pattern1")... then Grep("pattern2")... then Read(file)...
+```
+
+---
+
 ## Plan Mode Strategy
 
-When planning, maximize parallelism by grouping work:
+When planning, group work for parallel execution:
 
 **Preferred: By Module**
 
@@ -63,56 +120,6 @@ Module: database (schema.ts, migrations.ts)
 **Fallback: By File** when module boundaries are unclear.
 
 ---
-
-## Parallelism Rules
-
-### Automatic Triggers
-
-| Pattern                     | Example                 | Action             |
-| --------------------------- | ----------------------- | ------------------ |
-| Multiple items of same type | "Delete tables A, B, C" | Task per item      |
-| AND-connected operations    | "Run tests AND lint"    | Task per operation |
-| Plural nouns with action    | "Restart the services"  | Task per service   |
-| 3+ independent items        | Any list of 3+          | Always parallelize |
-
-### Anti-Patterns
-
-```javascript
-// ❌ WRONG - Creating todos then doing work inline sequentially
-TodoWrite([
-  { content: "Fix auth bug", status: "in_progress" },
-  { content: "Update tests", status: "pending" },
-  { content: "Update docs", status: "pending" }
-])
-// Then doing each task yourself one by one...
-
-// ✅ CORRECT - Execute todos via parallel Task agents
-TodoWrite([...todos...])  // Plan first
-// Then in ONE message:
-Task("Fix auth bug", prompt="Fix the auth bug in...", "general-purpose")
-Task("Update tests", prompt="Update tests for...", "general-purpose")
-Task("Update docs", prompt="Update documentation...", "general-purpose")
-// Mark todos complete as Tasks return
-```
-
-```javascript
-// ❌ WRONG - Bash is sequential even with multiple calls
-bq rm table1 && bq rm table2 && bq rm table3
-
-// ✅ CORRECT - Task subagents run in TRUE parallel
-Task("Delete table1", "bq rm project:dataset.table1", "general-purpose")
-Task("Delete table2", "bq rm project:dataset.table2", "general-purpose")
-Task("Delete table3", "bq rm project:dataset.table3", "general-purpose")
-// All in ONE message
-```
-
-```javascript
-// ❌ WRONG - Sequential exploration
-Grep("pattern1")... then Grep("pattern2")... then Read(file)...
-
-// ✅ CORRECT - Delegate to explorer
-Task(subagent_type="Explore", prompt="Find all auth-related code and patterns")
-```
 
 ## Shell Commands
 
@@ -133,10 +140,10 @@ Task(subagent_type="Explore", prompt="Find all auth-related code and patterns")
 Before every action:
 
 - [ ] TodoWrite tracking this? If not, add it NOW
-- [ ] **Am I about to do work inline?** STOP. Launch a Task agent instead
-- [ ] Have 2+ independent todos? Launch Task agents in ONE message
-- [ ] Exploration needed? Use `Task(subagent_type="Explore")`
-- [ ] Doing something sequentially that could be parallel? STOP. Fix it.
+- [ ] **Executing a plan?** → Launch parallel Task agents (MANDATORY)
+- [ ] **Multiple shell commands?** → Launch parallel Task agents (MANDATORY)
+- [ ] **Exploration needed?** → Use `Task(subagent_type="Explore")` (MANDATORY)
+- [ ] **Everything else?** → Work sequentially (default)
 
 ---
 
@@ -151,11 +158,11 @@ User: "Implement user authentication"
    - [ ] Implement frontend auth
    - [ ] Add tests
 
-2. EXECUTE - Launch parallel Task agents for EACH todo (ONE message):
+2. EXPLORE - Delegate to explorer (MANDATORY parallel):
    Task(subagent_type="Explore", prompt="Find existing auth patterns, user models, API routes")
    // Wait for explore results, then:
 
-3. EXECUTE - Parallel implementation Tasks (ONE message):
+3. EXECUTE PLAN - Parallel Task agents (MANDATORY parallel, ONE message):
    Task("Backend auth", prompt="Implement backend auth with JWT...", "general-purpose")
    Task("Frontend auth", prompt="Implement frontend auth forms...", "general-purpose")
    Task("Auth tests", prompt="Write tests for auth flow...", "general-purpose")
