@@ -73,7 +73,7 @@ in
         # Permission settings
         # Pre-allow common safe commands to avoid unnecessary prompts
         permissions = {
-          defaultMode = "acceptEdits";
+          defaultMode = "plan";
           allow = [
             # Version control
             "Bash(git:*)"
