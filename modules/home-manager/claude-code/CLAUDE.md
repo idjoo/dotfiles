@@ -1,249 +1,167 @@
 # Agent Instructions
 
-## Task Management (MANDATORY)
+## Quick Reference
 
-**You MUST use the `TodoWrite` tool for every task that involves more than a single action.**
+| Directive       | When                 | Tool                             |
+| --------------- | -------------------- | -------------------------------- |
+| **Parallelize** | 3+ independent items | `Task` subagents in ONE message  |
+| **Track**       | Multi-step work      | `TodoWrite` (planning only)      |
+| **Execute**     | Each todo item       | `Task` per todo (parallel)       |
+| **Explore**     | Codebase research    | `Task(subagent_type="Explore")`  |
 
-### When to Use TodoWrite
+---
 
-- Any request with multiple steps
-- Bug fixes (diagnose → fix → verify)
-- Feature implementations
-- Refactoring tasks
-- Build/test failures with multiple errors
+## Core Principles
 
-### Workflow
-
-1. **Plan First**: Break down the request into discrete steps using `TodoWrite`
-2. **One at a Time**: Mark exactly ONE todo as `in_progress` at any time
-3. **Update Immediately**: Mark each todo `completed` the moment you finish it
-4. **Stay Current**: The todo list must always reflect your actual progress
-
-### Example
+### 1. TodoWrite ≠ Execution
 
 ```
-User: "Fix the type errors and run the build"
+TodoWrite = PLANNING TOOL (create list, track status)
+Task      = EXECUTION TOOL (do the actual work)
 
-1. [in_progress] Run build to identify type errors
-2. [pending] Fix error in auth.ts
-3. [pending] Fix error in api.ts
-4. [pending] Verify build passes
+CRITICAL: After creating todos, execute them via Task agents!
 ```
 
-**Do not batch completions. Do not skip tracking. Do not work on multiple items simultaneously.**
-
-## Subagent & Parallelism (MANDATORY)
-
-**You MUST use the `Task` tool to run independent operations in parallel.**
-
-### Understanding Subagents
-
-- A **subagent** is a lightweight Claude Code instance running via the Task tool
-- Each subagent has its **own context window** - use this to gain additional context for large codebases
-- Parallelism is **capped at 10** concurrent tasks - additional tasks are queued automatically
-- Can handle 100+ tasks efficiently - they queue and execute as slots free up
-
-### When to Use Subagents
-
-- Exploring multiple directories/areas of a codebase simultaneously
-- Running independent verification steps (lint, test, build, type-check)
-- Researching multiple topics or files at once
-- Any operations where results don't depend on each other
-
-### How to Parallelize Effectively
-
-Launch multiple Task agents in a **single message** with multiple tool calls.
-
-**CRITICAL: Do NOT specify a parallelism level.** Let Claude Code decide.
+### 2. Parallel by Default
 
 ```
-// CORRECT - launch all tasks at once, let Claude Code manage parallelism
-Task(subagent_type="Explore", prompt="Explore backend structure")
-Task(subagent_type="Explore", prompt="Explore frontend structure")
-Task(subagent_type="Explore", prompt="Explore configuration files")
-Task(subagent_type="Explore", prompt="Explore tests and docs")
-
-// WRONG - specifying parallelism causes batch waiting (inefficient)
-"Run these 4 tasks with parallelism of 2"  // Waits for batch to complete
+Before ANY action: "Can this be split into parallel Tasks?"
+├── YES → Parallelize (no permission needed)
+├── UNCERTAIN → Parallelize (err on side of parallelism)
+└── NO (explicit dependency) → Document why, proceed sequentially
 ```
 
-### Why Avoid Specifying Parallelism
+**Sequential is a failure mode.** Use it only when Step B requires output from Step A.
 
-| Approach | Behavior |
-|----------|----------|
-| No parallelism specified | Tasks pull from queue immediately as slots free up |
-| Parallelism level specified | Waits for ALL tasks in current batch before starting next batch |
-
-**The default behavior (no parallelism specified) is more efficient.**
-
-### Practical Examples
-
-**Codebase exploration:**
-```
-Task(prompt="Explore src/api directory structure and patterns")
-Task(prompt="Explore src/components directory structure")
-Task(prompt="Explore src/utils and shared code")
-Task(prompt="Explore tests and testing patterns")
-```
-
-**Multiple verifications:**
-```
-Task(prompt="Run eslint and report issues")
-Task(prompt="Run type checker and report errors")
-Task(prompt="Run unit tests")
-Task(prompt="Check for security vulnerabilities")
-```
-
-**If operations are independent, they MUST run in parallel. Sequential execution of independent tasks is unacceptable.**
-
-## Tmux Agent Lifecycle Management (MANDATORY)
-
-**For long-running or interactive agent workflows, you MUST use Tmux sessions.**
-
-### Why Tmux
-
-- **No timeouts**: Sidesteps timeout issues with long-running commands or servers
-- **Persistence**: Agents never have to close - they persist indefinitely
-- **Identification**: Labeled sessions allow agents to find and communicate with each other
-- **True interaction**: Unlike ephemeral subagents, Tmux agents can interact bidirectionally
-
-### Launching Agents in Tmux
-
-When spawning a new agent that needs persistence, follow this exact sequence:
-
-```bash
-# 1. Create a named Tmux session
-tmux new-session -d -s "worker-agent-1"
-
-# 2. (Optional) Add any required MCPs
-tmux send-keys -t "worker-agent-1" 'claude mcp add supabase -- npx -y @supabase/mcp-server-supabase' Enter
-
-# 3. Launch Claude Code with permissions bypassed
-tmux send-keys -t "worker-agent-1" 'claude --dangerously-skip-permissions' Enter
-
-# 4. Wait for Claude to initialize, then send instructions
-sleep 3
-tmux send-keys -t "worker-agent-1" 'Your task is to...'
-tmux send-keys -t "worker-agent-1" Enter
-```
-
-### Session Naming Convention
-
-Use **kebab-case** with clear, descriptive names that indicate role:
-- `admin-agent` - The orchestrating agent
-- `worker-backend` - Backend-focused worker
-- `worker-frontend` - Frontend-focused worker
-- `monitor-agent` - Health monitoring agent
-- `mcp-supabase` - Agent with specific MCP attached
-
-## Inter-Agent Communication Protocol (CRITICAL)
-
-**When communicating between Tmux agents, you MUST use separate commands for typing and pressing Enter.**
-
-### The Golden Rule
-
-```bash
-# CORRECT - Two separate commands
-tmux send-keys -t "target-agent" 'Your message here'
-tmux send-keys -t "target-agent" Enter
-
-# WRONG - Combined (DOES NOT WORK RELIABLY)
-tmux send-keys -t "target-agent" 'Your message here' Enter
-```
-
-### Communication Patterns
-
-**Sending a task to another agent:**
-```bash
-tmux send-keys -t "worker-backend" 'Implement the user authentication endpoint. When complete, notify admin-agent in tmux session admin-agent.'
-tmux send-keys -t "worker-backend" Enter
-```
-
-**Agent reporting back:**
-```bash
-tmux send-keys -t "admin-agent" 'Task complete: User authentication endpoint implemented in src/api/auth.ts'
-tmux send-keys -t "admin-agent" Enter
-```
-
-**Checking agent status:**
-```bash
-# Capture the current state of an agent's pane
-tmux capture-pane -t "worker-backend" -p
-```
-
-### Listing Active Agents
-
-```bash
-# See all running agent sessions
-tmux list-sessions
-
-# Attach to observe an agent (for debugging)
-tmux attach-session -t "worker-backend"
-```
-
-## Self-Monitoring Agent Pattern (RECOMMENDED)
-
-**For autonomous operation, deploy a monitor agent that keeps the swarm alive.**
-
-### Monitor Agent Setup
-
-The monitor agent's sole job is to check agent health and reinitialize if needed:
-
-```bash
-# Launch the monitor
-tmux new-session -d -s "monitor-agent"
-tmux send-keys -t "monitor-agent" 'claude --dangerously-skip-permissions'
-tmux send-keys -t "monitor-agent" Enter
-sleep 3
-
-# Initialize with monitoring instructions
-tmux send-keys -t "monitor-agent" 'You are a monitor agent. Every 120 seconds, check the admin-agent tmux session. If it appears dead or unresponsive, reinitialize it with the standard admin prompt. Use: tmux capture-pane -t admin-agent -p to check status.'
-tmux send-keys -t "monitor-agent" Enter
-```
-
-### Health Check Loop (Monitor Agent Behavior)
-
-The monitor agent should:
-1. Run `sleep 120` between checks
-2. Capture the admin-agent pane: `tmux capture-pane -t "admin-agent" -p`
-3. Analyze if the agent is responsive
-4. If unresponsive, send reinitialization:
-   ```bash
-   tmux send-keys -t "admin-agent" 'Resume your admin duties. Check worker agent status and continue coordinating tasks.'
-   tmux send-keys -t "admin-agent" Enter
-   ```
-
-### Swarm Architecture Example
+### 3. The Execution Hierarchy
 
 ```
-┌─────────────────┐
-│  monitor-agent  │ ← Watches admin, reinitializes if dead
-└────────┬────────┘
-         │ monitors
-         ▼
-┌─────────────────┐
-│   admin-agent   │ ← Orchestrates all workers
-└────────┬────────┘
-         │ manages
-    ┌────┴────┬────────────┐
-    ▼         ▼            ▼
-┌────────┐ ┌────────┐ ┌────────┐
-│worker-1│ │worker-2│ │worker-3│
-└────────┘ └────────┘ └────────┘
+┌─────────────────────────────────────────────────────────────┐
+│   TodoWrite ─► Plan & track (batch multiple todos at once)  │
+│       ↓                                                     │
+│   EXECUTE via Task ─► One Task agent per independent todo   │
+│       ↓                                                     │
+│   Single message ─► Launch ALL Task agents together         │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-**This creates a self-healing agent swarm that can operate indefinitely.**
+---
 
-## Choosing Between Task Tool and Tmux Agents
+## Plan Mode Strategy
 
-| Scenario | Use Task Tool | Use Tmux Agents |
-|----------|---------------|-----------------|
-| Quick parallel searches | ✅ | ❌ |
-| One-off code exploration | ✅ | ❌ |
-| Long-running servers | ❌ | ✅ |
-| Agents that need to communicate | ❌ | ✅ |
-| Indefinite operation | ❌ | ✅ |
-| Agents with specific MCPs | ❌ | ✅ |
-| Self-healing swarms | ❌ | ✅ |
+When planning, maximize parallelism by grouping work:
 
-**Use Task tool for ephemeral work, Tmux for persistent interactive agents.**
+**Preferred: By Module**
+
+```
+Module: auth (auth.ts, session.ts, middleware.ts)
+Module: api (routes.ts, handlers.ts)
+Module: database (schema.ts, migrations.ts)
+→ 3 parallel Task agents, all in ONE message
+```
+
+**Fallback: By File** when module boundaries are unclear.
+
+---
+
+## Parallelism Rules
+
+### Automatic Triggers
+
+| Pattern                     | Example                 | Action             |
+| --------------------------- | ----------------------- | ------------------ |
+| Multiple items of same type | "Delete tables A, B, C" | Task per item      |
+| AND-connected operations    | "Run tests AND lint"    | Task per operation |
+| Plural nouns with action    | "Restart the services"  | Task per service   |
+| 3+ independent items        | Any list of 3+          | Always parallelize |
+
+### Anti-Patterns
+
+```javascript
+// ❌ WRONG - Creating todos then doing work inline sequentially
+TodoWrite([
+  { content: "Fix auth bug", status: "in_progress" },
+  { content: "Update tests", status: "pending" },
+  { content: "Update docs", status: "pending" }
+])
+// Then doing each task yourself one by one...
+
+// ✅ CORRECT - Execute todos via parallel Task agents
+TodoWrite([...todos...])  // Plan first
+// Then in ONE message:
+Task("Fix auth bug", prompt="Fix the auth bug in...", "general-purpose")
+Task("Update tests", prompt="Update tests for...", "general-purpose")
+Task("Update docs", prompt="Update documentation...", "general-purpose")
+// Mark todos complete as Tasks return
+```
+
+```javascript
+// ❌ WRONG - Bash is sequential even with multiple calls
+bq rm table1 && bq rm table2 && bq rm table3
+
+// ✅ CORRECT - Task subagents run in TRUE parallel
+Task("Delete table1", "bq rm project:dataset.table1", "general-purpose")
+Task("Delete table2", "bq rm project:dataset.table2", "general-purpose")
+Task("Delete table3", "bq rm project:dataset.table3", "general-purpose")
+// All in ONE message
+```
+
+```javascript
+// ❌ WRONG - Sequential exploration
+Grep("pattern1")... then Grep("pattern2")... then Read(file)...
+
+// ✅ CORRECT - Delegate to explorer
+Task(subagent_type="Explore", prompt="Find all auth-related code and patterns")
+```
+
+## Shell Commands
+
+### Modern CLI Tools (Prefer These)
+
+| Legacy | Modern | Key Flags                     |
+| ------ | ------ | ----------------------------- |
+| `ls`   | `eza`  | `-la`, `--tree`, `--git`      |
+| `find` | `fd`   | `-e ext`, `-t f/d`, `-H`      |
+| `grep` | `rg`   | `-i`, `-t type`, `-C 3`, `-l` |
+
+**Always check:** `command --help` before using unfamiliar flags.
+
+---
+
+## Execution Checklist
+
+Before every action:
+
+- [ ] TodoWrite tracking this? If not, add it NOW
+- [ ] **Am I about to do work inline?** STOP. Launch a Task agent instead
+- [ ] Have 2+ independent todos? Launch Task agents in ONE message
+- [ ] Exploration needed? Use `Task(subagent_type="Explore")`
+- [ ] Doing something sequentially that could be parallel? STOP. Fix it.
+
+---
+
+## Example Workflow
+
+```
+User: "Implement user authentication"
+
+1. PLAN - TodoWrite: Create task breakdown (batch all todos)
+   - [ ] Explore existing auth code
+   - [ ] Implement backend auth
+   - [ ] Implement frontend auth
+   - [ ] Add tests
+
+2. EXECUTE - Launch parallel Task agents for EACH todo (ONE message):
+   Task(subagent_type="Explore", prompt="Find existing auth patterns, user models, API routes")
+   // Wait for explore results, then:
+
+3. EXECUTE - Parallel implementation Tasks (ONE message):
+   Task("Backend auth", prompt="Implement backend auth with JWT...", "general-purpose")
+   Task("Frontend auth", prompt="Implement frontend auth forms...", "general-purpose")
+   Task("Auth tests", prompt="Write tests for auth flow...", "general-purpose")
+
+4. UPDATE - TodoWrite: Mark each todo complete AS Tasks return
+   // Don't wait until the end - update status in real-time
+
+KEY: Never do todo work yourself inline. Always delegate to Task agents.
+```
