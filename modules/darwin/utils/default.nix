@@ -43,6 +43,7 @@ in
         bun
         skaffold
         devbox
+        nh
       ]
       ++ (optionals cfg.gui.enable (
         with pkgs;
