@@ -44,9 +44,6 @@ in
       # MCP servers configuration
       mcpServers = config.modules.mcp-servers.servers;
 
-      # Global memory/instructions
-      memory.source = ./CLAUDE.md;
-
       commandsDir = ./commands;
 
       # Settings
@@ -79,10 +76,7 @@ in
             "Bash(git:*)"
             "Bash(gh:*)"
             # Package managers (read-only operations)
-            "Bash(npm list:*)"
-            "Bash(npm info:*)"
             "Bash(pnpm list:*)"
-            "Bash(yarn list:*)"
             # Build tools
             "Bash(make:*)"
             "Bash(cargo build:*)"
@@ -94,16 +88,8 @@ in
             # Nix ecosystem
             "Bash(nix:*)"
             "Bash(nixfmt:*)"
-            "Bash(statix:*)"
-            "Bash(home-manager:*)"
-            "Bash(darwin-rebuild:*)"
-            # Linters and formatters
-            "Bash(eslint:*)"
-            "Bash(prettier:*)"
-            "Bash(shfmt:*)"
+            "Bash(nh:*)"
             # Python ecosystem (uv + ruff)
-            "Bash(python:*)"
-            "Bash(python3:*)"
             "Bash(uv:*)"
             "Bash(ruff:*)"
             "Bash(pytest:*)"
@@ -122,14 +108,12 @@ in
             "Bash(fd:*)"
             "Bash(rg:*)"
             "Bash(cat:*)"
+            "Bash(tmux:*)"
           ];
           ask = [
             "Bash(rm:*)"
             "Bash(sudo:*)"
-            "Bash(npm install:*)"
-            "Bash(npm run:*)"
             "Bash(pnpm install:*)"
-            "Bash(yarn install:*)"
             # Python package installation (modifies environment)
             "Bash(uv add:*)"
             "Bash(uv remove:*)"
@@ -152,7 +136,7 @@ in
         # MCP server settings
         enableAllProjectMcpServers = true;
 
-        # Enable all installed plugins from claude-code-workflows marketplace
+        # Plugins
         enabledPlugins = {
           "context-management@claude-code-workflows" = true;
           "python-development@claude-code-workflows" = true;
@@ -167,6 +151,16 @@ in
           type = "command";
           command = "~/.claude/ccline/ccline";
           padding = 0;
+        };
+
+        # Hooks
+        hooks = {
+          Notification = [
+            (import ./hooks/notify.nix { inherit pkgs; })
+          ];
+          Stop = [
+            (import ./hooks/notify.nix { inherit pkgs; })
+          ];
         };
       };
     };
