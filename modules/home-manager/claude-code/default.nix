@@ -14,6 +14,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.packages = [ pkgs.htmldoc ];
+
     home.shellAliases = {
       claude = ''
         env \
