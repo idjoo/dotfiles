@@ -29,6 +29,7 @@ To determine which JavaScript package manager a project uses, look for the speci
 4.  **Documentation:** Whenever you are unsure about the exact signature or behavior of a function.
 
 **Workflow:**
+
 1.  **Identify:** Recognize the library/tool involved (e.g., "Next.js", "Tailwind", "Python `requests`").
 2.  **Resolve:** Call `resolve-library-id` to get the correct context ID.
 3.  **Query:** Call `query-docs` with specific questions (e.g., "how to fetch data in app router", "v5 config options").
@@ -40,7 +41,7 @@ To determine which JavaScript package manager a project uses, look for the speci
 **Mandate:** The `todo` tool is the primary mechanism for state and task tracking. You MUST use it for every interaction that involves more than a single immediate action.
 
 **Workflow:**
+
 1.  **Plan:** Immediately break down the user's request into actionable steps and add them using the `todo` tool.
 2.  **Execute & Update:** As you complete each step, mark it as done using the `todo` tool before moving to the next.
 3.  **Persist:** Ensure the todo list reflects the current state of the task at all times.
-
