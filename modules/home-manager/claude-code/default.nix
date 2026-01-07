@@ -117,8 +117,10 @@ in
             "Bash(which:*)"
             "Bash(type:*)"
             "Bash(bq query:*)"
-            "Bash(ls:*)"
-            "Bash(find:*)"
+            # Modern CLI tools (eza, fd, rg replace ls, find, grep)
+            "Bash(eza:*)"
+            "Bash(fd:*)"
+            "Bash(rg:*)"
             "Bash(cat:*)"
           ];
           ask = [
@@ -158,6 +160,13 @@ in
           "backend-development@claude-code-workflows" = true;
           "full-stack-orchestration@claude-code-workflows" = true;
           "cloud-infrastructure@claude-code-workflows" = true;
+        };
+
+        # Status line - CCometixLine
+        statusLine = {
+          type = "command";
+          command = "~/.claude/ccline/ccline";
+          padding = 0;
         };
       };
     };
