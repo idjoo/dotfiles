@@ -16,6 +16,11 @@ in
   config = mkIf cfg.enable {
     home.packages = [ pkgs.htmldoc ];
 
+    # User-level CLAUDE.md symlinked from dotfiles (mutable, version-controlled)
+    # Uses home.homeDirectory to support both Linux (/home/user) and macOS (/Users/user)
+    home.file.".claude/CLAUDE.md".source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/dotfiles/modules/home-manager/claude-code/CLAUDE.md";
+
     home.shellAliases = {
       claude = ''
         env \
