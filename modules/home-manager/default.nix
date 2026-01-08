@@ -33,6 +33,7 @@
     ./rofi
     ./ssh
     ./sops
+    ./stylix
     ./tmux
     ./urxvt
     ./wezterm
