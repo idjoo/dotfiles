@@ -22,6 +22,8 @@
   ];
 
   modules = {
+    stylix.enable = true;
+
     # window manager
     herbstluftwm.enable = true;
 

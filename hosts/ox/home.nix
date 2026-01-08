@@ -13,8 +13,8 @@
   ];
 
   home = {
-    username = "idjo";
-    homeDirectory = "/home/idjo";
+    username = "${outputs.username}";
+    homeDirectory = "/home/${outputs.username}";
 
     packages = with pkgs; [
       (google-cloud-sdk.withExtraComponents [
@@ -28,6 +28,7 @@
   programs.git.enable = true;
 
   modules = {
+    stylix.enable = true;
     atuin.enable = true;
     direnv.enable = true;
     eza.enable = true;
