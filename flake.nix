@@ -6,7 +6,7 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
     nur.url = "github:nix-community/NUR";
-    systems.url = "github:nix-systems/default-linux";
+    systems.url = "github:nix-systems/default";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -83,6 +83,11 @@
           config = {
             allowUnfreePredicate = (pkg: true);
           };
+          overlays = [
+            (import ./overlays { inherit inputs; }).additions
+            (import ./overlays { inherit inputs; }).modifications
+            (import ./overlays { inherit inputs; }).stable-packages
+          ];
         }
       );
       forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
@@ -161,6 +166,55 @@
           };
           modules = [
             ./hosts/rabbit/config.nix
+          ];
+        };
+      };
+
+      # Standalone Home Manager configurations for `nh home switch`
+      homeConfigurations = {
+        # NixOS hosts (Linux)
+        "idjo@ox" = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs rootPath;
+            hostName = "ox";
+          };
+          modules = [
+            ./hosts/ox/home.nix
+          ];
+        };
+
+        "idjo@horse" = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs rootPath;
+            hostName = "horse";
+          };
+          modules = [
+            ./hosts/horse/home.nix
+          ];
+        };
+
+        "idjo@tiger" = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs rootPath;
+            hostName = "tiger";
+          };
+          modules = [
+            ./hosts/tiger/home-manager/home.nix
+          ];
+        };
+
+        # Darwin host (macOS)
+        "idjo@snake" = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgsFor.aarch64-darwin;
+          extraSpecialArgs = {
+            inherit inputs outputs rootPath;
+            hostName = "snake";
+          };
+          modules = [
+            ./hosts/snake/home.nix
           ];
         };
       };
