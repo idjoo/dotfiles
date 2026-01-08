@@ -81,11 +81,7 @@ let
   '';
 in
 {
-  hooks = [
-    {
-      type = "command";
-      command = script;
-      timeout = 10;
-    }
-  ];
+  type = "command";
+  command = script;
+  timeout = 10;
 }
