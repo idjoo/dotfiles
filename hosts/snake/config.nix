@@ -9,7 +9,6 @@
 {
   imports = [
     outputs.darwinModules
-    inputs.home-manager.darwinModules.default
   ];
 
   nixpkgs = {
@@ -82,20 +81,6 @@
       enable = true;
       gui.enable = true;
       custom.enable = false;
-    };
-  };
-
-  # Home Manager
-  home-manager = {
-    backupFileExtension = "hm.bak";
-    extraSpecialArgs = {
-      inherit inputs outputs rootPath;
-      inherit (config.networking) hostName;
-    };
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users = {
-      ${outputs.username} = import ./home.nix;
     };
   };
 

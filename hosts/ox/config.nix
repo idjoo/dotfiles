@@ -11,8 +11,6 @@
   imports = [
     outputs.nixosModules
 
-    inputs.home-manager.nixosModules.home-manager
-
     ./hardware-config.nix
   ];
 
@@ -221,19 +219,6 @@
     };
     xremap.enable = true;
     sops.enable = true;
-  };
-
-  home-manager = {
-    backupFileExtension = "hm.bak";
-    extraSpecialArgs = {
-      inherit inputs outputs rootPath;
-      inherit (config.networking) hostName;
-    };
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users = {
-      ${outputs.username} = import ./home.nix;
-    };
   };
 
   # This value determines the NixOS release from which the default
