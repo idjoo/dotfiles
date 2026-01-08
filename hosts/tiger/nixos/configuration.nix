@@ -10,8 +10,6 @@
   imports = [
     outputs.nixosModules
 
-    inputs.home-manager.nixosModules.home-manager
-
     ./hardware-configuration.nix
   ];
 
@@ -172,18 +170,6 @@
     pipewire.enable = true;
     tailscale.enable = true;
     utils.enable = true;
-  };
-
-  home-manager = {
-    extraSpecialArgs = {
-      inherit inputs outputs;
-    };
-    backupFileExtension = "bak";
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users = {
-      ${outputs.username} = import ../home-manager/home.nix;
-    };
   };
 
   # This value determines the NixOS release from which the default
