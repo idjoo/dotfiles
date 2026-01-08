@@ -68,7 +68,7 @@
 
       formatters = {
         nixfmt = {
-          command = lib.getExe pkgs.nixfmt-rfc-style;
+          command = lib.getExe pkgs.nixfmt;
         };
 
         gofmt = {

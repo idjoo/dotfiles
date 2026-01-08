@@ -98,7 +98,7 @@
       username = "idjo";
 
       packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; });
-      formatter = forEachSystem (pkgs: pkgs.nixfmt-rfc-style);
+      formatter = forEachSystem (pkgs: pkgs.nixfmt);
       overlays = import ./overlays { inherit inputs; };
 
       nixosModules = import ./modules/nixos;
