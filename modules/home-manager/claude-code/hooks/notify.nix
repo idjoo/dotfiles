@@ -1,7 +1,6 @@
 {
   pkgs,
   topic ? "idjo-claude-code",
-  server ? "https://ntfy.sh",
 }:
 let
   script = pkgs.writers.writePython3 "notify" { } ''
@@ -14,8 +13,6 @@ let
         cmd = [
             "${pkgs.ntfy-sh}/bin/ntfy",
             "publish",
-            "--server",
-            "${server}",
             "--title",
             title,
             "--markdown",
@@ -24,9 +21,14 @@ let
             cmd.extend(["--tags", tags])
         cmd.extend(["${topic}", message])
         try:
-            subprocess.run(cmd, capture_output=True, timeout=5)
-        except Exception:
-            pass
+            result = subprocess.run(
+                cmd, capture_output=True, timeout=5, text=True
+            )
+            if result.returncode != 0:
+                err = f"ntfy error (exit {result.returncode}): {result.stderr}"
+                print(err, file=sys.stderr)
+        except Exception as e:
+            print(f"ntfy exception: {e}", file=sys.stderr)
 
 
     def handle_notification(data):
