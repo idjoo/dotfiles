@@ -125,7 +125,6 @@ in
             "Read(./.env)"
             "Read(./.env.*)"
             "Read(./secrets/**)"
-            "Bash(curl:*)"
           ];
         };
 
@@ -158,10 +157,15 @@ in
         # Hooks
         hooks = {
           Notification = [
-            (import ./hooks/notify.nix { inherit pkgs; })
+            {
+              matcher = "";
+              hooks = [ (import ./hooks/notify.nix { inherit pkgs; }) ];
+            }
           ];
           Stop = [
-            (import ./hooks/notify.nix { inherit pkgs; })
+            {
+              hooks = [ (import ./hooks/notify.nix { inherit pkgs; }) ];
+            }
           ];
         };
       };
