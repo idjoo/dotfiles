@@ -14,6 +14,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    # User-level GEMINI.md symlinked from dotfiles (mutable, version-controlled)
+    # Uses home.homeDirectory to support both Linux (/home/user) and macOS (/Users/user)
+    home.file.".gemini/GEMINI.md".source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/dotfiles/modules/home-manager/gemini-cli/GEMINI.md";
+
     home.shellAliases = {
       gemini = ''
         env \
@@ -25,10 +30,6 @@ in
 
     programs.gemini-cli = {
       enable = cfg.enable;
-
-      context = {
-        AGENTS = ./AGENTS.md;
-      };
 
       commands = {
         "context" = {
@@ -102,7 +103,7 @@ in
 
       settings = {
         context = {
-          fileName = [ "AGENTS.md" ];
+          fileName = [ "GEMINI.md" ];
         };
 
         general = {
