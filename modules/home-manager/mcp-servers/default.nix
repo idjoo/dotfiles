@@ -22,12 +22,26 @@ with lib;
           "@upstash/context7-mcp@latest"
         ];
       };
+
       tmux = {
         command = "${pkgs.bun}/bin/bunx";
         args = [
           "-y"
           "tmux-mcp"
           "--shell-type=zsh"
+        ];
+      };
+
+      playwright = {
+        command = "docker";
+        args = [
+          "run"
+          "--interactive"
+          "--rm"
+          "--init"
+          "--pull=always"
+          "--volume=/tmp/playwright-output:/tmp/playwright-output"
+          "mcr.microsoft.com/playwright/mcp"
         ];
       };
     };
