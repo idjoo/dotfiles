@@ -150,6 +150,7 @@ in
           "backend-development@claude-code-workflows" = true;
           "full-stack-orchestration@claude-code-workflows" = true;
           "cloud-infrastructure@claude-code-workflows" = true;
+          "code-documentation@claude-code-workflows" = true;
         };
 
         # Status line - CCometixLine
