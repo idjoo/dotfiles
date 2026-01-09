@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }:
 with lib;
@@ -40,10 +41,10 @@ with lib;
           "--rm"
           "--init"
           "--pull=always"
-          "--volume=/tmp/playwright:/tmp/playwright"
+          "--volume=${config.home.homeDirectory}/.playwright:/playwright-data"
           "mcr.microsoft.com/playwright/mcp"
-          "--output-dir=/tmp/playwright/screenshot"
-          "--storage-state=/tmp/playwright/storage/state.json"
+          "--output-dir=/playwright-data"
+          "--storage-state=/playwright-data/state.json"
         ];
       };
     };
