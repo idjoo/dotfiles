@@ -10,7 +10,7 @@
 | **Parallel**   | Batch independent tool calls in ONE message                   |
 | **Bash**       | Chain commands in ONE call using `&&` or `;`                  |
 | **Context7**   | Query docs BEFORE writing library/framework code              |
-| **Playwright** | Screenshot to `latest.png` AFTER screen-changing actions      |
+| **Playwright** | Use `browser_run_code` for batch; screenshot after actions    |
 | **Tmux**       | Use MCP tools (not Bash); `rawMode` for REPLs; no heredocs    |
 
 ---
@@ -112,11 +112,31 @@ User: "Add NextAuth"
 
 ## 4. Playwright MCP
 
-**Take screenshots after every screen-changing action.**
+**Prefer `browser_run_code` for batch operations. Take screenshots after screen-changing actions.**
 
-### Rule
+### Tool Preference
 
-After any screen-modifying tool, call `browser_take_screenshot`:
+**Use `browser_run_code` when possible** — it executes multiple Playwright operations in a single call, reducing round-trips and improving efficiency.
+
+```
+✓ browser_run_code: async (page) => {
+    await page.goto('https://example.com');
+    await page.fill('#email', 'user@test.com');
+    await page.fill('#password', 'secret');
+    await page.click('button[type="submit"]');
+  }
+✗ browser_navigate → browser_type → browser_type → browser_click  ← 4 round-trips
+```
+
+### When to Use Individual Tools
+
+- **Snapshot needed**: Use `browser_snapshot` to read page state for decision-making
+- **Dynamic interaction**: When next action depends on page response
+- **Debugging**: Step-by-step execution for troubleshooting
+
+### Screenshot Rule
+
+After any screen-modifying action, call `browser_take_screenshot`:
 
 ```
 filename: "/tmp/playwright/screenshot/latest.png"
@@ -126,11 +146,15 @@ filename: "/tmp/playwright/screenshot/latest.png"
 
 `browser_navigate`, `browser_click`, `browser_type`, `browser_fill_form`,
 `browser_select_option`, `browser_press_key`, `browser_handle_dialog`,
-`browser_file_upload`, `browser_tabs` (select/new)
+`browser_file_upload`, `browser_tabs` (select/new), `browser_run_code`
 
 ### Pattern
 
 ```
+# Batch operation with screenshot
+browser_run_code(code: "...") → browser_take_screenshot(filename: "...")
+
+# Individual operation with screenshot
 browser_click(element, ref) → browser_take_screenshot(filename: "...")
 ```
 
@@ -200,6 +224,7 @@ execute-command(paneId, "j", noEnter: true) → capture-pane(paneId)
 | **Bash**       | Multiple Bash calls instead of chaining            |
 | **Docs**       | Writing library code without Context7 lookup       |
 | **Docs**       | Assuming training data has current APIs            |
+| **Playwright** | Using individual tools when `browser_run_code` fits|
 | **Playwright** | Skipping screenshot after screen-changing action   |
 | **Tmux**       | Using `Bash("tmux ...")` instead of Tmux MCP tools |
 | **Tmux**       | Using heredocs with `rawMode: false`               |
