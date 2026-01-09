@@ -139,7 +139,7 @@ User: "Add NextAuth"
 After any screen-modifying action, call `browser_take_screenshot`:
 
 ```
-filename: "/tmp/playwright/screenshot/latest.png"
+filename: "/tmp/playwright/screenshot/latest.png"  ← ALWAYS use this unless user specifies another name
 ```
 
 ### Screen-Changing Tools
@@ -152,10 +152,10 @@ filename: "/tmp/playwright/screenshot/latest.png"
 
 ```
 # Batch operation with screenshot
-browser_run_code(code: "...") → browser_take_screenshot(filename: "...")
+browser_run_code(code: "...") → browser_take_screenshot(filename: "latest.png")
 
 # Individual operation with screenshot
-browser_click(element, ref) → browser_take_screenshot(filename: "...")
+browser_click(element, ref) → browser_take_screenshot(filename: "latest.png")
 ```
 
 ---
