@@ -139,8 +139,10 @@ User: "Add NextAuth"
 After any screen-modifying action, call `browser_take_screenshot`:
 
 ```
-filename: "~/.playwright/latest.png"  ← ALWAYS use this unless user specifies another name
+filename: "latest.png"  ← ALWAYS use this unless user specifies another name
 ```
+
+**Note:** Screenshots save to `/playwright-data/` inside Docker (mounted to `~/.playwright/` on host).
 
 ### Screen-Changing Tools
 
