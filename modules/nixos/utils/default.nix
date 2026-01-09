@@ -22,26 +22,7 @@ in
       glibc
     ];
 
-    services.xrdp.enable = true;
-    services.xrdp.audio.enable = true;
-    services.xrdp.defaultWindowManager = "${pkgs.herbstluftwm}/bin/herbstluftwm --locked";
-
     environment.localBinInPath = true;
-
-    xdg.portal = {
-      enable = true;
-      extraPortals = [
-        pkgs.xdg-desktop-portal-gtk
-      ];
-      config = {
-        common = {
-          default = [
-            "gtk"
-          ];
-        };
-      };
-    };
-    services.flatpak.enable = true;
 
     environment.systemPackages =
       with pkgs;
