@@ -139,7 +139,7 @@ User: "Add NextAuth"
 After any screen-modifying action, call `browser_take_screenshot`:
 
 ```
-filename: "/tmp/playwright/screenshot/latest.png"  ← ALWAYS use this unless user specifies another name
+filename: "~/.playwright/latest.png"  ← ALWAYS use this unless user specifies another name
 ```
 
 ### Screen-Changing Tools
