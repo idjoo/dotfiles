@@ -43,7 +43,7 @@ with lib;
           "--volume=/tmp/playwright:/tmp/playwright"
           "mcr.microsoft.com/playwright/mcp"
           "--output-dir=/tmp/playwright/screenshot"
-          "--storage-state=/tmp/playwright/storage/storage-state.json"
+          "--storage-state=/tmp/playwright/storage/state.json"
         ];
       };
     };
