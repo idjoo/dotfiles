@@ -162,7 +162,7 @@ in
           usageStatisticsEnabled = false;
         };
         model = {
-          name= "gemini-3-pro-preview";
+          name = "gemini-3-flash-preview";
           compressionThreshold = 0.75;
         };
         mcpServers = config.modules.mcp-servers.servers;
