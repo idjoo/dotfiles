@@ -40,8 +40,10 @@ with lib;
           "--rm"
           "--init"
           "--pull=always"
-          "--volume=/tmp/playwright-output:/tmp/playwright-output"
+          "--volume=/tmp/playwright:/tmp/playwright"
           "mcr.microsoft.com/playwright/mcp"
+          "--output-dir=/tmp/playwright/screenshot"
+          "--storage-state=/tmp/playwright/storage/storage-state.json"
         ];
       };
     };
