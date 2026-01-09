@@ -142,7 +142,9 @@ After any screen-modifying action, call `browser_take_screenshot`:
 filename: "latest.png"  ← ALWAYS use this unless user specifies another name
 ```
 
-**Note:** Screenshots save to `/playwright-data/` inside Docker (mounted to `~/.playwright/` on host).
+### Storage State
+
+Browser session persists at `/playwright-data/state.json` (cookies, localStorage, auth).
 
 ### Screen-Changing Tools
 
