@@ -17,8 +17,6 @@ in
     programs.nh = {
       enable = true;
 
-      flake = "/home/${outputs.username}/dotfiles";
-
       clean = {
         enable = true;
         extraArgs = "--keep-since 30d --keep 10";
