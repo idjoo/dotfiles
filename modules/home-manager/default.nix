@@ -76,7 +76,7 @@
     # tmux
     t = "${pkgs.tmux}/bin/tmux";
     tn = "${pkgs.tmux}/bin/tmux new";
-    ta = "${pkgs.tmux}/bin/tmux attach";
+    ta = "${pkgs.tmux}/bin/tmux attach -t 0";
 
     # ssh
     horse = "TERM=xterm-256color ${pkgs.openssh}/bin/ssh ${outputs.username}@horse";
