@@ -26,6 +26,7 @@
     ./lazygit
     ./mcp-servers
     ./neovim
+    ./playwright
     ./nushell
     ./password-store
     ./polybar
@@ -84,10 +85,6 @@
 
   home.sessionVariables = {
     NH_FLAKE = "${config.home.homeDirectory}/dotfiles";
-
-    PLAYWRIGHT_BROWSERS_PATH = "${pkgs.playwright-driver.browsers}";
-    PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";
-    PLAYWRIGHT_HOST_PLATFORM_OVERRIDE = "ubuntu-24.04";
   };
 
   home.sessionPath = [

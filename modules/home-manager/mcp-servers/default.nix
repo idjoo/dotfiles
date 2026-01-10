@@ -32,21 +32,6 @@ with lib;
           "--shell-type=zsh"
         ];
       };
-
-      playwright = {
-        command = "docker";
-        args = [
-          "run"
-          "--interactive"
-          "--rm"
-          "--init"
-          "--pull=always"
-          "--volume=${config.home.homeDirectory}/.playwright:/playwright-data"
-          "mcr.microsoft.com/playwright/mcp"
-          "--output-dir=/playwright-data"
-          "--storage-state=/playwright-data/state.json"
-        ];
-      };
     };
   };
 }
