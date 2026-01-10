@@ -46,6 +46,7 @@
     password-store.enable = true;
     claude-code.enable = true;
     gemini-cli.enable = true;
+    playwright.enable = true;
   };
 
   systemd.user = {

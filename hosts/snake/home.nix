@@ -62,6 +62,7 @@
     zoxide.enable = true;
     atuin.enable = true;
     sops.enable = true;
+    playwright.enable = true;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
