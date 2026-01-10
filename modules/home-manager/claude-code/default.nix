@@ -7,6 +7,49 @@
 with lib;
 let
   cfg = config.modules.claude-code;
+
+  # Wrapper script for claude with Vertex AI configuration
+  # Named "claude" and calls original binary by full store path to avoid recursion
+  claudeWrapper = pkgs.writeShellScriptBin "claude" ''
+    export CLAUDE_CODE_USE_VERTEX=1
+    export ANTHROPIC_DEFAULT_OPUS_MODEL=claude-opus-4-5@20251101
+    export ANTHROPIC_DEFAULT_SONNET_MODEL=claude-sonnet-4-5@20250929
+    export ANTHROPIC_DEFAULT_HAIKU_MODEL=claude-haiku-4-5@20251001
+    export GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.claude/sa.json
+    export GOOGLE_CLOUD_PROJECT=lv-playground-genai
+    export CLOUD_ML_REGION=global
+    exec ${pkgs.claude-code}/bin/claude "$@"
+  '';
+
+  agents = pkgs.writeShellScriptBin "agents" ''
+    set -euo pipefail
+
+    PLUGIN_NAME="''${1%%:*}"
+    FULL_ARG="$1"
+    PROMPT="''${2:-}"
+    SESSION_NAME="claude-agents"
+    SETTINGS_FILE=".claude/settings.local.json"
+
+    if ! ${pkgs.tmux}/bin/tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+      ${pkgs.tmux}/bin/tmux new-session -d -s "$SESSION_NAME"
+    else
+      ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME"
+    fi
+
+    TARGET="$SESSION_NAME"
+
+    if [[ -f "$SETTINGS_FILE" ]]; then
+      ${pkgs.jq}/bin/jq '.enabledPlugins = {}' "$SETTINGS_FILE" >"''${SETTINGS_FILE}.tmp" &&
+        mv "''${SETTINGS_FILE}.tmp" "$SETTINGS_FILE"
+    fi
+
+    CLAUDE_CMD="claude --dangerously-skip-permissions '/$FULL_ARG'"
+    [[ -n "$PROMPT" ]] && CLAUDE_CMD="$CLAUDE_CMD '$PROMPT'"
+
+    ${pkgs.tmux}/bin/tmux send-keys -t "$TARGET" "claude plugin install --scope local '$PLUGIN_NAME' && $CLAUDE_CMD" Enter
+
+    echo "Started in tmux session '$SESSION_NAME'"
+  '';
 in
 {
   options.modules.claude-code = {
@@ -14,25 +57,17 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ pkgs.htmldoc ];
+    home.packages = [
+      pkgs.htmldoc
+      agents
+    ];
 
     # User-level CLAUDE.md symlinked from dotfiles (mutable, version-controlled)
     # Uses home.homeDirectory to support both Linux (/home/user) and macOS (/Users/user)
-    home.file.".claude/CLAUDE.md".source = config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/dotfiles/modules/home-manager/claude-code/CLAUDE.md";
+    home.file.".claude/CLAUDE.md".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/claude-code/CLAUDE.md";
 
     home.shellAliases = {
-      claude = ''
-        env \
-          CLAUDE_CODE_USE_VERTEX=1 \
-          ANTHROPIC_DEFAULT_OPUS_MODEL=claude-opus-4-5@20251101 \
-          ANTHROPIC_DEFAULT_SONNET_MODEL=claude-sonnet-4-5@20250929 \
-          ANTHROPIC_DEFAULT_HAIKU_MODEL=claude-haiku-4-5@20251001 \
-          GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.claude/sa.json \
-          GOOGLE_CLOUD_PROJECT=lv-playground-genai \
-          CLOUD_ML_REGION=global \
-          claude'';
-
       claude-kanban = ''
         env \
           CLAUDE_CODE_USE_VERTEX=1 \
@@ -47,6 +82,8 @@ in
 
     programs.claude-code = {
       enable = cfg.enable;
+
+      package = claudeWrapper;
 
       # MCP servers configuration
       mcpServers = config.modules.mcp-servers.servers;
@@ -116,6 +153,9 @@ in
             "Bash(rg:*)"
             "Bash(cat:*)"
             "Bash(tmux:*)"
+            "mcp__context7__*"
+            "mcp__tmux__*"
+            "mcp__playwright__*"
           ];
           ask = [
             "Bash(rm:*)"
