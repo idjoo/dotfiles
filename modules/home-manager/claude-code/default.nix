@@ -8,8 +8,6 @@ with lib;
 let
   cfg = config.modules.claude-code;
 
-  # Wrapper script for claude with Vertex AI configuration
-  # Named "claude" and calls original binary by full store path to avoid recursion
   claudeWrapper = pkgs.writeShellScriptBin "claude" ''
     export CLAUDE_CODE_USE_VERTEX=1
     export ANTHROPIC_DEFAULT_OPUS_MODEL=claude-opus-4-5@20251101
@@ -62,8 +60,6 @@ in
       agents
     ];
 
-    # User-level CLAUDE.md symlinked from dotfiles (mutable, version-controlled)
-    # Uses home.homeDirectory to support both Linux (/home/user) and macOS (/Users/user)
     home.file.".claude/CLAUDE.md".source =
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/claude-code/CLAUDE.md";
 
@@ -85,43 +81,28 @@ in
 
       package = claudeWrapper;
 
-      # MCP servers configuration
       mcpServers = config.modules.mcp-servers.servers;
 
       commandsDir = ./commands;
 
-      # Settings
       settings = {
-        # Model configuration
         model = "opus";
-
-        # Session cleanup (default: 30 days)
         cleanupPeriodDays = 30;
-
-        # Output style adjustment
         outputStyle = "Explanatory";
-
-        # Extended thinking enabled by default
         alwaysThinkingEnabled = true;
 
-        # Environment variables applied to every session
         env = {
           DISABLE_AUTOUPDATER = "1";
           DISABLE_TELEMETRY = "1";
           DISABLE_ERROR_REPORTING = "1";
         };
 
-        # Permission settings
-        # Pre-allow common safe commands to avoid unnecessary prompts
         permissions = {
           defaultMode = "acceptEdits";
           allow = [
-            # Version control
             "Bash(git:*)"
             "Bash(gh:*)"
-            # Package managers (read-only operations)
             "Bash(pnpm list:*)"
-            # Build tools
             "Bash(make:*)"
             "Bash(cargo build:*)"
             "Bash(cargo test:*)"
@@ -129,15 +110,12 @@ in
             "Bash(cargo clippy:*)"
             "Bash(go build:*)"
             "Bash(go test:*)"
-            # Nix ecosystem
             "Bash(nix:*)"
             "Bash(nixfmt:*)"
             "Bash(nh:*)"
-            # Python ecosystem (uv + ruff)
             "Bash(uv:*)"
             "Bash(ruff:*)"
             "Bash(pytest:*)"
-            # Common utilities
             "Bash(jq:*)"
             "Bash(yq:*)"
             "Bash(wc:*)"
@@ -147,7 +125,6 @@ in
             "Bash(which:*)"
             "Bash(type:*)"
             "Bash(bq query:*)"
-            # Modern CLI tools (eza, fd, rg replace ls, find, grep)
             "Bash(eza:*)"
             "Bash(fd:*)"
             "Bash(rg:*)"
@@ -161,7 +138,6 @@ in
             "Bash(rm:*)"
             "Bash(sudo:*)"
             "Bash(pnpm install:*)"
-            # Python package installation (modifies environment)
             "Bash(uv add:*)"
             "Bash(uv remove:*)"
             "Bash(uv sync:*)"
@@ -173,16 +149,13 @@ in
           ];
         };
 
-        # Attribution disabled
         attribution = {
           commit = "";
           pr = "";
         };
 
-        # MCP server settings
         enableAllProjectMcpServers = true;
 
-        # Plugins
         enabledPlugins = {
           "context-management@claude-code-workflows" = true;
           "python-development@claude-code-workflows" = true;
@@ -193,14 +166,12 @@ in
           "code-documentation@claude-code-workflows" = true;
         };
 
-        # Status line - CCometixLine
         statusLine = {
           type = "command";
           command = "~/.claude/ccline/ccline";
           padding = 0;
         };
 
-        # Hooks
         hooks = {
           Notification = [
             {
