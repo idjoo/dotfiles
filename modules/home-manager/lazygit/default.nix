@@ -18,159 +18,61 @@ in
       settings = {
         customCommands = [
           {
-            key = "<c-a>";
-            description = "AI-powered conventional commit";
-            context = "global";
+            key = "N";
+            context = "worktrees";
+            description = "Create new worktree from current branch";
             prompts = [
               {
-                type = "menu";
-                key = "Type";
-                title = "Type of change";
-                options = [
-                  {
-                    name = "auto";
-                    description = "Let AI analyze and determine the best commit type";
-                    value = "ai-defined";
-                  }
-                  {
-                    name = "build";
-                    description = "Changes that affect the build system or external dependencies";
-                    value = "build";
-                  }
-                  {
-                    name = "feat";
-                    description = "A new feature";
-                    value = "feat";
-                  }
-                  {
-                    name = "fix";
-                    description = "A bug fix";
-                    value = "fix";
-                  }
-                  {
-                    name = "chore";
-                    description = "Other changes that don't modify src or test files";
-                    value = "chore";
-                  }
-                  {
-                    name = "ci";
-                    description = "Changes to CI configuration files and scripts";
-                    value = "ci";
-                  }
-                  {
-                    name = "docs";
-                    description = "Documentation only changes";
-                    value = "docs";
-                  }
-                  {
-                    name = "perf";
-                    description = "A code change that improves performance";
-                    value = "perf";
-                  }
-                  {
-                    name = "revert";
-                    description = "Reverts a previous commit";
-                    value = "revert";
-                  }
-                  {
-                    name = "style";
-                    description = "Changes that do not affect the meaning of the code";
-                    value = "style";
-                  }
-                  {
-                    name = "test";
-                    description = "Adding missing tests or correcting existing tests";
-                    value = "test";
-                  }
-                ];
-              }
-              {
-                type = "menuFromCommand";
-                title = "AI Generated Commit Messages";
-                key = "CommitMsg";
-                command = ''
-                  bash -c "
-                  # Check for staged changes
-                  diff=\$(git diff --cached | head -n 10)
-                  if [ -z \"\$diff\" ]; then
-                    echo \"No changes in staging. Add changes first.\"
-                    exit 1
-                  fi
-
-                  SELECTED_TYPE=\"{{.Form.Type}}\"
-                  COMMITS_TO_SUGGEST=5
-
-                  export GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.gemini/sa.json
-                  export GOOGLE_CLOUD_PROJECT=lv-playground-genai
-                  export GOOGLE_CLOUD_LOCATION=global
-                  gemini --model=gemini-3-flash-preview \"
-                  You are an expert at writing Git commits. Your job is to write commit messages that follow the Conventional Commits format.
-
-                  The user has selected: \$SELECTED_TYPE
-
-                  Your task is to:
-                  1. Analyze the code changes
-                  2. Determine the most appropriate commit type (if user selected 'ai-defined')
-                  3. Determine an appropriate scope (component/area affected)
-                  4. Decide if this is a breaking change
-                  5. Write clear, concise commit messages
-
-                  Available commit types:
-                  - feat: A new feature
-                  - fix: A bug fix
-                  - docs: Documentation only changes
-                  - style: Changes that do not affect the meaning of the code
-                  - perf: A code change that improves performance
-                  - test: Adding missing tests or correcting existing tests
-                  - build: Changes that affect the build system or external dependencies
-                  - ci: Changes to CI configuration files and scripts
-                  - chore: Other changes that don't modify src or test files
-                  - revert: Reverts a previous commit
-
-                  Follow these guidelines:
-                  - Structure: <type>(<scope>): <description>
-                  - If user selected 'ai-defined', analyze the changes and pick the most suitable type
-                  - If user selected a specific type, use that type: \$SELECTED_TYPE
-                  - Add scope in parentheses if applicable (e.g., auth, api, ui, config)
-                  - Use exclamation mark (!) after type/scope for breaking changes: type(scope)!: description
-                  - Use lowercase for description (except proper nouns)
-                  - Use imperative mood (\"add\", not \"added\")
-                  - Keep description under 50 characters when possible
-                  - No period at the end of subject line
-
-                  Examples:
-                  - feat(auth): add OAuth login support
-                  - fix(api): handle null response in user endpoint
-                  - docs(readme): update installation instructions
-                  - style(ui): improve button spacing consistency
-                  - refactor(database): simplify query builder logic
-                  - test(auth): add unit tests for login flow
-                  - build(deps): upgrade React to version 18
-                  - ci(github): fix deployment workflow
-                  - chore(config): update ESLint rules
-                  - perf(api)!: optimize database queries
-
-                  IMPORTANT:
-                  - Generate exactly \$COMMITS_TO_SUGGEST different commit message options
-                  - If user selected 'ai-defined', you can use different types for different options
-                  - If user selected a specific type, all messages must use that type
-                  - Only return commit messages, no explanations
-                  - Do not use markdown code blocks
-                  - One message per line
-
-                  Previous commits for context:
-                  \$(git log --oneline -10)
-
-                  Changes to analyze:
-                  \$(git diff --cached --stat)
-                  \$(git diff --cached)
-                  \"
-                  "
-                '';
+                type = "input";
+                title = "Create a new worktree from {{ .CheckedOutBranch.Name }} with what name?";
+                key = "Name";
+                initialValue = "";
               }
             ];
-            command = "git commit -m \"{{.Form.CommitMsg}}\"";
-            loadingText = "Generating commit messages...";
+            command = "git worktree add ../{{ .Form.Name }} {{ .CheckedOutBranch.Name }} -b {{ .Form.Name }}";
+          }
+          {
+            key = "N";
+            context = "localBranches";
+            description = "Create new worktree from selected branch";
+            prompts = [
+              {
+                type = "input";
+                title = "Create a new worktree from {{ .SelectedLocalBranch.Name }} with what name?";
+                key = "Name";
+                initialValue = "";
+              }
+            ];
+            command = "git worktree add ../{{ .Form.Name }} {{ .SelectedLocalBranch.Name }} -b {{ .Form.Name }}";
+          }
+          {
+            key = "D";
+            context = "worktrees";
+            description = "Force remove selected worktree";
+            prompts = [
+              {
+                type = "confirm";
+                title = "Force Remove Worktree";
+                body = "Are you sure you want to remove this worktree and any submodules?";
+              }
+            ];
+            command = "git worktree remove -f {{ .SelectedWorktree.Path | quote }}";
+            loadingText = "Removing worktree...";
+            output = "log";
+          }
+          {
+            key = "C";
+            context = "files";
+            description = "AI-powered commit with Claude";
+            prompts = [
+              {
+                type = "confirm";
+                title = "AI Commit";
+                body = "Generate commit message with Claude?";
+              }
+            ];
+            command = "claude --no-session-persistence --print /commit";
+            loadingText = "Generating commit with Claude...";
           }
         ];
       };
