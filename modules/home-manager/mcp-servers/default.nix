@@ -23,15 +23,6 @@ with lib;
           "@upstash/context7-mcp@latest"
         ];
       };
-
-      tmux = {
-        command = "${pkgs.bun}/bin/bunx";
-        args = [
-          "-y"
-          "tmux-mcp"
-          "--shell-type=zsh"
-        ];
-      };
     };
   };
 }
