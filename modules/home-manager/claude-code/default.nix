@@ -63,6 +63,15 @@ in
     home.file.".claude/CLAUDE.md".source =
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/claude-code/CLAUDE.md";
 
+    home.file.".claude/skills/context7".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/claude-code/skills/context7";
+
+    home.file.".claude/skills/playwright".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/claude-code/skills/playwright";
+
+    home.file.".claude/skills/tmux".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/claude-code/skills/tmux";
+
     home.shellAliases = {
       claude-kanban = ''
         env \
@@ -130,8 +139,8 @@ in
             "Bash(rg:*)"
             "Bash(cat:*)"
             "Bash(tmux:*)"
+            "Bash(readlink:*)"
             "mcp__context7__*"
-            "mcp__tmux__*"
             "mcp__playwright__*"
           ];
           ask = [
@@ -155,16 +164,6 @@ in
         };
 
         enableAllProjectMcpServers = true;
-
-        enabledPlugins = {
-          "context-management@claude-code-workflows" = true;
-          "python-development@claude-code-workflows" = true;
-          "javascript-typescript@claude-code-workflows" = true;
-          "backend-development@claude-code-workflows" = true;
-          "full-stack-orchestration@claude-code-workflows" = true;
-          "cloud-infrastructure@claude-code-workflows" = true;
-          "code-documentation@claude-code-workflows" = true;
-        };
 
         statusLine = {
           type = "command";
