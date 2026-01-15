@@ -112,13 +112,6 @@ in
             "Bash(git:*)"
             "Bash(gh:*)"
             "Bash(pnpm list:*)"
-            "Bash(make:*)"
-            "Bash(cargo build:*)"
-            "Bash(cargo test:*)"
-            "Bash(cargo check:*)"
-            "Bash(cargo clippy:*)"
-            "Bash(go build:*)"
-            "Bash(go test:*)"
             "Bash(nix:*)"
             "Bash(nixfmt:*)"
             "Bash(nh:*)"
@@ -133,7 +126,7 @@ in
             "Bash(diff:*)"
             "Bash(which:*)"
             "Bash(type:*)"
-            "Bash(bq query:*)"
+            "Bash(bq:*)"
             "Bash(eza:*)"
             "Bash(fd:*)"
             "Bash(rg:*)"
@@ -171,19 +164,77 @@ in
           padding = 0;
         };
 
-        hooks = {
-          Notification = [
-            {
-              matcher = "";
-              hooks = [ (import ./hooks/notify.nix { inherit pkgs; }) ];
-            }
-          ];
-          Stop = [
-            {
-              hooks = [ (import ./hooks/notify.nix { inherit pkgs; }) ];
-            }
-          ];
-        };
+        hooks =
+          let
+            notify = import ./hooks/notify.nix { inherit pkgs; };
+          in
+          {
+            Notification = [
+              {
+                matcher = "";
+                hooks = [ notify ];
+              }
+            ];
+
+            Stop = [
+              {
+                hooks = [ notify ];
+              }
+            ];
+
+            # Memory
+            SessionStart = [
+              {
+                matcher = "startup|resume";
+                hooks = [
+                  {
+                    type = "command";
+                    command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks session-start --claude";
+                    timeout = 10;
+                  }
+                ];
+              }
+            ];
+
+            UserPromptSubmit = [
+              {
+                hooks = [
+                  {
+                    type = "command";
+                    command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks user-prompt --claude";
+                    timeout = 10;
+                  }
+                ];
+              }
+            ];
+
+            PreCompact = [
+              {
+                matcher = "auto|manual";
+                hooks = [
+                  {
+                    type = "command";
+                    command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks curation --claude";
+                    timeout = 10;
+                  }
+                ];
+              }
+            ];
+
+            SessionEnd = [
+              {
+                matcher = "auto|manual";
+                hooks = [
+                  {
+                    type = "command";
+                    command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks curation --claude";
+                    timeout = 10;
+                  }
+                ];
+              }
+            ];
+
+          };
       };
     };
   };
