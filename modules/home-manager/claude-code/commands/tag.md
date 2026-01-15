@@ -13,16 +13,16 @@ Manage semantic versioning for the project by analyzing git history to auto-dete
 </OBJECTIVE>
 
 <ARGUMENTS>
-Command: `$ARGUMENTS`
+Command: $ARGUMENTS
 
 Supported subcommands:
-- **(empty or `auto`)**: Analyze git log, auto-detect version bump type, update CHANGELOG.md
-- **`current`**: Display current version without changes
-- **`patch`**: Force patch bump (X.Y.Z → X.Y.Z+1)
-- **`minor`**: Force minor bump (X.Y.Z → X.Y+1.0)
-- **`major`**: Force major bump (X.Y.Z → X+1.0.0)
-- **`set X.Y.Z`**: Set specific version
-- **`changelog`**: Only regenerate CHANGELOG.md without version bump
+- **(empty or "auto")**: Analyze git log, auto-detect version bump type, update CHANGELOG.md
+- **"current"**: Display current version without changes
+- **"patch"**: Force patch bump (X.Y.Z → X.Y.Z+1)
+- **"minor"**: Force minor bump (X.Y.Z → X.Y+1.0)
+- **"major"**: Force major bump (X.Y.Z → X+1.0.0)
+- **"set X.Y.Z"**: Set specific version
+- **"changelog"**: Only regenerate CHANGELOG.md without version bump
 </ARGUMENTS>
 
 <INSTRUCTIONS>
@@ -42,19 +42,19 @@ git log $(git describe --tags --abbrev=0 2>/dev/null)..HEAD --pretty=format:"%H|
 git log --pretty=format:"%H|%s|%b"
 ```
 
-## 2. Auto-Detection Logic (for `auto` or empty command)
+## 2. Auto-Detection Logic (for "auto" or empty command)
 
 Analyze each commit message using Conventional Commits:
 
 ### Major Bump Triggers (BREAKING CHANGE)
 - Commit body contains "BREAKING CHANGE:"
-- Type has `!` suffix: `feat!:`, `fix!:`, `refactor!:`
+- Type has "!" suffix: "feat!:", "fix!:", "refactor!:"
 
 ### Minor Bump Triggers
-- `feat:` or `feat(scope):`
+- "feat:" or "feat(scope):"
 
 ### Patch Bump Triggers (default)
-- `fix:`, `perf:`, `refactor:`, `docs:`, `style:`, `test:`, `build:`, `ci:`, `chore:`
+- "fix:", "perf:", "refactor:", "docs:", "style:", "test:", "build:", "ci:", "chore:"
 
 **Priority**: major > minor > patch
 
@@ -91,11 +91,11 @@ All notable changes to this project will be documented in this file.
 ```
 
 **Mapping**:
-- `feat` → Added
-- `fix` → Fixed
-- `perf`, `refactor` → Changed
-- `docs` → Documentation (optional section)
-- `BREAKING CHANGE` → ⚠️ prefix and prominent placement
+- "feat" → Added
+- "fix" → Fixed
+- "perf", "refactor" → Changed
+- "docs" → Documentation (optional section)
+- "BREAKING CHANGE" → ⚠️ prefix and prominent placement
 
 ## 4. Version Update Workflow
 
@@ -104,9 +104,9 @@ All notable changes to this project will be documented in this file.
 3. **Update** VERSION file with new version
 4. **Update** CHANGELOG.md with grouped commits
 5. **Stage** VERSION and CHANGELOG.md
-6. **Commit** with message: `chore(release): X.Y.Z`
-7. **Tag** with: `git tag -a vX.Y.Z -m "Release X.Y.Z"`
-8. **Push** tag and commit: `git push && git push --tags`
+6. **Commit** with message: "chore(release): X.Y.Z"
+7. **Tag** with: git tag -a vX.Y.Z -m "Release X.Y.Z"
+8. **Push** tag and commit: git push && git push --tags
 
 ## 5. Output Format
 
