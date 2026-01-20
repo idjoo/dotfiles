@@ -19,8 +19,19 @@ with lib;
       context7 = {
         command = "${pkgs.bun}/bin/bunx";
         args = [
-          "-y"
           "@upstash/context7-mcp@latest"
+        ];
+      };
+
+      serena = {
+        command = "${pkgs.uv}/bin/uvx";
+        args = [
+          "--from=git+https://github.com/oraios/serena"
+          "serena"
+          "start-mcp-server"
+          "--open-web-dashboard=false"
+          "--context=claude-code"
+          "--project-from-cwd"
         ];
       };
     };
