@@ -90,5 +90,8 @@
   home.sessionPath = [
     "${config.home.homeDirectory}/.local/bin"
   ];
-}
 
+  home.packages = [
+    pkgs.nixd
+  ];
+}
