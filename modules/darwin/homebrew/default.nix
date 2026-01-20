@@ -37,6 +37,7 @@ in
         "shottr"
         "roblox"
         "docker-desktop"
+        "another-redis-desktop-manager"
       ];
     };
   };
