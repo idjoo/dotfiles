@@ -9,6 +9,7 @@ let
   cfg = config.modules.claude-code;
 
   claudeWrapper = pkgs.writeShellScriptBin "claude" ''
+    export ENABLE_TOOL_SEARCH=true
     export CLAUDE_CODE_USE_VERTEX=1
     export ANTHROPIC_DEFAULT_OPUS_MODEL=claude-opus-4-5@20251101
     export ANTHROPIC_DEFAULT_SONNET_MODEL=claude-sonnet-4-5@20250929
@@ -135,6 +136,7 @@ in
             "Bash(readlink:*)"
             "mcp__context7__*"
             "mcp__playwright__*"
+            "mcp__serena__*"
           ];
           ask = [
             "Bash(rm:*)"

@@ -87,6 +87,21 @@ Tool B requires Tool A's **output** (true data dependency)
 
 ---
 
+## 3. MCP Server: Serena
+
+**Read Serena's initial instructions at session start if not already done.**
+
+### Rule
+
+Before using any Serena tools, call `mcp__serena__initial_instructions` to load project context and coding guidelines. This ensures proper understanding of the codebase structure and Serena's capabilities.
+
+```
+✓ Session start → mcp__serena__initial_instructions → proceed with Serena tools
+✗ Using Serena tools without reading initial instructions first
+```
+
+---
+
 ## Violations
 
 | Category  | Violation                                         |
@@ -96,3 +111,4 @@ Tool B requires Tool A's **output** (true data dependency)
 | **Tools** | Sequential calls when parallel is possible        |
 | **Bash**  | Multiple Bash calls instead of chaining           |
 | **Bash**  | Running Bash without `run_in_background: true`    |
+| **Serena**| Using Serena tools without reading initial instructions |
