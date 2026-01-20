@@ -1,11 +1,25 @@
 {
   lib,
+  pkgs,
   config,
   ...
 }:
 with lib;
 let
   cfg = config.modules.git;
+
+  gw = pkgs.writers.writeBashBin "gw" ''
+    if [ -z "$1" ]; then
+      echo "Usage: gw <branch-name>"
+      echo "Example: gw feat/new-feature"
+      exit 1
+    fi
+
+    branch="$1"
+    dir="../''${branch//\//-}"
+
+    git worktree add -b "$branch" "$dir"
+  '';
 in
 {
   options.modules.git = {
@@ -18,6 +32,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.packages = [ gw ];
+
     programs.git = {
       enable = cfg.enable;
 
