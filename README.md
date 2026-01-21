@@ -89,11 +89,11 @@ git add <new-files>
 | Host | Platform | Architecture | Type | Description |
 |------|----------|--------------|------|-------------|
 | **ox** | NixOS | x86_64-linux | Server | Primary server, backend services |
-| **horse** | NixOS | x86_64-linux | Server | Secondary server, printing |
-| **tiger** | NixOS | x86_64-linux | Desktop | Linux desktop, herbstluftwm |
-| **snake** | nix-darwin | aarch64-darwin | Desktop | macOS, AeroSpace WM |
-| **monkey** | nix-on-droid | aarch64-linux | Mobile | Android/Termux |
-| **rabbit** | nix-on-droid | aarch64-linux | Mobile | Android/Termux |
+| **horse** | NixOS | x86_64-linux | Desktop | Office Linux desktop |
+| **tiger** | NixOS | x86_64-linux | Desktop | Personal Linux desktop, herbstluftwm |
+| **snake** | nix-darwin | aarch64-darwin | Desktop | Office Mac, AeroSpace WM |
+| **monkey** | nix-on-droid | aarch64-linux | Mobile | Personal Android phone |
+| **rabbit** | nix-on-droid | aarch64-linux | Mobile | Office Android phone |
 
 ### Module System
 
