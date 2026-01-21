@@ -11,7 +11,7 @@ A Nix flake-based dotfiles repository managing system configurations across mult
 ```bash
 # Rebuild system (uses NH_FLAKE env var pointing to ~/dotfiles)
 nh home switch ~/dotfiles           # Home Manager only
-nh os switch                        # NixOS (Linux)
+nh os switch ~/dotfiles              # NixOS (Linux)
 nh darwin switch ~/dotfiles         # macOS
 
 # Format Nix files
