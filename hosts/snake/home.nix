@@ -56,6 +56,7 @@
     eza.enable = true;
     gemini-cli.enable = true;
     claude-code.enable = true;
+    opencode.enable = true;
     git = {
       enable = true;
       email = "vian@idjo.cc";
