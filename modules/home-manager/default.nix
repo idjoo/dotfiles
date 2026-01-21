@@ -7,24 +7,22 @@
 {
   # List your module files here
   imports = [
+    ./ai
     ./atuin
     ./btop
     ./cava
-    ./claude-code
     ./direnv
     ./dunst
     ./eza
     ./firefox
     ./flameshot
     ./fzf
-    ./gemini-cli
     ./ghostty
     ./git
     ./go
     ./gpg
     ./herbstluftwm
     ./lazygit
-    ./mcp-servers
     ./neovim
     ./playwright
     ./nushell
@@ -41,6 +39,7 @@
     ./zen-browser
     ./zsh
     ./zoxide
+    ./utils
   ];
 
   home.shellAliases = {

@@ -21,16 +21,13 @@
   home =
     let
       mcpServers = {
-        mcpServers = config.modules.mcp-servers.servers;
+        mcpServers = config.programs.mcp.servers;
       };
       mcpServersJson = builtins.toJSON mcpServers;
     in
     {
       file = {
         "${config.xdg.configHome}/mcphub/servers.json".text = mcpServersJson;
-        "${config.home.homeDirectory}/.cursor/mcp.json".text =
-          builtins.replaceStrings [ "/mcp" ] [ "/sse" ]
-            mcpServersJson;
       };
     };
 }
