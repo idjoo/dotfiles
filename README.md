@@ -61,27 +61,68 @@ git add <new-files>
 
 ## Architecture
 
-```
-┌──────────────────────────────────────────────────────────────────┐
-│                          flake.nix                                │
-│                     (Entry Point & Orchestration)                 │
-├──────────────────────────────────────────────────────────────────┤
-│  Inputs: nixpkgs, home-manager, nix-darwin, stylix, nixvim, ...  │
-│  Outputs: nixosConfigurations, darwinConfigurations, homeConfigs │
-└───────────────────┬──────────────────────────────────────────────┘
-                    │
-    ┌───────────────┼───────────────┬───────────────┐
-    ▼               ▼               ▼               ▼
-┌────────┐    ┌──────────┐    ┌──────────┐    ┌────────────┐
-│ hosts/ │    │ modules/ │    │ overlays │    │   pkgs/    │
-│        │    │          │    │          │    │            │
-│ ox     │    │ nixos/   │    │additions │    │ custom     │
-│ horse  │    │ darwin/  │    │mods      │    │ packages   │
-│ tiger  │    │ home-mgr │    │stable    │    │            │
-│ snake  │    │ nix-droid│    │          │    │            │
-│ monkey │    │          │    │          │    │            │
-│ rabbit │    │          │    │          │    │            │
-└────────┘    └──────────┘    └──────────┘    └────────────┘
+```mermaid
+graph TB
+    subgraph "Flake Entry Point"
+        FLAKE[flake.nix<br/>Entry Point & Orchestration]
+    end
+
+    subgraph "Inputs"
+        NP[nixpkgs]
+        HM[home-manager]
+        ND[nix-darwin]
+        ST[stylix]
+        NV[nixvim]
+    end
+
+    subgraph "Outputs"
+        NC[nixosConfigurations]
+        DC[darwinConfigurations]
+        HC[homeConfigurations]
+    end
+
+    subgraph "hosts/"
+        OX[ox<br/>Primary Server]
+        HORSE[horse<br/>Office Linux]
+        TIGER[tiger<br/>Personal Linux]
+        SNAKE[snake<br/>Office Mac]
+        MONKEY[monkey<br/>Personal Phone]
+        RABBIT[rabbit<br/>Office Phone]
+    end
+
+    subgraph "modules/"
+        NIXOS[nixos/]
+        DARWIN[darwin/]
+        HOMEMGR[home-manager/]
+        DROID[nix-on-droid/]
+    end
+
+    subgraph "overlays/"
+        ADD[additions]
+        MOD[modifications]
+        STABLE[stable-packages]
+    end
+
+    subgraph "pkgs/"
+        CUSTOM[Custom Packages]
+    end
+
+    NP --> FLAKE
+    HM --> FLAKE
+    ND --> FLAKE
+    ST --> FLAKE
+    NV --> FLAKE
+
+    FLAKE --> NC
+    FLAKE --> DC
+    FLAKE --> HC
+
+    NC --> OX
+    NC --> HORSE
+    NC --> TIGER
+    DC --> SNAKE
+    HC --> MONKEY
+    HC --> RABBIT
 ```
 
 ### Host Matrix
