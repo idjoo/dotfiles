@@ -5,9 +5,6 @@
   ...
 }:
 with lib;
-let
-  playwrightDataDir = "${config.home.homeDirectory}/.playwright";
-in
 {
   programs.mcp = {
     enable = true;
@@ -36,13 +33,17 @@ in
         url = "https://mcp.atlassian.com/v1/mcp";
       };
 
-      playwright = mkIf config.modules.playwright.enable {
-        command = "${pkgs.playwright-mcp}/bin/mcp-server-playwright";
-        args = [
-          "--output-dir=${playwrightDataDir}"
-          "--storage-state=${playwrightDataDir}/state.json"
-        ];
-      };
+      playwright =
+        let
+          dataDir = "${config.home.homeDirectory}/.playwright";
+        in
+        mkIf config.modules.playwright.enable {
+          command = "${pkgs.playwright-mcp}/bin/mcp-server-playwright";
+          args = [
+            "--output-dir=${dataDir}"
+            "--storage-state=${dataDir}/state.json"
+          ];
+        };
     };
   };
 }
