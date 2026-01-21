@@ -16,8 +16,8 @@ in
   config = mkIf cfg.enable {
     # User-level GEMINI.md symlinked from dotfiles (mutable, version-controlled)
     # Uses home.homeDirectory to support both Linux (/home/user) and macOS (/Users/user)
-    home.file.".gemini/GEMINI.md".source = config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/dotfiles/modules/home-manager/gemini-cli/GEMINI.md";
+    home.file.".gemini/GEMINI.md".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/gemini-cli/GEMINI.md";
 
     home.shellAliases = {
       gemini = ''
@@ -196,7 +196,7 @@ in
           jitContext = true;
           codebaseInvestigatorSettings.enabled = true;
           introspectionAgentSettings.enabled = true;
-          skills=true;
+          skills = true;
         };
       };
     };
