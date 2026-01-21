@@ -11,39 +11,14 @@ in
 {
   options.modules.utils = {
     enable = mkEnableOption "utils";
-    custom.enable = mkEnableOption "utils.custom";
   };
   config = mkIf cfg.enable {
-    environment.systemPackages =
-      with pkgs;
-      [
-        # archive
-        unzip
-        zip
+    environment.systemPackages = with pkgs; [
+      # nix helper for darwin rebuilds
+      nh
 
-        # nix
-        nix-init
-        nix-output-monitor
-        nurl
-
-        # others
-        fd
-        jq
-        git-filter-repo
-        openssl
-        p7zip
-        ripgrep
-        sqlite
-        devbox
-        nh
-      ]
-      ++ (optionals cfg.custom.enable (
-        with pkgs;
-        [
-          # custom
-          android-unpinner
-          httpgenerator
-        ]
-      ));
+      # dev environments
+      devbox
+    ];
   };
 }

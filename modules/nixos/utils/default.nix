@@ -11,10 +11,10 @@ in
 {
   options.modules.utils = {
     enable = mkEnableOption "utils";
-    gui.enable = mkEnableOption "utils.gui";
-    custom.enable = mkEnableOption "utils.custom";
+    gui.enable = mkEnableOption "Linux GUI utilities";
   };
   config = mkIf cfg.enable {
+    # nix-ld for running unpatched binaries
     programs.nix-ld.enable = true;
     programs.nix-ld.libraries = with pkgs; [
       zlib
@@ -27,56 +27,16 @@ in
     environment.systemPackages =
       with pkgs;
       [
-        # archive
-        unzip
-        zip
-
-        # clipboard
+        # X11 clipboard
         xclip
         xsel
-
-        # nix
-        nix-init
-        nix-output-monitor
-        nurl
-
-        # others
-        fd
-        git-filter-repo
-        jq
-        kubectl
-        openssl
-        p7zip
-        rclone
-        ripgrep
-        sqlite
-        gh
-        oci-cli
-        docker-buildx
-        uv
-        bun
-        pnpm
-        nodejs
       ]
-      ++ (optionals cfg.gui.enable (
-        with pkgs;
-        [
-          # desktop app
-          dbeaver-bin
-          libreoffice-qt6-fresh
-          discord
-          bottles
-          code-cursor
-          zathura
-        ]
-      ))
-      ++ (optionals cfg.custom.enable (
-        with pkgs;
-        [
-          # custom
-          android-unpinner
-          httpgenerator
-        ]
-      ));
+      ++ optionals cfg.gui.enable [
+        # Linux-only GUI apps
+        libreoffice-qt6-fresh
+        discord
+        bottles
+        zathura
+      ];
   };
 }
