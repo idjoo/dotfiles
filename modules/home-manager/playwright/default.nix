@@ -39,14 +39,5 @@ in
 
     # Ensure data directory exists
     home.file."${dataDir}/.keep".text = "";
-
-    # Register the Playwright MCP server
-    modules.mcp-servers.servers.playwright = {
-      command = "${pkgs.playwright-mcp}/bin/mcp-server-playwright";
-      args = [
-        "--output-dir=${dataDir}"
-        "--storage-state=${dataDir}/state.json"
-      ];
-    };
   };
 }
