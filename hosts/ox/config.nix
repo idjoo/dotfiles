@@ -215,7 +215,6 @@
     utils = {
       enable = true;
       gui.enable = false;
-      custom.enable = false;
     };
     xremap.enable = true;
     sops.enable = true;

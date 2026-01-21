@@ -160,7 +160,6 @@
     utils = {
       enable = true;
       gui.enable = true;
-      custom.enable = false;
     };
     xremap.enable = true;
   };
