@@ -11,7 +11,6 @@ in
 {
   options.modules.utils = {
     enable = mkEnableOption "utils";
-    gui.enable = mkEnableOption "utils.gui";
     custom.enable = mkEnableOption "utils.custom";
   };
   config = mkIf cfg.enable {
@@ -31,28 +30,13 @@ in
         fd
         jq
         git-filter-repo
-        kubectl
         openssl
         p7zip
         ripgrep
         sqlite
-        gh
-        nodejs
-        uv
-        pnpm
-        bun
-        skaffold
         devbox
         nh
       ]
-      ++ (optionals cfg.gui.enable (
-        with pkgs;
-        [
-          # desktop app
-          dbeaver-bin
-          code-cursor
-        ]
-      ))
       ++ (optionals cfg.custom.enable (
         with pkgs;
         [
