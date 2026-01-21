@@ -46,12 +46,12 @@ graph TB
     end
 
     subgraph "Hosts"
-        OX[ox<br/>NixOS Server]
-        HORSE[horse<br/>NixOS Server]
-        TIGER[tiger<br/>NixOS Desktop]
-        SNAKE[snake<br/>macOS]
-        MONKEY[monkey<br/>Android]
-        RABBIT[rabbit<br/>Android]
+        OX[ox<br/>Primary Server]
+        HORSE[horse<br/>Office Linux Desktop]
+        TIGER[tiger<br/>Personal Linux Desktop]
+        SNAKE[snake<br/>Office Mac]
+        MONKEY[monkey<br/>Personal Phone]
+        RABBIT[rabbit<br/>Office Phone]
     end
 
     NP --> F
