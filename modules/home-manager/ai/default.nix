@@ -3,5 +3,6 @@
     ./claude-code
     ./gemini-cli
     ./mcp
+    ./opencode
   ];
 }
