@@ -43,6 +43,13 @@
     # Browser
     zen-browser.enable = true;
 
+    # Utils
+    utils = {
+      enable = true;
+      cli.enable = true;
+      gui.enable = true;
+    };
+
     # CLIs
     btop.enable = true;
     eza.enable = true;
