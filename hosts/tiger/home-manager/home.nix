@@ -23,6 +23,12 @@
 
   modules = {
     stylix.enable = true;
+    utils = {
+      enable = true;
+      nix.enable = true;
+      cli.enable = true;
+      gui.enable = true;
+    };
 
     # window manager
     herbstluftwm.enable = true;

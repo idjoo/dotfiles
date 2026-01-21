@@ -29,6 +29,11 @@
 
   modules = {
     stylix.enable = true;
+    utils = {
+      enable = true;
+      nix.enable = true;
+      cli.enable = true;
+    };
     atuin.enable = true;
     direnv.enable = true;
     eza.enable = true;

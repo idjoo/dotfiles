@@ -46,6 +46,7 @@
     # Utils
     utils = {
       enable = true;
+      nix.enable = true;
       cli.enable = true;
       gui.enable = true;
     };
