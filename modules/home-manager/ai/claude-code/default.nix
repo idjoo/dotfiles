@@ -73,19 +73,6 @@ in
     home.file.".claude/skills/tmux".source =
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/claude-code/skills/tmux";
 
-    home.shellAliases = {
-      claude-kanban = ''
-        env \
-          CLAUDE_CODE_USE_VERTEX=1 \
-          ANTHROPIC_DEFAULT_OPUS_MODEL=claude-opus-4-5@20251101 \
-          ANTHROPIC_DEFAULT_SONNET_MODEL=claude-sonnet-4-5@20250929 \
-          ANTHROPIC_DEFAULT_HAIKU_MODEL=claude-haiku-4-5@20251001 \
-          GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.claude/sa.json \
-          GOOGLE_CLOUD_PROJECT=lv-playground-genai \
-          CLOUD_ML_REGION=global \
-          ${pkgs.bun}/bin/bunx vibe-kanban'';
-    };
-
     programs.claude-code = {
       enable = cfg.enable;
 
