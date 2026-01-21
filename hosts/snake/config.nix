@@ -77,10 +77,7 @@
     stylix.enable = true;
     tailscale.enable = true;
 
-    utils = {
-      enable = true;
-      custom.enable = false;
-    };
+    utils.enable = true;
   };
 
   # Used for backwards compatibility, please read the changelog before changing.
