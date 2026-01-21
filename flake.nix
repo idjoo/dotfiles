@@ -136,15 +136,15 @@
       };
 
       darwinConfigurations = {
-        snake =  nix-darwin.lib.darwinSystem  {
+        snake = nix-darwin.lib.darwinSystem {
           specialArgs = {
             inherit inputs outputs rootPath;
           };
           modules = [
             ./hosts/snake/config.nix
-	    {
-	      system.configurationRevision = self.rev or self.dirtyRev or null;
-	    }
+            {
+              system.configurationRevision = self.rev or self.dirtyRev or null;
+            }
           ];
         };
       };
