@@ -21,9 +21,8 @@ in
       };
 
       defaultCommand = "fd --type f";
-      defaultOptions =
-        [
-        ];
+      defaultOptions = [
+      ];
 
       changeDirWidgetCommand = "fd --type d";
       changeDirWidgetOptions = [

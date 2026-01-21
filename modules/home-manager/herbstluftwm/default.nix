@@ -146,7 +146,7 @@ in
         mouse_recenter_gap = 0;
         smart_frame_surroundings = false;
         smart_window_surroundings = false;
-        tree_style = ''╾│ ├└╼─┐'';
+        tree_style = "╾│ ├└╼─┐";
         window_gap = 0;
       };
 
