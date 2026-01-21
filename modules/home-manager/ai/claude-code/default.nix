@@ -124,6 +124,7 @@ in
             "mcp__context7__*"
             "mcp__playwright__*"
             "mcp__serena__*"
+            "mcp__atlassian__*"
           ];
           ask = [
             "Bash(rm:*)"
