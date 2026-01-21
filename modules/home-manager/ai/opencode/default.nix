@@ -7,7 +7,7 @@
 let
   cfg = config.modules.opencode;
 
-  oc = pkgs.writeShellScriptBin "oc" ''
+  opencodeWrapper = pkgs.writeShellScriptBin "opencode" ''
     export GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.claude/sa.json
     export GOOGLE_CLOUD_PROJECT=lv-playground-genai
     export VERTEX_LOCATION=global
@@ -21,27 +21,37 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ oc ];
+    home.shellAliases = {
+      oc = "${opencodeWrapper}/bin/opencode";
+    };
 
-    xdg.configFile."opencode/AGENTS.md".source = ./AGENTS.md;
+    xdg.configFile."opencode/AGENTS.md".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/ai/opencode/AGENTS.md";
 
     programs.opencode = {
       enable = true;
 
+      package = opencodeWrapper;
+
       enableMcpIntegration = true;
 
       settings = {
-        model = "vertex/claude-opus-4-5@20251101";
+        model = "google-vertex-anthropic/claude-opus-4-5@20251101";
+
         permission = {
           lsp = "allow";
           skill = "allow";
+          todowrite = "allow";
+          todoread = "allow";
         };
+
         lsp = {
           nixd = {
             command = [ "${pkgs.nixd}/bin/nixd" ];
             extensions = [ ".nix" ];
           };
         };
+
         command = {
           commit = import ./commands/commit.nix;
         };
