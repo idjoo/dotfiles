@@ -1,6 +1,8 @@
-# CLAUDE.md
+# Project Context
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides repository context for AI agents working with this codebase.
+
+> **Note**: Behavioral rules are in `~/.config/opencode/AGENTS.md` (loaded automatically).
 
 ## Repository Overview
 
