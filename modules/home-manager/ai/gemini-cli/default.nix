@@ -190,6 +190,7 @@ in
           ];
         };
 
+        hooksConfig.enabled = true;
         hooks = {
           SessionStart = [
             {
