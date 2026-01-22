@@ -4,11 +4,14 @@
 
 ## Quick Reference
 
-| Rule          | Requirement                                                  |
-| ------------- | ------------------------------------------------------------ |
-| **TodoWrite** | FIRST action for 2+ step tasks; no exceptions                |
-| **Parallel**  | Batch independent tool calls in ONE message                  |
-| **Bash**      | Chain commands in ONE call                                   |
+| Rule          | Requirement                                              |
+| ------------- | -------------------------------------------------------- |
+| **TodoWrite** | FIRST action for 2+ step tasks; no exceptions            |
+| **Parallel**  | Batch independent tool calls in ONE message              |
+| **Bash**      | Chain commands in ONE call                               |
+| **Skills**    | Check for available skills before implementing workflows |
+| **Python**    | Always use `uv run --with <deps>` for scripts            |
+| **Context7**  | Use context7 skill for library/framework documentation   |
 
 ---
 
@@ -85,12 +88,76 @@ Before using any Serena tools, call `mcp__serena__initial_instructions` to load 
 
 ---
 
+## 4. Skills Usage
+
+**Check for available skills before starting tasks. Skills provide optimized workflows.**
+
+### Rule
+
+Before beginning a task, check if a relevant skill exists that can handle it more effectively. Skills are specialized workflows for common operations like commits, code review, and document generation.
+
+```
+✓ User asks to commit → Check skills → Use /commit skill
+✓ Creating a PDF → Check skills → Use /pdf skill
+✗ Manually implementing a workflow that a skill already handles
+```
+
+### Available Skills (Examples)
+
+- `/commit` - Smart atomic commits with Conventional Commits
+- `/pdf` - PDF manipulation and creation
+- `/xlsx` - Spreadsheet operations
+- `/docx` - Document creation and editing
+- `/pptx` - Presentation tasks
+
+### Why
+
+- **Consistency**: Skills follow established patterns and best practices
+- **Efficiency**: Pre-built workflows avoid reinventing solutions
+- **Quality**: Skills are optimized for their specific use cases
+
+---
+
+## 5. Python Execution
+
+**ALWAYS use `uv run` with inline dependencies. Never use bare `python` commands.**
+
+### Rule
+
+When running Python scripts or one-liners, use `uv run --with <deps>` to ensure dependencies are available in an isolated environment:
+
+```
+✓ uv run --with requests python script.py
+✓ uv run --with pandas,numpy python -c "import pandas as pd; ..."
+✗ python script.py                    ← No dependency management
+✗ pip install requests && python ...  ← Pollutes environment
+```
+
+### Why
+
+- **Reproducibility**: Dependencies are explicit and isolated per invocation
+- **No global pollution**: Avoids modifying system/user Python packages
+- **Declarative**: The command shows exactly what's needed to run
+
+---
+
+## 6. Documentation Lookup
+
+**Route to context7 skill. Never use web search for library docs.**
+
+→ See `skills/context7/SKILL.md` for full workflow.
+
+---
+
 ## Violations
 
-| Category  | Violation                                         |
-| --------- | ------------------------------------------------- |
-| **Todos** | Starting multi-step work without a todo list      |
-| **Todos** | Batching completions instead of immediate updates |
-| **Tools** | Sequential calls when parallel is possible        |
-| **Bash**  | Multiple Bash calls instead of chaining           |
-| **Serena**| Using Serena tools without reading initial instructions |
+| Category     | Violation                                                |
+| ------------ | -------------------------------------------------------- |
+| **Todos**    | Starting multi-step work without a todo list             |
+| **Todos**    | Batching completions instead of immediate updates        |
+| **Tools**    | Sequential calls when parallel is possible               |
+| **Bash**     | Multiple Bash calls instead of chaining                  |
+| **Skills**   | Manually implementing workflows when a skill exists      |
+| **Python**   | Using bare `python` or `pip install` instead of `uv run` |
+| **Serena**   | Using Serena tools without reading initial instructions  |
+| **Context7** | Using WebSearch for library documentation instead of skill |
