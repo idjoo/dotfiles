@@ -125,6 +125,7 @@ in
             "mcp__playwright__*"
             "mcp__serena__*"
             "mcp__atlassian__*"
+            "Skill(*)"
           ];
           ask = [
             "Bash(rm:*)"
