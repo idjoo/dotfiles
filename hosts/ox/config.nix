@@ -158,7 +158,7 @@
 
     recommendedProxySettings = true;
 
-    virtualHosts."os.wyvern-vector.ts.net" = {
+    virtualHosts."ox.wyvern-vector.ts.net" = {
       locations."~ /api/whatsapp/(.*)" = {
         proxyPass = "http://127.0.0.1:8000/$1";
       };
