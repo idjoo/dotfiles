@@ -189,6 +189,65 @@ in
             "save_memory"
           ];
         };
+
+        hooks = {
+          SessionStart = [
+            {
+              matcher = "startup|resume";
+              hooks = [
+                {
+                  name = "load-session-primer";
+                  type = "command";
+                  command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks session-start --gemini";
+                  description = "Load session primer at the beginning of a session";
+                }
+              ];
+            }
+          ];
+
+          BeforeAgent = [
+            {
+              matcher = "*";
+              hooks = [
+                {
+                  name = "inject-memories";
+                  type = "command";
+                  command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks user-prompt --gemini";
+                  description = "Inject relevant memories into user prompt";
+                }
+              ];
+            }
+          ];
+
+          PreCompress = [
+            {
+              matcher = "auto|manual";
+              hooks = [
+                {
+                  name = "curate-memories";
+                  type = "command";
+                  command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks curation --gemini";
+                  description = "Curate memories before context compression";
+                }
+              ];
+            }
+          ];
+
+          SessionEnd = [
+            {
+              matcher = "exit|logout";
+              hooks = [
+                {
+                  name = "curate-memories";
+                  type = "command";
+                  command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks curation --gemini";
+                  description = "Curate memories before session end";
+                }
+              ];
+            }
+          ];
+        };
+
         experimental = {
           enableAgents = true;
           extensionManagement = true;
