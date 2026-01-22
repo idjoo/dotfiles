@@ -54,9 +54,7 @@
     # CLIs
     btop.enable = true;
     eza.enable = true;
-    gemini-cli.enable = true;
-    claude-code.enable = true;
-    opencode.enable = true;
+    ai.enable = true;
     git = {
       enable = true;
       email = "vian@idjo.cc";
@@ -71,7 +69,6 @@
     zoxide.enable = true;
     atuin.enable = true;
     sops.enable = true;
-    playwright.enable = true;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
