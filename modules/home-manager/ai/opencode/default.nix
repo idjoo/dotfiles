@@ -11,6 +11,7 @@ let
     export GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.claude/sa.json
     export GOOGLE_CLOUD_PROJECT=lv-playground-genai
     export VERTEX_LOCATION=global
+    export OPENCODE_DISABLE_LSP_DOWNLOAD=true
     export OPENCODE_EXPERIMENTAL=true
     exec ${pkgs.opencode}/bin/opencode "$@"
   '';
@@ -49,6 +50,14 @@ in
           nixd = {
             command = [ "${pkgs.nixd}/bin/nixd" ];
             extensions = [ ".nix" ];
+          };
+
+          pyright = {
+            command = [ "${pkgs.pyright}/bin/pyright" ];
+            extensions = [
+              ".py"
+              ".pyi"
+            ];
           };
         };
 
