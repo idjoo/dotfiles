@@ -59,6 +59,13 @@ in
               ".pyi"
             ];
           };
+
+          bqls = {
+            command = [ "${config.home.homeDirectory}/.local/bin/bqls" ];
+            extensions = [
+              ".bq.sql"
+            ];
+          };
         };
 
         command = {
