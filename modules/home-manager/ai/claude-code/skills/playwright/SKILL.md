@@ -5,60 +5,66 @@ allowed-tools: mcp__playwright__*
 user-invocable: false
 ---
 
-# Playwright Browser Automation
+<skill name="Playwright Browser Automation">
+  <purpose>Efficiently automate browser interactions using the Playwright MCP tools.</purpose>
 
-Efficiently automate browser interactions using the Playwright MCP tools.
-
-## Tool Preference
-
-**Prefer `browser_run_code` for batch operations** - it executes multiple Playwright operations in a single call, reducing round-trips.
-
-```javascript
-// Good: Single call for multiple operations
+  <tool-preference>
+    <principle>Prefer `browser_run_code` for batch operations - it executes multiple Playwright operations in a single call, reducing round-trips.</principle>
+    
+    <example type="good" title="Single call for multiple operations">
+      <code>
 browser_run_code: async (page) => {
   await page.goto('https://example.com');
   await page.fill('#email', 'user@test.com');
   await page.fill('#password', 'secret');
   await page.click('button[type="submit"]');
 }
+      </code>
+    </example>
+    
+    <example type="avoid" title="Multiple individual tool calls">
+      <description>browser_navigate → browser_type → browser_type → browser_click</description>
+    </example>
+  </tool-preference>
 
-// Avoid: Multiple individual tool calls
-// browser_navigate → browser_type → browser_type → browser_click
-```
+  <when-to-use-individual-tools>
+    <use-case name="Snapshot needed">Use `browser_snapshot` to read page state for decision-making</use-case>
+    <use-case name="Dynamic interaction">When next action depends on page response</use-case>
+    <use-case name="Debugging">Step-by-step execution for troubleshooting</use-case>
+  </when-to-use-individual-tools>
 
-## When to Use Individual Tools
+  <screenshot-rule>
+    <principle>After any screen-modifying action, call `browser_take_screenshot`</principle>
+    <default-filename>latest.png</default-filename>
+    <note>ALWAYS use "latest.png" unless user specifies another name</note>
+  </screenshot-rule>
 
-- **Snapshot needed**: Use `browser_snapshot` to read page state for decision-making
-- **Dynamic interaction**: When next action depends on page response
-- **Debugging**: Step-by-step execution for troubleshooting
+  <screen-changing-tools title="Tools that modify visible page and require screenshots">
+    <tool>browser_navigate</tool>
+    <tool>browser_click</tool>
+    <tool>browser_type</tool>
+    <tool>browser_fill_form</tool>
+    <tool>browser_select_option</tool>
+    <tool>browser_press_key</tool>
+    <tool>browser_handle_dialog</tool>
+    <tool>browser_file_upload</tool>
+    <tool>browser_tabs (select/new)</tool>
+    <tool>browser_run_code</tool>
+  </screen-changing-tools>
 
-## Screenshot Rule
+  <storage-state>
+    <path>/playwright-data/state.json</path>
+    <note>Browser session persists cookies, localStorage, and auth</note>
+  </storage-state>
 
-After any screen-modifying action, call `browser_take_screenshot`:
-
-```
-filename: "latest.png"  # ALWAYS use this unless user specifies another name
-```
-
-## Screen-Changing Tools
-
-These tools modify the visible page and require screenshots:
-
-- `browser_navigate`, `browser_click`, `browser_type`
-- `browser_fill_form`, `browser_select_option`, `browser_press_key`
-- `browser_handle_dialog`, `browser_file_upload`
-- `browser_tabs` (select/new), `browser_run_code`
-
-## Storage State
-
-Browser session persists at `/playwright-data/state.json` (cookies, localStorage, auth).
-
-## Pattern
-
-```
-# Batch operation with screenshot
-browser_run_code(code) → browser_take_screenshot(filename: "latest.png")
-
-# Individual operation with screenshot
-browser_click(element, ref) → browser_take_screenshot(filename: "latest.png")
-```
+  <patterns>
+    <pattern name="Batch operation with screenshot">
+      <step>browser_run_code(code)</step>
+      <step>browser_take_screenshot(filename: "latest.png")</step>
+    </pattern>
+    <pattern name="Individual operation with screenshot">
+      <step>browser_click(element, ref)</step>
+      <step>browser_take_screenshot(filename: "latest.png")</step>
+    </pattern>
+  </patterns>
+</skill>
