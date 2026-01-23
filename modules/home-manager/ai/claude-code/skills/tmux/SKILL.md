@@ -5,108 +5,65 @@ allowed-tools: Bash(tmux:*)
 user-invocable: false
 ---
 
-# Tmux Workflow
+<skill name="Tmux Workflow">
+  <purpose>Manage terminal sessions with tmux for background processes, parallel terminals, and persistent workspaces.</purpose>
 
-Manage terminal sessions with tmux for background processes, parallel terminals, and persistent workspaces.
+  <section name="Session Management">
+    <subsection name="Check Existing Sessions First">
+      <principle>Always check before creating new sessions</principle>
+      <command>tmux list-sessions 2>/dev/null || echo "No sessions"</command>
+    </subsection>
 
-## Session Management
+    <subsection name="Create or Attach">
+      <command description="Create new session">tmux new-session -d -s "session-name"</command>
+      <command description="Attach to existing">tmux attach-session -t "session-name"</command>
+      <command description="Create if not exists, attach if exists">tmux new-session -A -s "session-name"</command>
+    </subsection>
+  </section>
 
-### Check Existing Sessions First
+  <section name="Executing Commands">
+    <subsection name="Run Command in Session">
+      <command description="Send command to session">tmux send-keys -t "session-name" "your-command" Enter</command>
+      <command description="Send to specific window">tmux send-keys -t "session-name:window-name" "command" Enter</command>
+      <command description="Send to specific pane">tmux send-keys -t "session-name:0.0" "command" Enter</command>
+    </subsection>
 
-Always check before creating new sessions:
+    <subsection name="Capture Output">
+      <command description="Capture pane contents">tmux capture-pane -t "session-name" -p</command>
+      <command description="Capture with history (last 1000 lines)">tmux capture-pane -t "session-name" -p -S -1000</command>
+    </subsection>
+  </section>
 
-```bash
-tmux list-sessions 2>/dev/null || echo "No sessions"
-```
+  <section name="Window and Pane Management">
+    <command description="New window in session">tmux new-window -t "session-name" -n "window-name"</command>
+    <command description="Split pane horizontally">tmux split-window -h -t "session-name"</command>
+    <command description="Split pane vertically">tmux split-window -v -t "session-name"</command>
+    <command description="List windows">tmux list-windows -t "session-name"</command>
+    <command description="List panes">tmux list-panes -t "session-name"</command>
+  </section>
 
-### Create or Attach
+  <section name="Common Patterns">
+    <pattern name="Background Process">
+      <description>Start process in background session</description>
+      <command>tmux new-session -d -s "build" &amp;&amp; tmux send-keys -t "build" "npm run build" Enter</command>
+    </pattern>
 
-```bash
-# Create new session
-tmux new-session -d -s "session-name"
+    <pattern name="Check Process Status">
+      <description>Capture output to see if process completed</description>
+      <command>tmux capture-pane -t "build" -p | tail -20</command>
+    </pattern>
 
-# Attach to existing
-tmux attach-session -t "session-name"
+    <pattern name="Cleanup">
+      <command description="Kill specific session">tmux kill-session -t "session-name"</command>
+      <command description="Kill all sessions">tmux kill-server</command>
+    </pattern>
+  </section>
 
-# Create if not exists, attach if exists
-tmux new-session -A -s "session-name"
-```
-
-## Executing Commands
-
-### Run Command in Session
-
-```bash
-# Send command to session
-tmux send-keys -t "session-name" "your-command" Enter
-
-# Send to specific window
-tmux send-keys -t "session-name:window-name" "command" Enter
-
-# Send to specific pane
-tmux send-keys -t "session-name:0.0" "command" Enter
-```
-
-### Capture Output
-
-```bash
-# Capture pane contents
-tmux capture-pane -t "session-name" -p
-
-# Capture with history (last 1000 lines)
-tmux capture-pane -t "session-name" -p -S -1000
-```
-
-## Window and Pane Management
-
-```bash
-# New window in session
-tmux new-window -t "session-name" -n "window-name"
-
-# Split pane horizontally
-tmux split-window -h -t "session-name"
-
-# Split pane vertically
-tmux split-window -v -t "session-name"
-
-# List windows
-tmux list-windows -t "session-name"
-
-# List panes
-tmux list-panes -t "session-name"
-```
-
-## Common Patterns
-
-### Background Process
-
-```bash
-# Start process in background session
-tmux new-session -d -s "build" && \
-tmux send-keys -t "build" "npm run build" Enter
-```
-
-### Check Process Status
-
-```bash
-# Capture output to see if process completed
-tmux capture-pane -t "build" -p | tail -20
-```
-
-### Cleanup
-
-```bash
-# Kill specific session
-tmux kill-session -t "session-name"
-
-# Kill all sessions
-tmux kill-server
-```
-
-## Best Practices
-
-1. **Name sessions descriptively**: Use meaningful names like `dev`, `build`, `logs`
-2. **Check before creating**: Always verify session doesn't exist first
-3. **Capture output**: Use `capture-pane` to verify command results
-4. **Clean up**: Kill sessions when work is complete
-5. **Chain commands**: Use `&&` to ensure proper sequencing
+  <best-practices>
+    <practice>Name sessions descriptively: Use meaningful names like `dev`, `build`, `logs`</practice>
+    <practice>Check before creating: Always verify session doesn't exist first</practice>
+    <practice>Capture output: Use `capture-pane` to verify command results</practice>
+    <practice>Clean up: Kill sessions when work is complete</practice>
+    <practice>Chain commands: Use `&amp;&amp;` to ensure proper sequencing</practice>
+  </best-practices>
+</skill>
