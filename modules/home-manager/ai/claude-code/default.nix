@@ -174,56 +174,56 @@ in
             ];
 
             # Memory
-            SessionStart = [
-              {
-                matcher = "startup|resume";
-                hooks = [
-                  {
-                    type = "command";
-                    command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks session-start --claude";
-                    timeout = 10;
-                  }
-                ];
-              }
-            ];
-
-            UserPromptSubmit = [
-              {
-                hooks = [
-                  {
-                    type = "command";
-                    command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks user-prompt --claude";
-                    timeout = 10;
-                  }
-                ];
-              }
-            ];
-
-            PreCompact = [
-              {
-                matcher = "auto|manual";
-                hooks = [
-                  {
-                    type = "command";
-                    command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks curation --claude";
-                    timeout = 10;
-                  }
-                ];
-              }
-            ];
-
-            SessionEnd = [
-              {
-                matcher = "auto|manual";
-                hooks = [
-                  {
-                    type = "command";
-                    command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks curation --claude";
-                    timeout = 10;
-                  }
-                ];
-              }
-            ];
+            # SessionStart = [
+            #   {
+            #     matcher = "startup|resume";
+            #     hooks = [
+            #       {
+            #         type = "command";
+            #         command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks session-start --claude";
+            #         timeout = 10;
+            #       }
+            #     ];
+            #   }
+            # ];
+            #
+            # UserPromptSubmit = [
+            #   {
+            #     hooks = [
+            #       {
+            #         type = "command";
+            #         command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks user-prompt --claude";
+            #         timeout = 10;
+            #       }
+            #     ];
+            #   }
+            # ];
+            #
+            # PreCompact = [
+            #   {
+            #     matcher = "auto|manual";
+            #     hooks = [
+            #       {
+            #         type = "command";
+            #         command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks curation --claude";
+            #         timeout = 10;
+            #       }
+            #     ];
+            #   }
+            # ];
+            #
+            # SessionEnd = [
+            #   {
+            #     matcher = "auto|manual";
+            #     hooks = [
+            #       {
+            #         type = "command";
+            #         command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks curation --claude";
+            #         timeout = 10;
+            #       }
+            #     ];
+            #   }
+            # ];
 
           };
       };
