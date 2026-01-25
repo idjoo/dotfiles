@@ -63,6 +63,7 @@ in
         set -ga terminal-overrides ",*256col*:Tc"
         set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
         set-environment -g COLORTERM "truecolor"
+        set -g allow-passthrough on
 
         unbind-key -T copy-mode-vi v
         bind-key -T copy-mode-vi 'v' send -X begin-selection
