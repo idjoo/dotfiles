@@ -58,6 +58,15 @@ These mandatory rules govern all interactions. Violations are unacceptable.
     <note>Operators: `&amp;&amp;` stops on failure; `;` continues regardless</note>
   </subsection>
 
+  <subsection name="Python Scripts">
+    <principle>Run Python scripts using uv for dependency management</principle>
+    <example type="correct">Bash("uv run --with requests script.py")</example>
+    <example type="correct">Bash("uv run --with pandas --with numpy analysis.py")</example>
+    <example type="correct">Bash("uv run --with requests python -c 'import requests; print(requests.get(\"https://example.com\").status_code)'")</example>
+    <example type="incorrect">Bash("python script.py") - Missing dependencies may fail</example>
+    <note>Use `--with package` for each required dependency; use `python -c` for inline code</note>
+  </subsection>
+
   <subsection name="Sequential Only When">
     <rule>Tool B requires Tool A's output (true data dependency)</rule>
   </subsection>
