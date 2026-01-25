@@ -26,9 +26,34 @@
       <step name="commit">
         For each atomic unit:
         <substep>Stage the relevant files using `git add &lt;files&gt;`.</substep>
-        <substep>Commit with emoji conventional format: `git commit -m "&lt;emoji&gt; &lt;type&gt;: &lt;description&gt;"`</substep>
+        <substep>Commit with emoji conventional format: `git commit -m "&lt;type&gt;(&lt;scope&gt;): &lt;emoji&gt; &lt;description&gt;"`</substep>
+        <substep>For breaking changes, add `!` before colon and include BREAKING CHANGE footer.</substep>
       </step>
     </instructions>
+
+    <commit-format>
+      <format>
+        Full format: &lt;type&gt;(&lt;scope&gt;)!: &lt;emoji&gt; &lt;description&gt;
+        
+        Components:
+        - type: Required. Conventional commit type (feat, fix, etc.).
+        - scope: Optional. Module, component, or area affected (e.g., auth, api, ui).
+        - !: Optional. Indicates breaking change.
+        - emoji: Required. Visual indicator of change type (after colon).
+        - description: Required. Imperative mood summary.
+      </format>
+      <scope-guidelines>
+        <guideline>Use lowercase, hyphenated names (e.g., user-auth, api-client).</guideline>
+        <guideline>Derive from: directory name, module name, feature area, or component.</guideline>
+        <guideline>Keep consistent across the project.</guideline>
+        <guideline>Omit scope only when change is truly global or scope is unclear.</guideline>
+      </scope-guidelines>
+      <breaking-change>
+        <rule>Add `!` after scope (or type if no scope) for breaking changes.</rule>
+        <rule>Include `BREAKING CHANGE:` footer in commit body explaining the break.</rule>
+        <rule>Use `-m` flag multiple times or heredoc for multi-line commits.</rule>
+      </breaking-change>
+    </commit-format>
 
     <constraints>
       <constraint name="atomic">Do not squash unrelated changes into one commit.</constraint>
@@ -133,19 +158,33 @@
 
     <examples>
       <good-messages>
-        <message>✨ feat: add user authentication system</message>
-        <message>🐛 fix: resolve memory leak in rendering process</message>
-        <message>📝 docs: update API documentation with new endpoints</message>
-        <message>♻️ refactor: simplify error handling logic in parser</message>
-        <message>🚨 fix: resolve linter warnings in component files</message>
-        <message>🦺 feat: add input validation for user registration form</message>
-        <message>🔒️ fix: strengthen authentication password requirements</message>
+        <category name="Without scope">
+          <message>feat: ✨ add user authentication system</message>
+          <message>fix: 🐛 resolve memory leak in rendering process</message>
+          <message>docs: 📝 update API documentation with new endpoints</message>
+        </category>
+        <category name="With scope">
+          <message>feat(auth): ✨ add OAuth2 login flow</message>
+          <message>fix(parser): 🐛 resolve memory leak in rendering process</message>
+          <message>refactor(api): ♻️ simplify error handling logic</message>
+          <message>fix(ui): 🚨 resolve linter warnings in component files</message>
+          <message>feat(forms): 🦺 add input validation for registration</message>
+          <message>fix(auth): 🔒️ strengthen password requirements</message>
+        </category>
+        <category name="Breaking changes">
+          <message>feat(api)!: 💥 change authentication endpoint response format</message>
+          <message>refactor!: 💥 rename config options for clarity</message>
+          <message>fix(db)!: 💥 update schema to support new user model</message>
+        </category>
       </good-messages>
+      <breaking-change-example>
+        <command>git commit -m "feat(api)!: 💥 change auth response format" -m "BREAKING CHANGE: The /auth/login endpoint now returns { token, user } instead of { accessToken, refreshToken }. Update client code accordingly."</command>
+      </breaking-change-example>
       <split-example>
-        <commit>✨ feat: add new solc version type definitions</commit>
-        <commit>📝 docs: update documentation for new solc versions</commit>
-        <commit>🔧 chore: update package.json dependencies</commit>
-        <commit>✅ test: add unit tests for new solc version features</commit>
+        <commit>feat(solc): ✨ add new version type definitions</commit>
+        <commit>docs(solc): 📝 update documentation for new versions</commit>
+        <commit>chore(deps): 🔧 update package.json dependencies</commit>
+        <commit>test(solc): ✅ add unit tests for new version features</commit>
       </split-example>
     </examples>
 
