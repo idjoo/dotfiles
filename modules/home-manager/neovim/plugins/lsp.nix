@@ -44,7 +44,15 @@
           ];
         };
       };
-      jsonls.enable = true;
+      jsonls = {
+        enable = true;
+        settings = {
+          filetypes = [
+            "json"
+            "jsonc"
+          ];
+        };
+      };
       yamlls.enable = true;
       jdtls.enable = true;
       taplo.enable = true;
