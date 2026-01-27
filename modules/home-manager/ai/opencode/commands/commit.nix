@@ -1,5 +1,7 @@
 {
   description = "Smart atomic commits with Conventional Commits and emoji";
+  subtask = true;
+  model = "google-vertex-anthropic/claude-sonnet-4@20250514";
   template = ''
     <role>
       You are a Senior Release Engineer and Git Expert. You excel at creating well-formatted 
@@ -29,7 +31,16 @@
         <substep>Commit with emoji conventional format: `git commit -m "&lt;type&gt;(&lt;scope&gt;): &lt;emoji&gt; &lt;description&gt;"`</substep>
         <substep>For breaking changes, add `!` before colon and include BREAKING CHANGE footer.</substep>
       </step>
+      <step name="push" condition="when $1 equals 'push' or '--push'">
+        After all commits are complete, push to the remote repository using `git push`.
+        If the branch has no upstream, use `git push -u origin &lt;branch&gt;`.
+      </step>
     </instructions>
+
+    <arguments>
+      <arg position="1">$1</arg>
+      <note>Pass "push" or "--push" as argument to push after committing</note>
+    </arguments>
 
     <commit-format>
       <format>
