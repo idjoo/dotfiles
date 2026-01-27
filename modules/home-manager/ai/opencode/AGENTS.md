@@ -8,6 +8,7 @@ These mandatory rules govern all interactions. Violations are unacceptable.
   <rule name="todowrite">FIRST action for 2+ step tasks; no exceptions</rule>
   <rule name="Parallel">Batch independent tool calls in ONE message</rule>
   <rule name="Bash">Chain commands in ONE call (`&amp;&amp;` or `;`)</rule>
+  <rule name="Python">ALWAYS use `uv run` - NEVER bare `python` or `python3`</rule>
   <rule name="LSP">Prefer LSP over grep for code navigation</rule>
   <rule name="Delegate">Use subagents for specialized tasks</rule>
   <rule name="Verify">Test changes before marking complete</rule>
@@ -58,13 +59,46 @@ These mandatory rules govern all interactions. Violations are unacceptable.
     <note>Operators: `&amp;&amp;` stops on failure; `;` continues regardless</note>
   </subsection>
 
-  <subsection name="Python Scripts">
-    <principle>Run Python scripts using uv for dependency management</principle>
-    <example type="correct">Bash("uv run --with requests script.py")</example>
-    <example type="correct">Bash("uv run --with pandas --with numpy analysis.py")</example>
-    <example type="correct">Bash("uv run --with requests python -c 'import requests; print(requests.get(\"https://example.com\").status_code)'")</example>
-    <example type="incorrect">Bash("python script.py") - Missing dependencies may fail</example>
-    <note>Use `--with package` for each required dependency; use `python -c` for inline code</note>
+  <subsection name="Python Execution">
+    <principle>ALWAYS use `uv run` for Python. NEVER use bare `python` or `python3` commands.</principle>
+    
+    <rationale>
+      uv provides instant dependency resolution, isolated environments, and reproducible execution.
+      Bare python/python3 commands risk missing dependencies, version conflicts, and environment pollution.
+    </rationale>
+
+    <patterns>
+      <pattern name="Script with dependencies">
+        <example type="correct">Bash("uv run --with requests script.py")</example>
+        <example type="correct">Bash("uv run --with pandas --with numpy analysis.py")</example>
+      </pattern>
+      
+      <pattern name="Inline Python (`python -c`)">
+        <example type="correct">Bash("uv run python -c 'print(1+1)'")</example>
+        <example type="correct">Bash("uv run --with requests python -c 'import requests; ...'")</example>
+        <example type="incorrect">Bash("python -c 'print(1+1)'")</example>
+        <example type="incorrect">Bash("python3 -c 'import json; ...'")</example>
+      </pattern>
+      
+      <pattern name="Script without external deps">
+        <example type="correct">Bash("uv run script.py")</example>
+        <example type="incorrect">Bash("python script.py")</example>
+        <example type="incorrect">Bash("python3 script.py")</example>
+      </pattern>
+      
+      <pattern name="Module execution">
+        <example type="correct">Bash("uv run python -m pytest")</example>
+        <example type="correct">Bash("uv run --with black python -m black .")</example>
+        <example type="incorrect">Bash("python -m pytest")</example>
+      </pattern>
+    </patterns>
+
+    <rules>
+      <rule>Use `--with package` for each required dependency</rule>
+      <rule>Multiple deps: `--with pkg1 --with pkg2 --with pkg3`</rule>
+      <rule>Even stdlib-only scripts should use `uv run` for consistency</rule>
+      <rule>For projects with pyproject.toml, `uv run` auto-resolves project deps</rule>
+    </rules>
   </subsection>
 
   <subsection name="Sequential Only When">
@@ -235,6 +269,7 @@ These mandatory rules govern all interactions. Violations are unacceptable.
   <violation category="Todos">Batching completions instead of immediate updates</violation>
   <violation category="Tools">Sequential calls when parallel is possible</violation>
   <violation category="Bash">Multiple Bash calls instead of chaining</violation>
+  <violation category="Python">Using bare `python` or `python3` instead of `uv run`</violation>
   <violation category="LSP">Using grep/search when LSP would give precise results</violation>
   <violation category="Delegate">Manual exploration when subagent would be faster</violation>
   <violation category="Verify">Marking complete without testing changes</violation>
