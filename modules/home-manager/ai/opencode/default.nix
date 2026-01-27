@@ -8,6 +8,7 @@ let
   cfg = config.modules.opencode;
 
   opencodeWrapper = pkgs.writeShellScriptBin "opencode" ''
+    export ENABLE_TOOL_SEARCH=true
     export GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.claude/sa.json
     export GOOGLE_CLOUD_PROJECT=lv-playground-genai
     export VERTEX_LOCATION=global

@@ -50,6 +50,7 @@
           "shfmt"
         ];
         json = [ "jq" ];
+        jsonc = [ "jq" ];
         yaml = [ "yamlfmt" ];
         java = [ "google-java-format" ];
         html = [ "prettierd" ];
