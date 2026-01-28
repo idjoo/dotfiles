@@ -30,14 +30,14 @@ model: sonnet
     For each atomic unit:
     <substep>Stage the relevant files using `git add <files>`.</substep>
     <substep>Commit with emoji conventional format: `git commit -m "<type>(<scope>): <emoji> <description>"`</substep>
-    <substep>For breaking changes, add `!` before colon and include BREAKING CHANGE footer.</substep>
+    <substep>For breaking changes, add exclamation mark before colon and include BREAKING CHANGE footer.</substep>
   </step>
 </instructions>
 
 <commit-format>
   <format>
-    Full format: <type>(<scope>)!: <emoji> <description>
-    
+    Full format: type(scope)!: emoji description
+
     Components:
     - type: Required. Conventional commit type (feat, fix, etc.).
     - scope: Optional. Module, component, or area affected (e.g., auth, api, ui).
@@ -52,9 +52,9 @@ model: sonnet
     <guideline>Omit scope only when change is truly global or scope is unclear.</guideline>
   </scope-guidelines>
   <breaking-change>
-    <rule>Add `!` after scope (or type if no scope) for breaking changes.</rule>
-    <rule>Include `BREAKING CHANGE:` footer in commit body explaining the break.</rule>
-    <rule>Use `-m` flag multiple times or heredoc for multi-line commits.</rule>
+    <rule>Add exclamation mark after scope (or type if no scope) for breaking changes.</rule>
+    <rule>Include BREAKING CHANGE footer in commit body explaining the break.</rule>
+    <rule>Use -m flag multiple times or heredoc for multi-line commits.</rule>
   </breaking-change>
 </commit-format>
 
