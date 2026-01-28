@@ -37,6 +37,14 @@ in
 
       enableMcpIntegration = true;
 
+      commands = {
+        commit = ./commands/commit.md;
+      };
+
+      skills = {
+        tmux = ./skills/tmux;
+      };
+
       settings = {
         model = "google-vertex-anthropic/claude-opus-4-5@20251101";
 
@@ -67,10 +75,6 @@ in
               ".bq.sql"
             ];
           };
-        };
-
-        command = {
-          commit = import ./commands/commit.nix;
         };
       };
     };
