@@ -14,7 +14,7 @@ let
     export GOOGLE_VERTEX_LOCATION=global
     export OPENCODE_DISABLE_LSP_DOWNLOAD=true
     export OPENCODE_EXPERIMENTAL=true
-    exec ${pkgs.opencode}/bin/opencode "$@"
+    exec ${pkgs.llm-agents.opencode}/bin/opencode "$@"
   '';
 in
 {
