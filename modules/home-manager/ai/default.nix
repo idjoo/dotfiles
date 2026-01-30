@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib;
@@ -50,5 +51,9 @@ in
       opencode.enable = mkDefault cfg.opencode;
       playwright.enable = mkDefault cfg.mcp;
     };
+
+    home.packages = mkIf cfg.enable [
+      pkgs.llm-agents.agent-browser
+    ];
   };
 }
