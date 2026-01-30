@@ -24,6 +24,7 @@
         google-cloud-sdk.components.log-streaming
         google-cloud-sdk.components.cloud-run-proxy
         google-cloud-sdk.components.run-compose
+        google-cloud-sdk.components.pubsub-emulator
       ])
     ];
   };
