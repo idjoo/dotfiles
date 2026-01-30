@@ -16,6 +16,7 @@
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.stable-packages
+      outputs.overlays.llm-agents
 
       inputs.nur.overlays.default
     ];
