@@ -9,14 +9,6 @@ let
   cfg = config.modules.claude-code;
 
   claudeWrapper = pkgs.writeShellScriptBin "claude" ''
-    export ENABLE_TOOL_SEARCH=true
-    export CLAUDE_CODE_USE_VERTEX=1
-    export ANTHROPIC_DEFAULT_OPUS_MODEL=claude-opus-4-5@20251101
-    export ANTHROPIC_DEFAULT_SONNET_MODEL=claude-sonnet-4-5@20250929
-    export ANTHROPIC_DEFAULT_HAIKU_MODEL=claude-haiku-4-5@20251001
-    export GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.claude/sa.json
-    export GOOGLE_CLOUD_PROJECT=lv-playground-genai
-    export CLOUD_ML_REGION=global
     exec ${pkgs.claude-code}/bin/claude "$@"
   '';
 
@@ -92,6 +84,15 @@ in
           DISABLE_AUTOUPDATER = "1";
           DISABLE_TELEMETRY = "1";
           DISABLE_ERROR_REPORTING = "1";
+          SUPERMEMORY_CC_API_KEY = "***REDACTED***";
+          ENABLE_TOOL_SEARCH = "true";
+          CLAUDE_CODE_USE_VERTEX = "1";
+          ANTHROPIC_DEFAULT_OPUS_MODEL = "claude-opus-4-5@20251101";
+          ANTHROPIC_DEFAULT_SONNET_MODEL = "claude-sonnet-4-5@20250929";
+          ANTHROPIC_DEFAULT_HAIKU_MODEL = "claude-haiku-4-5@20251001";
+          GOOGLE_APPLICATION_CREDENTIALS = "${config.home.homeDirectory}/.claude/sa.json";
+          GOOGLE_CLOUD_PROJECT = "lv-playground-genai";
+          CLOUD_ML_REGION = "global";
         };
 
         permissions = {
@@ -153,6 +154,10 @@ in
           type = "command";
           command = "~/.claude/ccline/ccline";
           padding = 0;
+        };
+
+        enabledPlugins = {
+          "claude-supermemory@supermemory-plugins" = true;
         };
 
         hooks =
