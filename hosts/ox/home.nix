@@ -28,6 +28,7 @@
   programs.git.enable = true;
 
   modules = {
+    nh.enable = true;
     stylix.enable = true;
     utils = {
       enable = true;

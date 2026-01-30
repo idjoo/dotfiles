@@ -18,6 +18,8 @@
   ];
 
   modules = {
+    nh.enable = true;
+
     # shell
     zsh.enable = true;
 
