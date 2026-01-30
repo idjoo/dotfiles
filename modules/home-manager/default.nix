@@ -7,6 +7,7 @@
 {
   # List your module files here
   imports = [
+    ./agent-browser
     ./ai
     ./atuin
     ./btop
