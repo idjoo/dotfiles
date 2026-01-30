@@ -76,6 +76,11 @@ in
             ];
           };
         };
+
+        compaction = {
+          auto = true;
+          prune = true;
+        };
       };
     };
   };
