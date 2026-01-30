@@ -32,18 +32,6 @@ with lib;
       atlassian = {
         url = "https://mcp.atlassian.com/v1/mcp";
       };
-
-      playwright =
-        let
-          dataDir = "${config.home.homeDirectory}/.playwright";
-        in
-        mkIf config.modules.playwright.enable {
-          command = "${pkgs.playwright-mcp}/bin/mcp-server-playwright";
-          args = [
-            "--output-dir=${dataDir}"
-            "--storage-state=${dataDir}/state.json"
-          ];
-        };
     };
   };
 }
