@@ -25,6 +25,7 @@
     ./herbstluftwm
     ./lazygit
     ./neovim
+    ./nh
     ./playwright
     ./nushell
     ./password-store
@@ -83,9 +84,7 @@
     ox = "TERM=xterm-256color ${pkgs.openssh}/bin/ssh ${outputs.username}@ox";
   };
 
-  home.sessionVariables = {
-    NH_FLAKE = "${config.home.homeDirectory}/dotfiles";
-  };
+  home.sessionVariables = { };
 
   home.sessionPath = [
     "${config.home.homeDirectory}/.local/bin"
