@@ -49,11 +49,7 @@ in
       claude-code.enable = mkDefault cfg.claude-code;
       gemini-cli.enable = mkDefault cfg.gemini-cli;
       opencode.enable = mkDefault cfg.opencode;
-      playwright.enable = mkDefault cfg.mcp;
+      agent-browser.enable = mkDefault cfg.mcp;
     };
-
-    home.packages = mkIf cfg.enable [
-      pkgs.llm-agents.agent-browser
-    ];
   };
 }

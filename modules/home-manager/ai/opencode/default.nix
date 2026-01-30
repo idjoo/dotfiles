@@ -47,6 +47,7 @@ in
 
       settings = {
         model = "google-vertex-anthropic/claude-opus-4-5@20251101";
+        small_model = "google-vertex-anthropic/claude-sonnet-4-5@20250929";
 
         permission = {
           lsp = "allow";
