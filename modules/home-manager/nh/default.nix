@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  outputs,
   ...
 }:
 with lib;
@@ -12,14 +11,14 @@ in
   options.modules.nh = {
     enable = mkEnableOption "nh";
   };
-
   config = mkIf cfg.enable {
     programs.nh = {
       enable = true;
+      flake = "${config.home.homeDirectory}/dotfiles";
 
       clean = {
         enable = true;
-        extraArgs = "--keep-since 30d --keep 10";
+        extraArgs = "--keep 5 --keep-since 3d";
       };
     };
   };

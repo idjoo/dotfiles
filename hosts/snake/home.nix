@@ -30,6 +30,7 @@
   };
 
   modules = {
+    nh.enable = true;
     stylix.enable = true;
 
     # Terminal

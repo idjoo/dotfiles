@@ -4,7 +4,6 @@
   # List your module files here
   imports = [
     ./comma
-    ./nh
     ./nix
     ./pipewire
     ./rclone
