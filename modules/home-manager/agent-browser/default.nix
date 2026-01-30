@@ -6,8 +6,7 @@
 }:
 with lib;
 let
-  cfg = config.modules.playwright;
-  dataDir = "${config.home.homeDirectory}/.playwright";
+  cfg = config.modules.agent-browser;
 
   # Chromium revision from playwright-driver
   chromiumRevision = pkgs.playwright-driver.passthru.browsersJSON.chromium.revision;
@@ -23,23 +22,20 @@ let
       "${pkgs.playwright-driver.browsers}/chromium-${chromiumRevision}/chrome-linux/chrome";
 in
 {
-  options.modules.playwright = {
-    enable = mkEnableOption "playwright";
+  options.modules.agent-browser = {
+    enable = mkEnableOption "agent-browser";
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ pkgs.playwright-test ];
+    home.packages = [ pkgs.llm-agents.agent-browser ];
 
-    # Playwright environment variables via zsh envExtra
+    # agent-browser uses playwright under the hood
+    modules.playwright.enable = mkDefault true;
+
+    # Configure agent-browser to use nix-managed browser via zsh envExtra
     programs.zsh.envExtra = # bash
       ''
-        export PLAYWRIGHT_BROWSERS_PATH="${pkgs.playwright-driver.browsers}"
-        export PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS="true"
-        # export PLAYWRIGHT_HOST_PLATFORM_OVERRIDE="ubuntu-24.04"
-        export PLAYWRIGHT_LAUNCH_OPTIONS_EXECUTABLE_PATH="${executablePath}"
+        export AGENT_BROWSER_EXECUTABLE_PATH="${executablePath}"
       '';
-
-    # Ensure data directory exists
-    home.file."${dataDir}/.keep".text = "";
   };
 }
