@@ -71,8 +71,8 @@ in
                 body = "Generate commit message with Claude?";
               }
             ];
-            command = "claude --no-session-persistence --print /commit";
-            loadingText = "Generating commit with Claude...";
+            command = "opencode run --command commit";
+            loadingText = "Generating commit with AI...";
           }
         ];
       };
