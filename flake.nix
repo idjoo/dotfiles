@@ -62,6 +62,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+    };
   };
 
   outputs =
@@ -88,6 +92,7 @@
             (import ./overlays { inherit inputs; }).additions
             (import ./overlays { inherit inputs; }).modifications
             (import ./overlays { inherit inputs; }).stable-packages
+            (import ./overlays { inherit inputs; }).llm-agents
           ];
         }
       );
