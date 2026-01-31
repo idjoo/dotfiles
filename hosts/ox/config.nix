@@ -212,7 +212,6 @@
 
   modules = {
     comma.enable = true;
-    nh.enable = true;
     stylix.enable = true;
     tailscale.enable = true;
     utils = {
