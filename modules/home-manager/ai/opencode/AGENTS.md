@@ -1,279 +1,230 @@
 # Agent Instructions
 
-<important>
 These mandatory rules govern all interactions. Violations are unacceptable.
-</important>
 
-<quick-reference>
-  <rule name="todowrite">FIRST action for 2+ step tasks; no exceptions</rule>
-  <rule name="Parallel">Batch independent tool calls in ONE message</rule>
-  <rule name="Bash">Chain commands in ONE call (`&amp;&amp;` or `;`)</rule>
-  <rule name="Python">ALWAYS use `uv run` - NEVER bare `python` or `python3`</rule>
-  <rule name="LSP">Prefer LSP over grep for code navigation</rule>
-  <rule name="Delegate">Use subagents for specialized tasks</rule>
-  <rule name="Verify">Test changes before marking complete</rule>
-  <rule name="Skills">Load skills (Context7, Playwright) when needed</rule>
-</quick-reference>
+## Quick Reference
 
----
-
-<section name="Task Management">
-  <principle>ALWAYS use todowrite BEFORE starting any multi-step task. No exceptions.</principle>
-
-  <triggers title="If ANY apply, use todowrite FIRST">
-    <trigger>Request involves 2+ tool calls</trigger>
-    <trigger>Request involves 2+ sequential actions</trigger>
-    <trigger>Bug fixes, features, refactors, investigations</trigger>
-    <trigger>Playwright automation (navigate + interact = multi-step)</trigger>
-  </triggers>
-
-  <rules>
-    <rule>FIRST action: Call todowrite to create the task list</rule>
-    <rule>One `in_progress` at a time</rule>
-    <rule>Mark `completed` immediately after finishing each task</rule>
-    <rule>Break large tasks into atomic items</rule>
-  </rules>
-
-  <example title="Pattern">
-    "Fix login bug" ->
-      - Investigate error logs
-      - Identify root cause
-      - Implement fix
-      - Verify solution
-  </example>
-</section>
+| Rule | Requirement |
+|------|-------------|
+| **todowrite** | FIRST action for 2+ step tasks |
+| **question** | Use for ALL user interactions (choices, clarifications, interviews) |
+| **Parallel** | Batch independent tool calls in ONE message |
+| **bash** | Chain commands in ONE call (`&&` or `;`) |
+| **Python** | ALWAYS `uv run` - NEVER bare `python`/`python3` |
+| **lsp** | Prefer over grep for code navigation |
+| **Delegate** | Use subagents for specialized tasks |
+| **Verify** | Test changes before marking complete |
+| **skill** | Load skills when task matches (context7, playwright, tmux) |
 
 ---
 
-<section name="Tool Execution Strategy">
-  <subsection name="Parallel Calls (Default)">
-    <principle>Batch independent operations in ONE message</principle>
-    <example type="correct">Read(auth.ts) + Read(config.ts) + Grep("TODO") - Single message</example>
-    <example type="incorrect">Message 1: Read(auth.ts) -> Message 2: Read(config.ts) - Wastes turns</example>
-  </subsection>
+## User Interaction: question Tool
 
-  <subsection name="Bash Commands">
-    <principle>Chain shell commands in ONE Bash call</principle>
-    <example type="correct">Bash("npm test &amp;&amp; npm run lint &amp;&amp; npm run build")</example>
-    <example type="incorrect">Bash("npm test") + Bash("npm run lint") - Never parallel</example>
-    <note>Operators: `&amp;&amp;` stops on failure; `;` continues regardless</note>
-  </subsection>
+**Principle**: ALWAYS use the `question` tool when interacting with the user.
 
-  <subsection name="Python Execution">
-    <principle>ALWAYS use `uv run` for Python. NEVER use bare `python` or `python3` commands.</principle>
-    
-    <rationale>
-      uv provides instant dependency resolution, isolated environments, and reproducible execution.
-      Bare python/python3 commands risk missing dependencies, version conflicts, and environment pollution.
-    </rationale>
+**When to use** (if ANY apply, use `question`):
+- Presenting options or choices
+- Clarifying ambiguous instructions
+- Gathering requirements or preferences
+- Interviewing the user for information
+- Getting decisions on implementation approaches
+- Confirming before destructive actions
 
-    <patterns>
-      <pattern name="Script with dependencies">
-        <example type="correct">Bash("uv run --with requests script.py")</example>
-        <example type="correct">Bash("uv run --with pandas --with numpy analysis.py")</example>
-      </pattern>
-      
-      <pattern name="Inline Python (`python -c`)">
-        <example type="correct">Bash("uv run python -c 'print(1+1)'")</example>
-        <example type="correct">Bash("uv run --with requests python -c 'import requests; ...'")</example>
-        <example type="incorrect">Bash("python -c 'print(1+1)'")</example>
-        <example type="incorrect">Bash("python3 -c 'import json; ...'")</example>
-      </pattern>
-      
-      <pattern name="Script without external deps">
-        <example type="correct">Bash("uv run script.py")</example>
-        <example type="incorrect">Bash("python script.py")</example>
-        <example type="incorrect">Bash("python3 script.py")</example>
-      </pattern>
-      
-      <pattern name="Module execution">
-        <example type="correct">Bash("uv run python -m pytest")</example>
-        <example type="correct">Bash("uv run --with black python -m black .")</example>
-        <example type="incorrect">Bash("python -m pytest")</example>
-      </pattern>
-    </patterns>
+**Structure**:
+```json
+{
+  "questions": [{
+    "header": "Short label (max 30 chars)",
+    "question": "Complete question text",
+    "options": [
+      {"label": "Option 1", "description": "What this does"},
+      {"label": "Option 2", "description": "What this does"}
+    ],
+    "multiple": false
+  }]
+}
+```
 
-    <rules>
-      <rule>Use `--with package` for each required dependency</rule>
-      <rule>Multiple deps: `--with pkg1 --with pkg2 --with pkg3`</rule>
-      <rule>Even stdlib-only scripts should use `uv run` for consistency</rule>
-      <rule>For projects with pyproject.toml, `uv run` auto-resolves project deps</rule>
-    </rules>
-  </subsection>
+**Rules**:
+- Put recommended option FIRST with "(Recommended)" suffix
+- Don't add "Other" option - custom answers are automatic
+- Use `multiple: true` when user can select more than one
+- Keep labels concise (1-5 words)
+- Batch related questions in one call
 
-  <subsection name="Sequential Only When">
-    <rule>Tool B requires Tool A's output (true data dependency)</rule>
-  </subsection>
-</section>
+```
+✓ question(header: "Auth Method", options: ["JWT (Recommended)", "Session", "OAuth"])
+✗ Asking "Which do you prefer: JWT, Session, or OAuth?" in plain text
+```
 
 ---
 
-<section name="LSP Tools">
-  <principle>Use LSP tools for code navigation instead of grep/search when possible.</principle>
+## Task Management
 
-  <tool-reference>
-    <tool operation="Find definition" name="lsp_goto_definition">Jump to where symbol is defined</tool>
-    <tool operation="Find references" name="lsp_find_references">All usages across workspace</tool>
-    <tool operation="Get type info" name="lsp_hover">Type signature, documentation</tool>
-    <tool operation="File symbols" name="lsp_document_symbols">Outline of file structure</tool>
-    <tool operation="Workspace search" name="lsp_workspace_symbols">Find symbol by name globally</tool>
-    <tool operation="Rename" name="lsp_rename">Rename across entire codebase</tool>
-    <tool operation="Diagnostics" name="lsp_diagnostics">Errors/warnings before build</tool>
-  </tool-reference>
+**Principle**: ALWAYS use `todowrite` BEFORE starting any multi-step task.
 
-  <rule>
-    LSP provides semantic understanding of code. Prefer LSP operations over text-based search 
-    when you need to understand code structure, find usages, or navigate to definitions.
-  </rule>
+**Triggers** (if ANY apply, `todowrite` FIRST):
+- Request involves 2+ tool calls or sequential actions
+- Bug fixes, features, refactors, investigations
+- Browser automation (navigate + interact = multi-step)
 
-  <example type="correct">lsp_goto_definition("auth.ts", 42, 15) -> precise definition location</example>
-  <example type="incorrect">Grep("function authenticate") -> may find comments, strings, wrong matches</example>
+**Rules**:
+- One `in_progress` at a time
+- Mark `completed` immediately after each task
+- Break large tasks into atomic items
 
-  <example type="correct">lsp_find_references("config.ts", 10, 8) -> all actual usages</example>
-  <example type="incorrect">Grep("configValue") -> misses renamed imports, includes false positives</example>
-
-  <requirements>
-    LSP servers must be configured for the file type. Built-in servers auto-start for: 
-    TypeScript, Python, Go, Rust, C/C++, Java, and many more.
-  </requirements>
-</section>
+**Example**:
+```
+"Fix login bug" → todowrite:
+  1. Investigate error logs
+  2. Identify root cause
+  3. Implement fix
+  4. Verify solution
+```
 
 ---
 
-<section name="Agent Delegation">
-  <principle>Delegate specialized tasks to appropriate subagents.</principle>
+## Tool Execution Strategy
 
-  <delegation-guide>
-    <agent type="explore" task="Codebase exploration">Find files, patterns, implementations</agent>
-    <agent type="librarian" task="External docs/repos">Library docs, GitHub examples, remote repos</agent>
-    <agent type="general" task="Complex research">Multi-step investigation, parallel work</agent>
-    <agent type="oracle" task="Architecture decisions">Design guidance, deep code analysis</agent>
-  </delegation-guide>
+### Parallel Calls (Default)
 
-  <rules>
-    <rule>Parallel agents: Launch multiple explore/librarian agents in ONE message for broad searches</rule>
-    <rule>Be specific: Provide focused prompts with clear success criteria</rule>
-    <rule>Background when possible: Use `run_in_background: true` for non-blocking work</rule>
-  </rules>
+Batch independent operations in ONE message.
 
-  <example title="Pattern">
-    User: "How is authentication implemented?"
-    <correct>Launch explore agent: "Find auth implementation patterns in this codebase"</correct>
-    <incorrect>Manually grep through files one by one</incorrect>
-  </example>
-</section>
+```
+✓ read(auth.ts) + read(config.ts) + grep("TODO") → Single message
+✗ Message 1: read(auth.ts) → Message 2: read(config.ts) → Wastes turns
+```
 
----
+### bash Commands
 
-<section name="Search Strategy">
-  <principle>Match search approach to the task.</principle>
+Chain shell commands in ONE `bash` call.
 
-  <tool-selection>
-    <tool need="Semantic code understanding" name="LSP">Definitions, references, symbols</tool>
-    <tool need="Pattern matching" name="Grep / AST-grep">Text patterns, code structures</tool>
-    <tool need="File discovery" name="Glob">Find files by name/extension</tool>
-    <tool need="Broad exploration" name="explore agent">Unknown scope, multiple areas</tool>
-    <tool need="External resources" name="librarian agent">Docs, remote repos, examples</tool>
-  </tool-selection>
+```
+✓ bash("npm test && npm run lint && npm run build")
+✗ bash("npm test") + bash("npm run lint") → Never parallel
+```
 
-  <subsection name="Parallel Search Pattern">
-    <principle>For broad investigations, launch multiple searches in ONE message</principle>
-    <example type="correct">Grep("auth") + Glob("**/auth*") + explore("Find auth patterns") - Parallel</example>
-    <example type="incorrect">Grep -> wait -> Glob -> wait -> explore - Sequential waste</example>
-  </subsection>
-</section>
+Operators: `&&` stops on failure; `;` continues regardless.
+
+### Python Execution
+
+**ALWAYS use `uv run`. NEVER bare `python` or `python3`.**
+
+Why: Instant dependency resolution, isolated environments, reproducible execution.
+
+| Pattern | Correct | Incorrect |
+|---------|---------|-----------|
+| With deps | `uv run --with requests script.py` | `python script.py` |
+| Inline | `uv run python -c 'print(1)'` | `python -c 'print(1)'` |
+| Module | `uv run python -m pytest` | `python -m pytest` |
+| Multi-dep | `uv run --with pandas --with numpy script.py` | — |
+
+### Sequential Only When
+
+Tool B requires Tool A's output (true data dependency).
 
 ---
 
-<section name="Verification">
-  <principle>Verify changes work before marking tasks complete.</principle>
+## lsp Tool
 
-  <verification-requirements>
-    <requirement change="Code changes">Run relevant tests or type-check</requirement>
-    <requirement change="Config changes">Validate syntax/format</requirement>
-    <requirement change="Bug fixes">Reproduce fix, confirm resolution</requirement>
-    <requirement change="New features">Demonstrate functionality works</requirement>
-  </verification-requirements>
+**Principle**: Use `lsp` for code navigation instead of `grep`/search when possible.
 
-  <example title="Pattern">
-    After implementing fix:
-      1. Run targeted test: npm test path/to/file.test.ts
-      2. Verify no regressions
-      3. THEN mark todo as completed
+| Operation | lsp operation | Use For |
+|-----------|---------------|---------|
+| Find definition | `goToDefinition` | Jump to symbol definition |
+| Find references | `findReferences` | All usages across workspace |
+| Get type info | `hover` | Type signature, documentation |
+| File symbols | `documentSymbol` | Outline of file structure |
+| Workspace search | `workspaceSymbol` | Find symbol by name globally |
+| Go to impl | `goToImplementation` | Find interface implementations |
+| Call hierarchy | `prepareCallHierarchy` | Get call hierarchy at position |
+| Incoming calls | `incomingCalls` | Functions that call this function |
+| Outgoing calls | `outgoingCalls` | Functions called by this function |
 
-    <correct>Fix -> Test -> Verify -> Complete</correct>
-    <incorrect>Fix -> Complete -> Hope it works</incorrect>
-  </example>
-</section>
+```
+✓ lsp goToDefinition("auth.ts", 42, 15) → Precise definition
+✗ grep("function authenticate") → May match comments, strings, wrong functions
+```
 
----
-
-<section name="Skills">
-  <principle>Load skills for specialized workflows using the `skill` tool.</principle>
-
-  <available-skills>
-    <skill name="context7">Writing code with external libraries</skill>
-    <skill name="playwright">Browser automation tasks</skill>
-    <skill name="tmux">Terminal multiplexing, background processes</skill>
-  </available-skills>
-
-  <subsection name="Context7 Workflow">
-    <example>
-      User: "Add NextAuth to the project"
-
-      1. skill("context7") - Load documentation skill
-      2. context7_resolve-library-id("nextauth", "setup authentication")
-      3. context7_query-docs(libraryId, "NextAuth configuration")
-      4. Implement based on current docs
-
-      <correct>Query docs -> Implement based on results</correct>
-      <incorrect>Write library code from training data - May be outdated</incorrect>
-    </example>
-  </subsection>
-</section>
+LSP servers auto-start for: TypeScript, Python, Go, Rust, C/C++, Java, and more.
 
 ---
 
-<section name="MCP Server: Serena">
-  <principle>Read Serena's initial instructions at session start if not already done.</principle>
+## Verification
 
-  <rule>
-    Before using any Serena tools, call `serena_initial_instructions` to load project context. 
-    This ensures proper understanding of the codebase structure.
-  </rule>
+**Principle**: Verify changes work before marking tasks complete.
 
-  <example type="correct">Session start -> serena_initial_instructions -> proceed with Serena tools</example>
-  <example type="incorrect">Using Serena tools without reading initial instructions first</example>
-</section>
+| Change Type | Verification |
+|-------------|--------------|
+| Code changes | Run relevant tests or type-check |
+| Config changes | Validate syntax/format |
+| Bug fixes | Reproduce fix, confirm resolution |
+| New features | Demonstrate functionality works |
 
----
+```
+After implementing fix:
+  1. Run targeted test: npm test path/to/file.test.ts
+  2. Verify no regressions
+  3. THEN mark todo as completed
 
-<section name="Error Recovery">
-  <principle>Handle failures gracefully without user intervention when possible.</principle>
-
-  <recovery-patterns>
-    <pattern error="Command fails">Read error message, fix issue, retry</pattern>
-    <pattern error="Test fails">Analyze failure, fix code, re-run</pattern>
-    <pattern error="File not found">Search for correct path with Glob</pattern>
-    <pattern error="LSP unavailable">Fall back to Grep/AST-grep</pattern>
-    <pattern error="MCP timeout">Retry with simpler request</pattern>
-  </recovery-patterns>
-
-  <rule>After 2 failed attempts at the same approach, try a different strategy or ask user for guidance.</rule>
-</section>
+✓ Fix → Test → Verify → Complete
+✗ Fix → Complete → Hope it works
+```
 
 ---
 
-<violations>
-  <violation category="Todos">Starting multi-step work without a todo list</violation>
-  <violation category="Todos">Batching completions instead of immediate updates</violation>
-  <violation category="Tools">Sequential calls when parallel is possible</violation>
-  <violation category="Bash">Multiple Bash calls instead of chaining</violation>
-  <violation category="Python">Using bare `python` or `python3` instead of `uv run`</violation>
-  <violation category="LSP">Using grep/search when LSP would give precise results</violation>
-  <violation category="Delegate">Manual exploration when subagent would be faster</violation>
-  <violation category="Verify">Marking complete without testing changes</violation>
-  <violation category="Skills">Ignoring available skills for specialized tasks</violation>
-  <violation category="Serena">Using Serena tools without reading initial instructions</violation>
-  <violation category="Context7">Writing library code without querying docs first</violation>
-</violations>
+## Skills
+
+**Principle**: Load skills for specialized workflows using the `skill` tool.
+
+| Skill | When to Use |
+|-------|-------------|
+| context7 | Writing code with external libraries |
+| playwright | Browser automation tasks |
+| tmux | Terminal multiplexing, background processes |
+
+**Context7 Workflow**:
+```
+User: "Add NextAuth to the project"
+
+1. skill("context7")
+2. context7_resolve-library-id("nextauth", "setup authentication")
+3. context7_query-docs(libraryId, "NextAuth configuration")
+4. Implement based on current docs
+
+✓ Query docs → Implement based on results
+✗ Write library code from training data → May be outdated
+```
+
+---
+
+## Error Recovery
+
+**Principle**: Handle failures gracefully without user intervention when possible.
+
+| Error | Recovery |
+|-------|----------|
+| Command fails | Read error message, fix issue, retry |
+| Test fails | Analyze failure, fix code, re-run |
+| File not found | Search for correct path with `glob` |
+| LSP unavailable | Fall back to `grep`/AST-grep |
+| MCP timeout | Retry with simpler request |
+
+After 2 failed attempts at the same approach, try a different strategy or ask user for guidance.
+
+---
+
+## Violations
+
+| Category | Violation |
+|----------|-----------|
+| Todos | Starting multi-step work without a todo list |
+| Todos | Batching completions instead of immediate updates |
+| question | Asking choices/options in plain text instead of using `question` tool |
+| Tools | Sequential calls when parallel is possible |
+| bash | Multiple `bash` calls instead of chaining |
+| Python | Using bare `python` or `python3` instead of `uv run` |
+| lsp | Using `grep`/search when `lsp` would give precise results |
+| Verify | Marking complete without testing changes |
+| Skills | Ignoring available skills for specialized tasks |
+| Context7 | Writing library code without querying docs first |
