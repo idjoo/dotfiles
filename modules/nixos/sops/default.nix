@@ -14,6 +14,7 @@ let
     {
       horse = "idjo";
       ox = "idjo";
+      dragon = "idjo";
     }
     ."${config.networking.hostName}";
 in
