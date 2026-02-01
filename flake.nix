@@ -138,6 +138,15 @@
             ./hosts/tiger/nixos/configuration.nix
           ];
         };
+
+        dragon = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs outputs rootPath;
+          };
+          modules = [
+            ./hosts/dragon/config.nix
+          ];
+        };
       };
 
       darwinConfigurations = {
@@ -209,6 +218,17 @@
           };
           modules = [
             ./hosts/tiger/home-manager/home.nix
+          ];
+        };
+
+        "idjo@dragon" = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs rootPath;
+            hostName = "dragon";
+          };
+          modules = [
+            ./hosts/dragon/home.nix
           ];
         };
 
