@@ -63,12 +63,12 @@ in
           {
             key = "C";
             context = "files";
-            description = "AI-powered commit with Claude";
+            description = "AI-powered commit with AI";
             prompts = [
               {
                 type = "confirm";
                 title = "AI Commit";
-                body = "Generate commit message with Claude?";
+                body = "Generate commit message with AI?";
               }
             ];
             command = "opencode run --command commit";
