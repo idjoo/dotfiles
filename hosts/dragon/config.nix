@@ -136,6 +136,7 @@
       gui.enable = false;
     };
     sops.enable = true;
+    xremap.enable = true;
   };
 
   system.stateVersion = "23.11";
