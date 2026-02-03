@@ -26,6 +26,7 @@
     ./surround.nix
     ./telescope.nix
     ./treesitter.nix
+    ./wakatime.nix
     ./web-devicons.nix
     ./which-key.nix
   ];
