@@ -8,16 +8,7 @@
     inputs.sops-nix.homeManagerModules.sops
   ];
 
-  programs.nixvim.plugins.wakatime = {
-    enable = true;
-
-    lazyLoad = {
-      enable = true;
-      settings = {
-        event = [ "BufReadPost" "BufNewFile" ];
-      };
-    };
-  };
+  programs.nixvim.plugins.wakatime.enable = true;
 
   sops.secrets."apiKeys/wakatime" = { };
 
