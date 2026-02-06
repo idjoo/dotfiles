@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }:
 with lib;
@@ -47,6 +48,10 @@ in
     enable = mkEnableOption "claude-code";
   };
 
+  imports = [
+    inputs.sops-nix.homeManagerModules.sops
+  ];
+
   config = mkIf cfg.enable {
     home.packages = [
       pkgs.htmldoc
@@ -85,7 +90,7 @@ in
           ANTHROPIC_DEFAULT_OPUS_MODEL = "claude-opus-4-5@20251101";
           ANTHROPIC_DEFAULT_SONNET_MODEL = "claude-sonnet-4-5@20250929";
           ANTHROPIC_DEFAULT_HAIKU_MODEL = "claude-haiku-4-5@20251001";
-          GOOGLE_APPLICATION_CREDENTIALS = "${config.home.homeDirectory}/.claude/sa.json";
+          GOOGLE_APPLICATION_CREDENTIALS = config.sops.secrets."serviceAccounts/ai".path;
           GOOGLE_CLOUD_PROJECT = "lv-playground-genai";
           CLOUD_ML_REGION = "global";
         };
