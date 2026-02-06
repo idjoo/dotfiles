@@ -166,7 +166,6 @@
       enable = true;
       gui.enable = false;
     };
-    sops.enable = true;
     xremap.enable = true;
   };
 

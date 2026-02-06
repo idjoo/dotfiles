@@ -219,7 +219,6 @@
       gui.enable = false;
     };
     xremap.enable = true;
-    sops.enable = true;
   };
 
   # This value determines the NixOS release from which the default
