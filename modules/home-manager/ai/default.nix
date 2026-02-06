@@ -11,18 +11,25 @@ in
 {
   imports = [
     ./claude-code
+    ./cursor-agent
     ./gemini-cli
     ./mcp
     ./opencode
   ];
 
   options.modules.ai = {
-    enable = mkEnableOption "AI tools (claude-code, gemini-cli, opencode, mcp)";
+    enable = mkEnableOption "AI tools (claude-code, cursor-agent, gemini-cli, opencode, mcp)";
 
     claude-code = mkOption {
       type = types.bool;
       default = cfg.enable;
       description = "Enable claude-code when ai.enable is true";
+    };
+
+    cursor-agent = mkOption {
+      type = types.bool;
+      default = cfg.enable;
+      description = "Enable cursor-agent when ai.enable is true";
     };
 
     gemini-cli = mkOption {
@@ -47,17 +54,10 @@ in
   config = {
     modules = {
       claude-code.enable = mkDefault cfg.claude-code;
+      cursor-agent.enable = mkDefault cfg.cursor-agent;
       gemini-cli.enable = mkDefault cfg.gemini-cli;
       opencode.enable = mkDefault cfg.opencode;
       agent-browser.enable = mkDefault cfg.mcp;
-    };
-
-    home.packages = [
-      pkgs.cursor-cli
-    ];
-
-    home.shellAliases = {
-      ca = "${pkgs.cursor-cli}/bin/cursor-agent";
     };
   };
 }
