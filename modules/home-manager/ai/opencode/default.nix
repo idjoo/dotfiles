@@ -41,15 +41,9 @@ in
         commit = ./commands/commit.md;
       };
 
-      skills = {
-        tmux = ./skills/tmux;
-      };
-
       settings = {
         model = "google-vertex-anthropic/claude-opus-4-5@20251101";
         small_model = "google-vertex-anthropic/claude-sonnet-4-5@20250929";
-
-        # model = "moonshotai/kimi-k2.5";
 
         permission = {
           lsp = "allow";
