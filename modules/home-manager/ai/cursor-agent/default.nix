@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib;
@@ -13,8 +14,14 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.shellAliases = {
+      ca = "${pkgs.cursor-cli}/bin/cursor-agent";
+    };
+
     programs.cursor-agent = {
       enable = cfg.enable;
+
+      package = pkgs.llm-agents.cursor-agent;
 
       enableMcpIntegration = true;
 
