@@ -82,6 +82,12 @@ in
           auto = true;
           prune = true;
         };
+
+        plugin = [
+          "opencode-ntfy@latest"
+          "opencode-supermemory@latest"
+          "opencode-wakatime@latest"
+        ];
       };
     };
   };
