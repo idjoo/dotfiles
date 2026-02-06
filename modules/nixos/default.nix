@@ -7,7 +7,6 @@
     ./nix
     ./pipewire
     ./rclone
-    ./sops
     ./ssh
     ./stylix
     ./tailscale
