@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }:
 with lib;
@@ -13,6 +14,10 @@ in
     enable = mkEnableOption "gemini-cli";
   };
 
+  imports = [
+    inputs.sops-nix.homeManagerModules.sops
+  ];
+
   config = mkIf cfg.enable {
     # User-level GEMINI.md symlinked from dotfiles (mutable, version-controlled)
     # Uses home.homeDirectory to support both Linux (/home/user) and macOS (/Users/user)
@@ -22,7 +27,7 @@ in
     home.shellAliases = {
       gemini = ''
         env \
-          GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.gemini/sa.json \
+          GOOGLE_APPLICATION_CREDENTIALS=${config.sops.secrets."serviceAccounts/ai".path} \
           GOOGLE_CLOUD_PROJECT=lv-playground-genai \
           GOOGLE_CLOUD_LOCATION=global \
           gemini'';

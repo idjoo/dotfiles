@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }:
 let
@@ -9,7 +10,7 @@ let
 
   opencodeWrapper = pkgs.writeShellScriptBin "opencode" ''
     export ENABLE_TOOL_SEARCH=true
-    export GOOGLE_APPLICATION_CREDENTIALS=${config.home.homeDirectory}/.claude/sa.json
+    export GOOGLE_APPLICATION_CREDENTIALS=${config.sops.secrets."serviceAccounts/ai".path}
     export GOOGLE_VERTEX_PROJECT=lv-playground-genai
     export GOOGLE_VERTEX_LOCATION=global
     export OPENCODE_DISABLE_LSP_DOWNLOAD=true
@@ -18,6 +19,9 @@ let
   '';
 in
 {
+  imports = [
+    inputs.sops-nix.homeManagerModules.sops
+  ];
   options.modules.opencode = {
     enable = lib.mkEnableOption "opencode";
   };
