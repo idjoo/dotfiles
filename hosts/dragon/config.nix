@@ -1,5 +1,4 @@
-# Dragon - GCP cloud VM configuration
-# Based on ox, but without physical hardware-config.nix
+# Dragon - OCI ARM cloud VM configuration
 {
   inputs,
   outputs,
@@ -7,15 +6,18 @@
   config,
   pkgs,
   rootPath,
+  modulesPath,
   ...
 }:
 {
   imports = [
     outputs.nixosModules
+    ./disko.nix
+    (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
   nixpkgs = {
-    hostPlatform = "x86_64-linux";
+    hostPlatform = "aarch64-linux";
 
     overlays = [
       outputs.overlays.additions
@@ -63,10 +65,27 @@
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     };
 
+  # Boot configuration for OCI
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "virtio_pci"
+      "virtio_scsi"
+      "usbhid"
+    ];
+    kernelModules = [ ];
+    extraModulePackages = [ ];
+  };
+
   # hostname
   networking.hostName = "dragon";
 
-  # Enable networking (GCP handles DHCP)
+  # Enable networking (OCI handles DHCP)
+  networking.useDHCP = true;
   networking.networkmanager.enable = false;
 
   # services
@@ -78,7 +97,7 @@
     docker.enable = true;
   };
 
-  # firewall (GCP has its own firewall, but keep this for defense in depth)
+  # firewall (OCI has its own firewall, but keep this for defense in depth)
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ 22 80 443 ];
@@ -112,7 +131,19 @@
     packages = [ ];
     shell = pkgs.zsh;
     useDefaultShell = true;
+    # SSH authorized keys (public keys are not secret, can be hardcoded)
+    # These correspond to the private keys managed by sops
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDU/Xo4ax3/WcsICw4thl4oDurw6j2ThuOlcWAxQBQoy adrianus.vian.habirowo@devoteam.com"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWyabW5NL2Ul6e1/FIn/nbx+Dl1GlpBOtNDRhba6YLd vian@idjo.cc"
+    ];
   };
+
+  # Allow root login for nixos-anywhere initial deployment
+  users.users.root.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDU/Xo4ax3/WcsICw4thl4oDurw6j2ThuOlcWAxQBQoy adrianus.vian.habirowo@devoteam.com"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWyabW5NL2Ul6e1/FIn/nbx+Dl1GlpBOtNDRhba6YLd vian@idjo.cc"
+  ];
 
   # packages
   environment.systemPackages = with pkgs; [
