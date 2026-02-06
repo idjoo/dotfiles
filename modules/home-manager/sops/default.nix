@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  pkgs,
   config,
   rootPath,
   hostName,
@@ -44,6 +45,15 @@ in
       secrets."sshKeys/${sshKey}/id_ed25519.pub" = {
         mode = "0644";
       };
+
+      secrets."serviceAccounts/ai" = {
+        mode = "0600";
+      };
     };
+
+    # Fix sops-nix LaunchAgent on macOS: getconf needs system_cmds in PATH
+    launchd.agents.sops-nix.config.EnvironmentVariables.PATH = lib.mkIf pkgs.stdenv.isDarwin (
+      lib.mkForce "${pkgs.darwin.system_cmds}/bin"
+    );
   };
 }
