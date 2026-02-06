@@ -14,6 +14,7 @@ let
       ox = "idjo";
       horse = "devoteam";
       snake = "devoteam";
+      dragon = "idjo";
     }
     ."${hostName}";
 in
