@@ -53,17 +53,12 @@ in
       agents
     ];
 
+    home.shellAliases = {
+      cc = "${claudeWrapper}/bin/claude";
+    };
+
     home.file.".claude/CLAUDE.md".source =
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/claude-code/CLAUDE.md";
-
-    home.file.".claude/skills/context7".source =
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/claude-code/skills/context7";
-
-    home.file.".claude/skills/playwright".source =
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/claude-code/skills/playwright";
-
-    home.file.".claude/skills/tmux".source =
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/claude-code/skills/tmux";
 
     programs.claude-code = {
       enable = cfg.enable;
