@@ -51,5 +51,13 @@ in
       opencode.enable = mkDefault cfg.opencode;
       agent-browser.enable = mkDefault cfg.mcp;
     };
+
+    home.packages = [
+      pkgs.cursor-cli
+    ];
+
+    home.shellAliases = {
+      ca = "${pkgs.cursor-cli}/bin/cursor-agent";
+    };
   };
 }
