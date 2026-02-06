@@ -1,10 +1,14 @@
 {
   pkgs,
   config,
+  inputs,
   outputs,
   ...
 }:
 {
+  imports = [
+    inputs.sops-nix.homeManagerModules.sops
+  ];
   programs.nixvim.plugins.avante = {
     enable = true;
 
@@ -18,7 +22,7 @@
           env = {
             NODE_NO_WARNINGS = "1";
             CLI_TITLE = "${outputs.username}";
-            GOOGLE_APPLICATION_CREDENTIALS = "${config.home.homeDirectory}/.gemini/sa.json";
+            GOOGLE_APPLICATION_CREDENTIALS = config.sops.secrets."serviceAccounts/ai".path;
             GOOGLE_CLOUD_PROJECT = "lv-playground-genai";
             GOOGLE_CLOUD_LOCATION = "global";
           };
