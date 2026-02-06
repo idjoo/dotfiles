@@ -66,6 +66,11 @@
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
     };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -144,6 +149,7 @@
             inherit inputs outputs rootPath;
           };
           modules = [
+            inputs.disko.nixosModules.disko
             ./hosts/dragon/config.nix
           ];
         };
@@ -222,7 +228,7 @@
         };
 
         "idjo@dragon" = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = pkgsFor.x86_64-linux;
+          pkgs = pkgsFor.aarch64-linux;
           extraSpecialArgs = {
             inherit inputs outputs rootPath;
             hostName = "dragon";
