@@ -28,6 +28,7 @@
 
   modules = {
     nh.enable = true;
+    stylix.enable = true;
     utils = {
       enable = true;
       nix.enable = true;
