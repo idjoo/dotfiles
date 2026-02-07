@@ -35,7 +35,7 @@ in
       defaultSopsFormat = "yaml";
 
       age = {
-        keyFile = "${config.xdg.configHome}/age/key.txt";
+        keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
       };
 
       secrets."sshKeys/${sshKey}/id_ed25519" = {
