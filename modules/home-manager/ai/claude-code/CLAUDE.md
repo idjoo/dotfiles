@@ -213,12 +213,10 @@ These mandatory rules govern all interactions. Violations are unacceptable.
     Skills are specialized workflows for common operations like commits, code review, and document generation.
   </rule>
 
-  <example type="correct">User asks to commit -> Check skills -> Use /commit skill</example>
   <example type="correct">Creating a PDF -> Check skills -> Use /pdf skill</example>
   <example type="incorrect">Manually implementing a workflow that a skill already handles</example>
 
   <available-skills>
-    <skill name="/commit">Smart atomic commits with Conventional Commits</skill>
     <skill name="/pdf">PDF manipulation and creation</skill>
     <skill name="/xlsx">Spreadsheet operations</skill>
     <skill name="/docx">Document creation and editing</skill>

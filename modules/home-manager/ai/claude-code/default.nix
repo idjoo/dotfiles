@@ -72,8 +72,6 @@ in
 
       enableMcpIntegration = true;
 
-      commandsDir = ./commands;
-
       settings = {
         model = "opus";
         cleanupPeriodDays = 30;
