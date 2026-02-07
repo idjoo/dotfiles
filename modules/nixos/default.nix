@@ -6,7 +6,6 @@
     ./comma
     ./nix
     ./pipewire
-    ./rclone
     ./ssh
     ./stylix
     ./tailscale
