@@ -70,7 +70,6 @@ in
       ]
       ++ optionals cfg.custom.enable [
         # custom packages
-        android-unpinner
         httpgenerator
       ];
   };
