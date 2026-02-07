@@ -194,7 +194,6 @@ Modules are auto-imported via `outputs.homeManagerModules`, `outputs.nixosModule
 │   └── default.nix        # additions, modifications, stable-packages
 │
 ├── pkgs/                  # Custom package definitions
-│   ├── android-unpinner/
 │   ├── dank-mono-nerdfont/
 │   └── ...
 │

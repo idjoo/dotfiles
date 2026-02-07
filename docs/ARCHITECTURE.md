@@ -469,7 +469,6 @@ flowchart LR
     end
 
     subgraph "pkgs/"
-        P1[android-unpinner]
         P2[dank-mono-nerdfont]
         P3[httpgenerator]
         P4[gam]
