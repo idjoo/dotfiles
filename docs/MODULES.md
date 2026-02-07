@@ -621,18 +621,6 @@ Audio system.
 
 ---
 
-### `modules.rclone`
-
-Cloud storage integration.
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `enable` | bool | `false` | Enable rclone |
-
-**Location:** `modules/nixos/rclone/`
-
----
-
 ### `modules.comma`
 
 Nix-shell command wrapper.
