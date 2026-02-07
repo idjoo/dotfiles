@@ -161,6 +161,7 @@
 
   modules = {
     comma.enable = true;
+    stylix.enable = true;
     tailscale.enable = true;
     utils = {
       enable = true;
