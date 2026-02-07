@@ -41,10 +41,6 @@ in
 
       enableMcpIntegration = true;
 
-      commands = {
-        commit = ./commands/commit.md;
-      };
-
       settings = {
         model = "google-vertex-anthropic/claude-opus-4-6@default";
         small_model = "google-vertex-anthropic/claude-sonnet-4-5@20250929";
