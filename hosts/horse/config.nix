@@ -154,7 +154,6 @@
     nh.enable = true;
     nix.enable = true;
     pipewire.enable = true;
-    rclone.enable = true;
     ssh.enable = true;
     stylix.enable = true;
     tailscale.enable = true;
