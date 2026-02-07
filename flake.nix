@@ -107,7 +107,7 @@
     {
       username = "idjo";
 
-      packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; });
+      packages = forEachSystem (pkgs: import ./pkgs pkgs);
       formatter = forEachSystem (pkgs: pkgs.nixfmt);
       overlays = import ./overlays { inherit inputs; };
 
