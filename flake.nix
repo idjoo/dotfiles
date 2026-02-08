@@ -98,6 +98,7 @@
             (import ./overlays { inherit inputs; }).modifications
             (import ./overlays { inherit inputs; }).stable-packages
             (import ./overlays { inherit inputs; }).llm-agents
+            (import ./overlays { inherit inputs; }).nur
           ];
         }
       );
