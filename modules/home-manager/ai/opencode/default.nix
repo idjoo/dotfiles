@@ -41,6 +41,18 @@ in
 
       enableMcpIntegration = true;
 
+      web = {
+        enable = true;
+        extraArgs = [
+          "--hostname"
+          "0.0.0.0"
+          "--port"
+          "4096"
+          "--cors"
+          "https://opencode.wyvern-vector.ts.net"
+        ];
+      };
+
       settings = {
         model = "google-vertex-anthropic/claude-opus-4-6@default";
         small_model = "google-vertex-anthropic/claude-sonnet-4-5@20250929";
