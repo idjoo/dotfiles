@@ -41,6 +41,7 @@
       enable = true;
       email = "vian@idjo.cc";
     };
+    gpg.enable = true;
     lazygit.enable = true;
     neovim.enable = true;
     sops.enable = true;
