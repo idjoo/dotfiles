@@ -11,7 +11,7 @@ with lib;
 let
   cfg = config.modules.sops;
 
-  sshKey =
+  identity =
     {
       ox = "idjo";
       horse = "devoteam";
@@ -38,11 +38,19 @@ in
         keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
       };
 
-      secrets."sshKeys/${sshKey}/id_ed25519" = {
+      secrets."sshKeys/${identity}/id_ed25519" = {
         mode = "0600";
       };
 
-      secrets."sshKeys/${sshKey}/id_ed25519.pub" = {
+      secrets."sshKeys/${identity}/id_ed25519.pub" = {
+        mode = "0644";
+      };
+
+      secrets."gpgKeys/${identity}/private" = {
+        mode = "0600";
+      };
+
+      secrets."gpgKeys/${identity}/public" = {
         mode = "0644";
       };
 

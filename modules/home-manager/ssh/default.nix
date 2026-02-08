@@ -9,7 +9,7 @@ with lib;
 let
   cfg = config.modules.ssh;
 
-  sshKey =
+  identity =
     {
       ox = "idjo";
       horse = "devoteam";
@@ -43,7 +43,7 @@ in
     programs.keychain = {
       enable = true;
       keys = [
-        "${config.sops.secrets."sshKeys/${sshKey}/id_ed25519".path}"
+        "${config.sops.secrets."sshKeys/${identity}/id_ed25519".path}"
       ];
     };
   };
