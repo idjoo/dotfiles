@@ -1,16 +1,21 @@
 {
   lib,
   config,
+  inputs,
   pkgs,
   ...
 }:
 with lib;
 let
-  cfg = config.modules.cursor-agent;
+  cfg = config.modules.cursor;
 in
 {
-  options.modules.cursor-agent = {
-    enable = mkEnableOption "cursor-agent";
+  imports = [
+    inputs.cursor.homeModules.cursor
+  ];
+
+  options.modules.cursor = {
+    enable = mkEnableOption "cursor";
   };
 
   config = mkIf cfg.enable {
@@ -18,49 +23,53 @@ in
       ca = "${pkgs.cursor-cli}/bin/cursor-agent";
     };
 
-    programs.cursor-agent = {
+    programs.cursor = {
       enable = cfg.enable;
-
-      package = pkgs.llm-agents.cursor-agent;
 
       enableMcpIntegration = true;
 
-      settings = {
-        editor = {
-          vimMode = true;
-        };
-        display = {
-          showLineNumbers = true;
-        };
-        permissions = {
-          allow = [
-            "Shell(git:*)"
-            "Shell(gh:*)"
-            "Shell(nix:*)"
-            "Shell(nh:*)"
-            "Shell(uv:*)"
-            "Shell(jq:*)"
-            "Shell(yq:*)"
-            "Shell(rg:*)"
-            "Shell(fd:*)"
-            "Shell(cat:*)"
-            "Shell(eza:*)"
-            "Shell(wc:*)"
-            "Shell(sort:*)"
-            "Shell(uniq:*)"
-            "Shell(diff:*)"
-            "Shell(which:*)"
-            "Shell(type:*)"
-            "Shell(readlink:*)"
-          ];
-          deny = [
-            "Read(.env*)"
-            "Read(./secrets/**)"
-          ];
-        };
-        attribution = {
-          attributeCommitsToAgent = false;
-          attributePRsToAgent = false;
+      cli = {
+        enable = true;
+
+        package = pkgs.llm-agents.cursor-agent;
+
+        settings = {
+          editor = {
+            vimMode = true;
+          };
+          display = {
+            showLineNumbers = true;
+          };
+          permissions = {
+            allow = [
+              "Shell(git:*)"
+              "Shell(gh:*)"
+              "Shell(nix:*)"
+              "Shell(nh:*)"
+              "Shell(uv:*)"
+              "Shell(jq:*)"
+              "Shell(yq:*)"
+              "Shell(rg:*)"
+              "Shell(fd:*)"
+              "Shell(cat:*)"
+              "Shell(eza:*)"
+              "Shell(wc:*)"
+              "Shell(sort:*)"
+              "Shell(uniq:*)"
+              "Shell(diff:*)"
+              "Shell(which:*)"
+              "Shell(type:*)"
+              "Shell(readlink:*)"
+            ];
+            deny = [
+              "Read(.env*)"
+              "Read(./secrets/**)"
+            ];
+          };
+          attribution = {
+            attributeCommitsToAgent = false;
+            attributePRsToAgent = false;
+          };
         };
       };
 
