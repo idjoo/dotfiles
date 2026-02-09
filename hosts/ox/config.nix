@@ -33,7 +33,7 @@
     in
     {
       settings = {
-        trusted-users = [ "${outputs.username}" ];
+        trusted-users = [ "${outputs.lib.username}" ];
 
         substituters = [
           "https://cache.nixos.org"
@@ -123,7 +123,7 @@
   };
 
   # user accounts
-  users.users.${outputs.username} = {
+  users.users.${outputs.lib.username} = {
     isNormalUser = true;
     description = "Adrianus Vian Habirowo";
     extraGroups = [

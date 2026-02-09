@@ -32,7 +32,7 @@
     in
     {
       settings = {
-        trusted-users = [ "${outputs.username}" ];
+        trusted-users = [ "${outputs.lib.username}" ];
 
         substituters = [
           "https://cache.nixos.org"
@@ -130,7 +130,7 @@
   };
 
   # user accounts
-  users.users.${outputs.username} = {
+  users.users.${outputs.lib.username} = {
     isNormalUser = true;
     description = "Adrianus Vian Habirowo";
     extraGroups = [
@@ -167,8 +167,9 @@
     docker.enable = true;
   };
 
+  services.xremap.enable = false;
+
   modules = {
-    nh.enable = true;
     stylix.enable = true;
     pipewire.enable = true;
     tailscale.enable = true;

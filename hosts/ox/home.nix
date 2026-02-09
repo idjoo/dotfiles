@@ -9,12 +9,12 @@
 {
   # You can import other home-manager modules here
   imports = [
-    outputs.homeManagerModules
+    outputs.homeModules
   ];
 
   home = {
-    username = "${outputs.username}";
-    homeDirectory = "/home/${outputs.username}";
+    username = "${outputs.lib.username}";
+    homeDirectory = "/home/${outputs.lib.username}";
 
     packages = with pkgs; [
       (google-cloud-sdk.withExtraComponents [

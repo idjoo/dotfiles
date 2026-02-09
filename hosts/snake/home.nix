@@ -5,14 +5,14 @@
 }:
 {
   imports = [
-    outputs.homeManagerModules
+    outputs.homeModules
   ];
 
   programs.home-manager.enable = true;
 
   home = {
-    username = "${outputs.username}";
-    homeDirectory = "/Users/${outputs.username}";
+    username = "${outputs.lib.username}";
+    homeDirectory = "/Users/${outputs.lib.username}";
 
     shell = {
       enableShellIntegration = false;

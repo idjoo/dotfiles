@@ -22,7 +22,7 @@ in
     services.xremap = {
       enable = cfg.enable;
 
-      userName = outputs.username;
+      userName = outputs.lib.username;
       withX11 = true;
 
       config = {

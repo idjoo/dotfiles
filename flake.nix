@@ -111,16 +111,18 @@
       rootPath = ./.;
     in
     {
-      username = "idjo";
+      lib = {
+        username = "idjo";
+      };
 
       packages = forEachSystem (pkgs: import ./pkgs pkgs);
       formatter = forEachSystem (pkgs: pkgs.nixfmt);
       overlays = import ./overlays { inherit inputs; };
 
       nixosModules = import ./modules/nixos;
-      homeManagerModules = import ./modules/home-manager;
+      homeModules = import ./modules/home-manager;
       darwinModules = import ./modules/darwin;
-      nixOnDroidModules = import ./modules/nix-on-droid;
+      lib.nixOnDroidModules = import ./modules/nix-on-droid;
 
       nixosConfigurations = {
         ox = nixpkgs.lib.nixosSystem {

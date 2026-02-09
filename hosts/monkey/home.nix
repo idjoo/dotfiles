@@ -5,7 +5,7 @@
 }:
 {
   imports = [
-    outputs.homeManagerModules
+    outputs.homeModules
   ];
 
   programs.home-manager.enable = true;
