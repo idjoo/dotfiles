@@ -21,7 +21,7 @@ in
       in
       {
         settings = {
-          trusted-users = [ "${outputs.username}" ];
+          trusted-users = [ "${outputs.lib.username}" ];
 
           substituters = [
             "https://cache.nixos.org"

@@ -23,6 +23,9 @@
 
     config = {
       allowUnfreePredicate = (pkg: true);
+      permittedInsecurePackages = [
+        "google-chrome-144.0.7559.97"
+      ];
     };
   };
 
@@ -33,11 +36,11 @@
   time.timeZone = "Asia/Jakarta";
 
   # Users
-  system.primaryUser = "${outputs.username}";
-  users.users.${outputs.username} = {
+  system.primaryUser = "${outputs.lib.username}";
+  users.users.${outputs.lib.username} = {
     description = "Adrianus Vian Habirowo";
     shell = pkgs.zsh;
-    home = "/Users/${outputs.username}";
+    home = "/Users/${outputs.lib.username}";
   };
 
   # Fonts
