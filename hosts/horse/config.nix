@@ -107,10 +107,10 @@
     videoDrivers = [ "amdgpu" ];
   };
 
-  services.logind.lidSwitchExternalPower = "ignore";
+  services.logind.settings.Login.HandleLidSwitchExternalPower = "ignore";
 
   # user accounts
-  users.users.${outputs.username} = {
+  users.users.${outputs.lib.username} = {
     isNormalUser = true;
     description = "Adrianus Vian Habirowo";
     extraGroups = [
@@ -151,7 +151,6 @@
 
   modules = {
     comma.enable = true;
-    nh.enable = true;
     nix.enable = true;
     pipewire.enable = true;
     ssh.enable = true;

@@ -80,8 +80,8 @@
     ta = "${pkgs.tmux}/bin/tmux attach -t 0";
 
     # ssh
-    horse = "TERM=xterm-256color ${pkgs.openssh}/bin/ssh ${outputs.username}@horse";
-    ox = "TERM=xterm-256color ${pkgs.openssh}/bin/ssh ${outputs.username}@ox";
+    horse = "TERM=xterm-256color ${pkgs.openssh}/bin/ssh ${outputs.lib.username}@horse";
+    ox = "TERM=xterm-256color ${pkgs.openssh}/bin/ssh ${outputs.lib.username}@ox";
   };
 
   home.sessionVariables = { };
