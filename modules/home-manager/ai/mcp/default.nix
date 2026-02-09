@@ -32,6 +32,13 @@ with lib;
       atlassian = {
         url = "https://mcp.atlassian.com/v1/mcp";
       };
+
+      drawio = {
+        command = "${pkgs.bun}/bin/bunx";
+        args = [
+          "@next-ai-drawio/mcp-server@latest"
+        ];
+      };
     };
   };
 }
