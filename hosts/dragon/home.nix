@@ -8,12 +8,12 @@
 }:
 {
   imports = [
-    outputs.homeManagerModules
+    outputs.homeModules
   ];
 
   home = {
-    username = "${outputs.username}";
-    homeDirectory = "/home/${outputs.username}";
+    username = "${outputs.lib.username}";
+    homeDirectory = "/home/${outputs.lib.username}";
 
     packages = with pkgs; [
       (google-cloud-sdk.withExtraComponents [
@@ -50,7 +50,10 @@
     zoxide.enable = true;
     zsh.enable = true;
     password-store.enable = true;
-    ai.enable = true;
+    ai = {
+      enable = true;
+      opencode.web.enable = true;
+    };
   };
 
   systemd.user = {

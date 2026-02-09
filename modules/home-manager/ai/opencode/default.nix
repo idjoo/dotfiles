@@ -24,6 +24,7 @@ in
   ];
   options.modules.opencode = {
     enable = lib.mkEnableOption "opencode";
+    web.enable = lib.mkEnableOption "opencode web UI";
   };
 
   config = lib.mkIf cfg.enable {
@@ -41,7 +42,7 @@ in
 
       enableMcpIntegration = true;
 
-      web = {
+      web = lib.mkIf cfg.web.enable {
         enable = true;
         extraArgs = [
           "--hostname"
