@@ -38,10 +38,13 @@ in
       description = "Enable gemini-cli when ai.enable is true";
     };
 
-    opencode = mkOption {
-      type = types.bool;
-      default = cfg.enable;
-      description = "Enable opencode when ai.enable is true";
+    opencode = {
+      enable = mkOption {
+        type = types.bool;
+        default = cfg.enable;
+        description = "Enable opencode when ai.enable is true";
+      };
+      web.enable = mkEnableOption "opencode web UI";
     };
 
     mcp = mkOption {
@@ -56,7 +59,10 @@ in
       claude-code.enable = mkDefault cfg.claude-code;
       cursor.enable = mkDefault cfg.cursor;
       gemini-cli.enable = mkDefault cfg.gemini-cli;
-      opencode.enable = mkDefault cfg.opencode;
+      opencode = {
+        enable = mkDefault cfg.opencode.enable;
+        web.enable = mkDefault cfg.opencode.web.enable;
+      };
       agent-browser.enable = mkDefault cfg.mcp;
     };
   };
