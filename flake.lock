@@ -901,14 +901,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1770758044,
-        "narHash": "sha256-Q86U1b4ZiWA0m5P+R7d+zRGy/HLd9rabh0aUaoe6rxo=",
-        "path": "/Users/idjo/Documents/skills.nix",
-        "type": "path"
+        "lastModified": 1770882991,
+        "narHash": "sha256-MhrIjvogVj9RQ1x/0JpajreY11qw/O9CdN+jG8Kuezc=",
+        "owner": "idjoo",
+        "repo": "skills.nix",
+        "rev": "b1458c16054ebeb71b443de37549b6810052fc75",
+        "type": "github"
       },
       "original": {
-        "path": "/Users/idjo/Documents/skills.nix",
-        "type": "path"
+        "owner": "idjoo",
+        "repo": "skills.nix",
+        "type": "github"
       }
     },
     "sops-nix": {

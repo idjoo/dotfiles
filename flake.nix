@@ -78,7 +78,7 @@
     };
 
     skills = {
-      url = "path:/Users/idjo/Documents/skills.nix";
+      url = "github:idjoo/skills.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
