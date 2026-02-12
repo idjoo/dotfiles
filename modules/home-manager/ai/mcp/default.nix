@@ -18,10 +18,8 @@ with lib;
       };
 
       serena = {
-        command = "${pkgs.uv}/bin/uvx";
+        command = "${pkgs.serena}/bin/serena";
         args = [
-          "--from=git+https://github.com/oraios/serena"
-          "serena"
           "start-mcp-server"
           "--open-web-dashboard=false"
           "--context=claude-code"
