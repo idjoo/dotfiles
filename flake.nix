@@ -72,6 +72,16 @@
       url = "github:numtide/llm-agents.nix";
     };
 
+    serena = {
+      url = "github:oraios/serena";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    skills = {
+      url = "path:/Users/idjo/Documents/skills.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
