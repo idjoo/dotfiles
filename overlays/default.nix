@@ -13,6 +13,7 @@
     # });
     mcp-hub = inputs.mcp-hub.packages.${prev.stdenv.hostPlatform.system}.default;
     mcphub-nvim = inputs.mcphub-nvim.packages.${prev.stdenv.hostPlatform.system}.default;
+    serena = inputs.serena.packages.${prev.stdenv.hostPlatform.system}.default;
   };
 
   stable-packages = final: _prev: {
