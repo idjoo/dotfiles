@@ -9,10 +9,6 @@ with lib;
 let
   cfg = config.modules.claude-code;
 
-  claudeWrapper = pkgs.writeShellScriptBin "claude" ''
-    exec ${pkgs.claude-code}/bin/claude "$@"
-  '';
-
   agents = pkgs.writeShellScriptBin "agents" ''
     set -euo pipefail
 
@@ -59,7 +55,7 @@ in
     ];
 
     home.shellAliases = {
-      cc = "${claudeWrapper}/bin/claude";
+      cc = "${pkgs.llm-agents.claude-code}/bin/claude";
     };
 
     home.file.".claude/CLAUDE.md".source =
@@ -68,7 +64,7 @@ in
     programs.claude-code = {
       enable = cfg.enable;
 
-      package = claudeWrapper;
+      package = pkgs.llm-agents.claude-code;
 
       enableMcpIntegration = true;
 
