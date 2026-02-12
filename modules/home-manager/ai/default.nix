@@ -15,6 +15,7 @@ in
     ./gemini-cli
     ./mcp
     ./opencode
+    ./skills
   ];
 
   options.modules.ai = {
@@ -52,6 +53,12 @@ in
       default = cfg.enable;
       description = "Enable mcp servers when ai.enable is true";
     };
+
+    skills = mkOption {
+      type = types.bool;
+      default = cfg.enable;
+      description = "Enable declarative agent skills when ai.enable is true";
+    };
   };
 
   config = {
@@ -64,6 +71,7 @@ in
         web.enable = mkDefault cfg.opencode.web.enable;
       };
       agent-browser.enable = mkDefault cfg.mcp;
+      skills.enable = mkDefault cfg.skills;
     };
   };
 }
