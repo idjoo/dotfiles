@@ -901,11 +901,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770884154,
-        "narHash": "sha256-seBSgANq0QDMNdf8qFk/LNj/jQniKNabTpC4k4HrbSc=",
+        "lastModified": 1770891868,
+        "narHash": "sha256-pJYjLhaXn1sCismmrQ+ZqybVwk1yeTIO8KMHSiuFmcU=",
         "owner": "idjoo",
         "repo": "skills.nix",
-        "rev": "31ca86ff78e6b62593c64bd1bd9aa6065173a841",
+        "rev": "29c7620917dc1f8512354ff0f5cb0bcf18d18484",
         "type": "github"
       },
       "original": {
