@@ -30,9 +30,34 @@ in
       ];
 
       sources = [
-        { source = "idjoo/skills"; skills = ["*"]; }
-        { source = "obra/superpowers"; skills = ["*"]; }
-        { source = "wshobson/agents"; skills = ["*"]; }
+        {
+          source = "idjoo/skills";
+          skills = [ "*" ];
+        }
+        {
+          source = "obra/superpowers";
+          skills = [ "*" ];
+        }
+        {
+          source = "wshobson/agents";
+          skills = [ "*" ];
+        }
+        {
+          source = "vercel-labs/agent-browser";
+          skills = [ "agent-browser" ];
+        }
+        {
+          source = "vercel-labs/agent-browser";
+          skills = [ "agent-browser" ];
+        }
+        {
+          source = "softaworks/agent-toolkit";
+          skills = [ "qa-test-planner" ];
+        }
+        {
+          source = "remotion-dev/skills";
+          skills = [ "*" ];
+        }
       ];
     };
   };
