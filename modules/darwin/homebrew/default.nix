@@ -38,6 +38,7 @@ in
         "roblox"
         "docker-desktop"
         "another-redis-desktop-manager"
+        "whatsapp"
       ];
     };
   };
