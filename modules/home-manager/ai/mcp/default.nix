@@ -6,6 +6,11 @@
 }:
 with lib;
 {
+  home.packages = [
+    pkgs.serena
+    pkgs.marksman
+  ];
+
   programs.mcp = {
     enable = true;
 
