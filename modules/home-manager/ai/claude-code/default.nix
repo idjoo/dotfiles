@@ -8,36 +8,6 @@
 with lib;
 let
   cfg = config.modules.claude-code;
-
-  agents = pkgs.writeShellScriptBin "agents" ''
-    set -euo pipefail
-
-    PLUGIN_NAME="''${1%%:*}"
-    FULL_ARG="$1"
-    PROMPT="''${2:-}"
-    SESSION_NAME="claude-agents"
-    SETTINGS_FILE=".claude/settings.local.json"
-
-    if ! ${pkgs.tmux}/bin/tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
-      ${pkgs.tmux}/bin/tmux new-session -d -s "$SESSION_NAME"
-    else
-      ${pkgs.tmux}/bin/tmux new-window -t "$SESSION_NAME"
-    fi
-
-    TARGET="$SESSION_NAME"
-
-    if [[ -f "$SETTINGS_FILE" ]]; then
-      ${pkgs.jq}/bin/jq '.enabledPlugins = {}' "$SETTINGS_FILE" >"''${SETTINGS_FILE}.tmp" &&
-        mv "''${SETTINGS_FILE}.tmp" "$SETTINGS_FILE"
-    fi
-
-    CLAUDE_CMD="claude --dangerously-skip-permissions '/$FULL_ARG'"
-    [[ -n "$PROMPT" ]] && CLAUDE_CMD="$CLAUDE_CMD '$PROMPT'"
-
-    ${pkgs.tmux}/bin/tmux send-keys -t "$TARGET" "claude plugin install --scope local '$PLUGIN_NAME' && $CLAUDE_CMD" Enter
-
-    echo "Started in tmux session '$SESSION_NAME'"
-  '';
 in
 {
   options.modules.claude-code = {
@@ -49,11 +19,6 @@ in
   ];
 
   config = mkIf cfg.enable {
-    home.packages = [
-      pkgs.htmldoc
-      agents
-    ];
-
     home.shellAliases = {
       cc = "${pkgs.llm-agents.claude-code}/bin/claude";
     };
@@ -79,7 +44,7 @@ in
           DISABLE_TELEMETRY = "1";
           DISABLE_ERROR_REPORTING = "1";
           SUPERMEMORY_CC_API_KEY = "***REDACTED***";
-          ENABLE_TOOL_SEARCH = "true";
+          ENABLE_TOOL_SEARCH = "0";
           CLAUDE_CODE_USE_VERTEX = "1";
           ANTHROPIC_DEFAULT_OPUS_MODEL = "claude-opus-4-6@default";
           ANTHROPIC_DEFAULT_SONNET_MODEL = "claude-sonnet-4-5@20250929";
@@ -150,9 +115,9 @@ in
           padding = 0;
         };
 
-        enabledPlugins = {
-          "claude-supermemory@supermemory-plugins" = true;
-        };
+        # enabledPlugins = {
+        #   "claude-supermemory@supermemory-plugins" = true;
+        # };
 
         hooks =
           let
