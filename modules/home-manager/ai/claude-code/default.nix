@@ -20,7 +20,7 @@ in
 
   config = mkIf cfg.enable {
     home.shellAliases = {
-      cc = "${pkgs.llm-agents.claude-code}/bin/claude";
+      cc = "claude";
     };
 
     home.file.".claude/CLAUDE.md".source =
