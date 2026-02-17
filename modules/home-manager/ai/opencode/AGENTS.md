@@ -4,18 +4,18 @@ These mandatory rules govern all interactions. Violations are unacceptable.
 
 ## Quick Reference
 
-| Rule              | Requirement                                                                                           |
-| ----------------- | ----------------------------------------------------------------------------------------------------- |
-| **Skills**        | Check and invoke relevant skills BEFORE any task — even 1% chance means invoke                        |
-| **Serena**        | DEFAULT tool for ALL code navigation, search, and editing - use before Read/Edit/Grep/Glob            |
-| **todowrite**     | FIRST action for 2+ step tasks                                                                        |
-| **question**      | Use for ALL user interactions (choices, clarifications, interviews)                                   |
-| **Parallel**      | Batch independent tool calls in ONE message                                                           |
-| **bash**          | Chain commands in ONE call (`&&` or `;`)                                                              |
-| **Python**        | ALWAYS `uv run python <args>` or `uv run --with <deps> python <args>` - NEVER bare `python`/`python3` |
-| **TDD**           | No production code without a failing test first                                                       |
-| **Verify**        | Evidence before claims — run verification, read output, THEN claim success                            |
-| **skill**         | Load skills before doing any tasks                                                                    |
+| Rule          | Requirement                                                                                           |
+| ------------- | ----------------------------------------------------------------------------------------------------- |
+| **Skills**    | Check and invoke relevant skills BEFORE any task — even 1% chance means invoke                        |
+| **Serena**    | DEFAULT tool for ALL code navigation, search, and editing - use before Read/Edit/Grep/Glob            |
+| **todowrite** | FIRST action for 2+ step tasks                                                                        |
+| **question**  | Use for ALL user interactions (choices, clarifications, interviews)                                   |
+| **Parallel**  | Batch independent tool calls in ONE message                                                           |
+| **bash**      | Chain commands in ONE call (`&&` or `;`)                                                              |
+| **Python**    | ALWAYS `uv run python <args>` or `uv run --with <deps> python <args>` - NEVER bare `python`/`python3` |
+| **TDD**       | No production code without a failing test first                                                       |
+| **Verify**    | Evidence before claims — run verification, read output, THEN claim success                            |
+| **skill**     | Load skills before doing any tasks                                                                    |
 
 ---
 
@@ -48,17 +48,18 @@ All creative work (features, bug fixes, refactors, behavior changes) follows thi
 
 Even a 1% chance means invoke the skill. If it turns out to be wrong, you don't need to follow it. But you MUST check.
 
-| Thought (STOP — you're rationalizing)       | Reality                                              |
-| ------------------------------------------- | ---------------------------------------------------- |
-| "This is just a simple question"            | Questions are tasks. Check for skills.               |
-| "I need more context first"                 | Skill check comes BEFORE clarifying questions.       |
-| "Let me explore the codebase first"         | Skills tell you HOW to explore. Check first.         |
-| "This doesn't need a formal skill"          | If a skill exists, use it.                           |
-| "I remember this skill"                     | Skills evolve. Read current version.                 |
-| "The skill is overkill"                     | Simple things become complex. Use it.                |
-| "I'll just do this one thing first"         | Check BEFORE doing anything.                         |
+| Thought (STOP — you're rationalizing) | Reality                                        |
+| ------------------------------------- | ---------------------------------------------- |
+| "This is just a simple question"      | Questions are tasks. Check for skills.         |
+| "I need more context first"           | Skill check comes BEFORE clarifying questions. |
+| "Let me explore the codebase first"   | Skills tell you HOW to explore. Check first.   |
+| "This doesn't need a formal skill"    | If a skill exists, use it.                     |
+| "I remember this skill"               | Skills evolve. Read current version.           |
+| "The skill is overkill"               | Simple things become complex. Use it.          |
+| "I'll just do this one thing first"   | Check BEFORE doing anything.                   |
 
 **Skill Priority:**
+
 1. **Process skills first** (brainstorming, systematic-debugging) — determine HOW to approach
 2. **Implementation skills second** (frontend-design, etc.) — guide execution
 
@@ -107,12 +108,14 @@ Even a 1% chance means invoke the skill. If it turns out to be wrong, you don't 
 ### 4. Execution (Two Options)
 
 **Subagent-Driven (same session):**
+
 - **Invoke:** `skill("subagent-driven-development")`
 - Fresh subagent per task — no context pollution
 - Two-stage review after each: spec compliance THEN code quality
 - Fix issues before moving to next task
 
 **Batch Execution (separate session):**
+
 - **Invoke:** `skill("executing-plans")`
 - Execute in batches of 3 tasks
 - Report and wait for feedback between batches
@@ -128,6 +131,7 @@ Even a 1% chance means invoke the skill. If it turns out to be wrong, you don't 
 - Push back with technical reasoning if reviewer is wrong
 
 **When receiving review:**
+
 - **Invoke:** `skill("receiving-code-review")`
 - Verify before implementing — technical rigor, not performative agreement
 - Never say "You're absolutely right!" or "Great point!"
@@ -239,12 +243,12 @@ BEFORE claiming success:
 - Trusting subagent success reports without independent verification
 - Relying on partial verification
 
-| Claim           | Requires                                    | NOT Sufficient                    |
-| --------------- | ------------------------------------------- | --------------------------------- |
-| Tests pass      | Test command output: 0 failures             | Previous run, "should pass"       |
-| Build succeeds  | Build command: exit 0                       | Linter passing                    |
-| Bug fixed       | Test original symptom: passes               | Code changed, assumed fixed       |
-| Requirements met| Line-by-line checklist verified              | Tests passing                     |
+| Claim            | Requires                        | NOT Sufficient              |
+| ---------------- | ------------------------------- | --------------------------- |
+| Tests pass       | Test command output: 0 failures | Previous run, "should pass" |
+| Build succeeds   | Build command: exit 0           | Linter passing              |
+| Bug fixed        | Test original symptom: passes   | Code changed, assumed fixed |
+| Requirements met | Line-by-line checklist verified | Tests passing               |
 
 </verification-rules>
 
@@ -261,6 +265,7 @@ BEFORE claiming success:
 **Don't use when:** Failures are related, agents would edit same files, need full system context.
 
 **Pattern:**
+
 1. Identify independent domains
 2. Create focused agent tasks (specific scope, clear goal, constraints)
 3. Dispatch in parallel via Task tool
@@ -276,17 +281,17 @@ Serena is your **DEFAULT** tool for ALL code operations. Use Serena BEFORE reach
 
 <serena-first-policy>
 
-| Operation              | Use Serena                                           | NOT                              |
-| ---------------------- | ---------------------------------------------------- | -------------------------------- |
-| Understand a file      | `get_symbols_overview`                               | `Read` the whole file            |
-| Read a function/class  | `find_symbol` with `include_body=True`               | `Read` with line offsets         |
-| Search code            | `find_symbol` or `search_for_pattern`                | `Grep` or `Glob`                 |
-| Find references        | `find_referencing_symbols`                           | `Grep` for usage patterns        |
-| Edit a symbol          | `replace_symbol_body`                                | `Edit` with oldString/newString  |
-| Add code after symbol  | `insert_after_symbol`                                | `Edit` to append                 |
-| Add code before symbol | `insert_before_symbol`                               | `Edit` to prepend                |
-| Find files             | `find_file` or `list_dir`                            | `Glob`                           |
-| Rename across codebase | `rename_symbol`                                      | Manual find-and-replace          |
+| Operation              | Use Serena                             | NOT                             |
+| ---------------------- | -------------------------------------- | ------------------------------- |
+| Understand a file      | `get_symbols_overview`                 | `Read` the whole file           |
+| Read a function/class  | `find_symbol` with `include_body=True` | `Read` with line offsets        |
+| Search code            | `find_symbol` or `search_for_pattern`  | `Grep` or `Glob`                |
+| Find references        | `find_referencing_symbols`             | `Grep` for usage patterns       |
+| Edit a symbol          | `replace_symbol_body`                  | `Edit` with oldString/newString |
+| Add code after symbol  | `insert_after_symbol`                  | `Edit` to append                |
+| Add code before symbol | `insert_before_symbol`                 | `Edit` to prepend               |
+| Find files             | `find_file` or `list_dir`              | `Glob`                          |
+| Rename across codebase | `rename_symbol`                        | Manual find-and-replace         |
 
 </serena-first-policy>
 
@@ -494,21 +499,21 @@ ALWAYS use `uv run`. NEVER bare `python` or `python3`.
 
 Load skills for specialized workflows using the `skill` tool. All superpowers skills are pre-installed.
 
-| Skill                             | When to Use                                                       |
-| --------------------------------- | ----------------------------------------------------------------- |
-| brainstorming                     | Before any creative work — features, components, behavior changes |
-| using-git-worktrees               | Creating isolated workspace for feature work                      |
-| writing-plans                     | Have spec/requirements, before touching code                      |
-| subagent-driven-development       | Executing plans with independent tasks in current session         |
-| executing-plans                   | Executing plans in separate session with review checkpoints       |
-| test-driven-development           | Implementing any feature or bugfix                                |
-| systematic-debugging              | Any bug, test failure, or unexpected behavior                     |
-| verification-before-completion    | Before claiming work is complete, fixed, or passing               |
-| requesting-code-review            | After completing tasks, before merging                            |
-| receiving-code-review             | When receiving review feedback                                    |
-| dispatching-parallel-agents       | 2+ independent tasks that can run concurrently                    |
-| finishing-a-development-branch    | Implementation complete, deciding how to integrate                |
-| context7                          | Writing code with external libraries                              |
+| Skill                          | When to Use                                                       |
+| ------------------------------ | ----------------------------------------------------------------- |
+| brainstorming                  | Before any creative work — features, components, behavior changes |
+| using-git-worktrees            | Creating isolated workspace for feature work                      |
+| writing-plans                  | Have spec/requirements, before touching code                      |
+| subagent-driven-development    | Executing plans with independent tasks in current session         |
+| executing-plans                | Executing plans in separate session with review checkpoints       |
+| test-driven-development        | Implementing any feature or bugfix                                |
+| systematic-debugging           | Any bug, test failure, or unexpected behavior                     |
+| verification-before-completion | Before claiming work is complete, fixed, or passing               |
+| requesting-code-review         | After completing tasks, before merging                            |
+| receiving-code-review          | When receiving review feedback                                    |
+| dispatching-parallel-agents    | 2+ independent tasks that can run concurrently                    |
+| finishing-a-development-branch | Implementation complete, deciding how to integrate                |
+| context7                       | Writing code with external libraries                              |
 
 <context7-workflow>
 
@@ -532,13 +537,13 @@ INCORRECT: Write library code from training data → May be outdated
 
 Handle failures gracefully without user intervention when possible.
 
-| Error           | Recovery                                          |
-| --------------- | ------------------------------------------------- |
-| Command fails   | Read error message, fix issue, retry              |
-| Test fails      | Analyze failure, fix code, re-run                 |
-| File not found  | Search with `find_file` or `list_dir`, then `Glob`|
-| Serena fails    | Fall back to `Read`/`Edit`/`Grep` as needed       |
-| MCP timeout     | Retry with simpler request                        |
+| Error          | Recovery                                           |
+| -------------- | -------------------------------------------------- |
+| Command fails  | Read error message, fix issue, retry               |
+| Test fails     | Analyze failure, fix code, re-run                  |
+| File not found | Search with `find_file` or `list_dir`, then `Glob` |
+| Serena fails   | Fall back to `Read`/`Edit`/`Grep` as needed        |
+| MCP timeout    | Retry with simpler request                         |
 
 After 2 failed attempts at the same approach, try a different strategy or ask user for guidance.
 
@@ -548,23 +553,23 @@ After 2 failed attempts at the same approach, try a different strategy or ask us
 
 <violations>
 
-| Category       | Violation                                                             |
-| -------------- | --------------------------------------------------------------------- |
-| Skills         | Not checking for relevant skills before starting a task               |
-| Skills         | Rationalizing why a skill doesn't apply without invoking it           |
-| Workflow       | Jumping to code without brainstorming/planning for non-trivial work   |
-| TDD            | Writing production code before a failing test                         |
-| TDD            | Keeping code written before tests as "reference"                      |
-| Debugging      | Proposing fixes without root cause investigation                      |
-| Verification   | Claiming success without running verification commands                |
-| Verification   | Using "should", "probably", "seems to" about untested state          |
-| Todos          | Starting multi-step work without a todo list                          |
-| Todos          | Batching completions instead of immediate updates                     |
-| question       | Asking choices/options in plain text instead of using `question` tool |
-| Tools          | Sequential calls when parallel is possible                            |
-| bash           | Multiple `bash` calls instead of chaining                             |
-| Python         | Using bare `python` or `python3` instead of `uv run`                  |
-| Serena         | Using `Read`/`Edit`/`Grep`/`Glob` when Serena tools would work        |
-| Context7       | Writing library code without querying docs first                      |
+| Category     | Violation                                                             |
+| ------------ | --------------------------------------------------------------------- |
+| Skills       | Not checking for relevant skills before starting a task               |
+| Skills       | Rationalizing why a skill doesn't apply without invoking it           |
+| Workflow     | Jumping to code without brainstorming/planning for non-trivial work   |
+| TDD          | Writing production code before a failing test                         |
+| TDD          | Keeping code written before tests as "reference"                      |
+| Debugging    | Proposing fixes without root cause investigation                      |
+| Verification | Claiming success without running verification commands                |
+| Verification | Using "should", "probably", "seems to" about untested state           |
+| Todos        | Starting multi-step work without a todo list                          |
+| Todos        | Batching completions instead of immediate updates                     |
+| question     | Asking choices/options in plain text instead of using `question` tool |
+| Tools        | Sequential calls when parallel is possible                            |
+| bash         | Multiple `bash` calls instead of chaining                             |
+| Python       | Using bare `python` or `python3` instead of `uv run`                  |
+| Serena       | Using `Read`/`Edit`/`Grep`/`Glob` when Serena tools would work        |
+| Context7     | Writing library code without querying docs first                      |
 
 </violations>
