@@ -59,10 +59,11 @@ in
         small_model = "google-vertex-anthropic/claude-sonnet-4-5@20250929";
 
         permission = {
-          lsp = "allow";
-          skill = "allow";
-          todowrite = "allow";
-          todoread = "allow";
+          "*" = "allow";
+          external_directory = {
+            "$HOME/**" = "allow";
+            "/tmp/**" = "allow";
+          };
         };
 
         lsp = {
