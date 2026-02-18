@@ -43,6 +43,14 @@ in
           skills = [ "*" ];
         }
         {
+          source = "anthropics/skills";
+          skills = [ "*" ];
+        }
+        {
+          source = "remotion-dev/skills";
+          skills = [ "*" ];
+        }
+        {
           source = "vercel-labs/agent-browser";
           skills = [ "agent-browser" ];
         }
@@ -53,10 +61,6 @@ in
         {
           source = "softaworks/agent-toolkit";
           skills = [ "qa-test-planner" ];
-        }
-        {
-          source = "remotion-dev/skills";
-          skills = [ "*" ];
         }
       ];
     };
