@@ -37,6 +37,11 @@ in
     programs.git = {
       enable = cfg.enable;
 
+      ignores = [
+        ".serena/"
+        ".direnv/"
+      ];
+
       settings = {
         user = {
           name = "Adrianus Vian Habirowo";
