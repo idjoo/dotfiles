@@ -91,6 +91,7 @@ in
         compaction = {
           auto = true;
           prune = true;
+          reserved = 850000;
         };
 
         plugin = [
