@@ -29,7 +29,7 @@ in
 
   config = lib.mkIf cfg.enable {
     home.shellAliases = {
-      oc = "${opencodeWrapper}/bin/opencode";
+      oc = "opencode";
     };
 
     xdg.configFile."opencode/AGENTS.md".source =
