@@ -111,8 +111,7 @@ in
 
         statusLine = {
           type = "command";
-          command = "~/.claude/ccline/ccline";
-          padding = 0;
+          command = "${pkgs.llm-agents.ccstatusline}/bin/ccstatusline";
         };
 
         # enabledPlugins = {
