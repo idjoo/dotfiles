@@ -55,51 +55,7 @@ in
         };
 
         permissions = {
-          defaultMode = "acceptEdits";
-          allow = [
-            "Bash(git:*)"
-            "Bash(gh:*)"
-            "Bash(pnpm list:*)"
-            "Bash(nix:*)"
-            "Bash(nixfmt:*)"
-            "Bash(nh:*)"
-            "Bash(uv:*)"
-            "Bash(ruff:*)"
-            "Bash(pytest:*)"
-            "Bash(jq:*)"
-            "Bash(yq:*)"
-            "Bash(wc:*)"
-            "Bash(sort:*)"
-            "Bash(uniq:*)"
-            "Bash(diff:*)"
-            "Bash(which:*)"
-            "Bash(type:*)"
-            "Bash(bq:*)"
-            "Bash(eza:*)"
-            "Bash(fd:*)"
-            "Bash(rg:*)"
-            "Bash(cat:*)"
-            "Bash(tmux:*)"
-            "Bash(readlink:*)"
-            "mcp__context7__*"
-            "mcp__playwright__*"
-            "mcp__serena__*"
-            "mcp__atlassian__*"
-            "Skill(*)"
-          ];
-          ask = [
-            "Bash(rm:*)"
-            "Bash(sudo:*)"
-            "Bash(pnpm install:*)"
-            "Bash(uv add:*)"
-            "Bash(uv remove:*)"
-            "Bash(uv sync:*)"
-          ];
-          deny = [
-            "Read(./.env)"
-            "Read(./.env.*)"
-            "Read(./secrets/**)"
-          ];
+          defaultMode = "bypassPermissions";
         };
 
         attribution = {
