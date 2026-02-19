@@ -482,14 +482,29 @@ Operators: `&&` stops on failure; `;` continues regardless.
 
 ### Python Execution
 
-ALWAYS use `uv run`. NEVER bare `python` or `python3`.
+ALWAYS use `uv run`. NEVER bare `python` or `python3`. NEVER `pip install`.
 
-| Pattern   | Correct                                       | Incorrect              |
-| --------- | --------------------------------------------- | ---------------------- |
-| With deps | `uv run --with requests script.py`            | `python script.py`     |
-| Inline    | `uv run python -c 'print(1)'`                 | `python -c 'print(1)'` |
-| Module    | `uv run python -m pytest`                     | `python -m pytest`     |
-| Multi-dep | `uv run --with pandas --with numpy script.py` | —                      |
+**Iron Rule: `uv run --with <deps>` is the ONLY way to run Python with dependencies.**
+
+Do NOT install packages globally or into any environment. Use `uv run --with` to declare
+dependencies inline for every invocation. This ensures reproducibility and avoids polluting
+the system.
+
+| Pattern      | Correct                                       | Incorrect                              |
+| ------------ | --------------------------------------------- | -------------------------------------- |
+| With deps    | `uv run --with requests script.py`            | `python script.py`                     |
+| Inline       | `uv run python -c 'print(1)'`                 | `python -c 'print(1)'`                 |
+| Module       | `uv run python -m pytest`                     | `python -m pytest`                     |
+| Multi-dep    | `uv run --with pandas --with numpy script.py` | `pip install pandas numpy && python …` |
+| Quick script | `uv run --with httpx python -c '...'`         | `pip install httpx && python -c '...'` |
+
+### Forbidden Patterns
+
+- `python` / `python3` — always prefix with `uv run`
+- `pip install` / `pip3 install` — use `uv run --with` instead
+- `conda install` / `conda run` — use `uv run --with` instead
+- Creating virtualenvs manually (`python -m venv`) — `uv run` handles isolation
+- `poetry run` / `pipenv run` — use `uv run --with` instead
 
 </python-execution>
 
