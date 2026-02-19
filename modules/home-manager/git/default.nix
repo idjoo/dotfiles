@@ -40,6 +40,8 @@ in
       ignores = [
         ".serena/"
         ".direnv/"
+        "*.db"
+        "*.sqlite"
       ];
 
       settings = {
