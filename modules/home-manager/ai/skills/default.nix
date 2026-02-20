@@ -51,6 +51,10 @@ in
           skills = [ "*" ];
         }
         {
+          source = "waynesutton/convexskills";
+          skills = [ "*" ];
+        }
+        {
           source = "vercel-labs/agent-browser";
           skills = [ "agent-browser" ];
         }
