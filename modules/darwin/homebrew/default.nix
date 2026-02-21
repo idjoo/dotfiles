@@ -39,6 +39,7 @@ in
         "docker-desktop"
         "another-redis-desktop-manager"
         "whatsapp"
+        "microsoft-edge"
       ];
     };
   };
