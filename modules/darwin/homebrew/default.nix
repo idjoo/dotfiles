@@ -16,7 +16,7 @@ in
   config = mkIf cfg.enable {
     system.activationScripts.homebrew.text = lib.mkIf config.homebrew.enable (
       lib.mkBefore ''
-        if [[ ! -f "${config.homebrew.brewPrefix}/brew" ]]; then
+        if [[ ! -f "${config.homebrew.prefix}/brew" ]]; then
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         fi
       ''
