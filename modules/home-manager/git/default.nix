@@ -42,6 +42,7 @@ in
         ".direnv/"
         "*.db"
         "*.sqlite"
+        ".claude/settings.local.json"
       ];
 
       settings = {
