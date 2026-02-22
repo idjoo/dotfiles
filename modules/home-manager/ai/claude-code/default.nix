@@ -23,11 +23,10 @@ in
       cc = "claude";
     };
 
-    home.file.".claude/CLAUDE.md".source =
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/claude-code/CLAUDE.md";
-
     programs.claude-code = {
       enable = cfg.enable;
+
+      memory.source = ./CLAUDE.md;
 
       package = pkgs.llm-agents.claude-code;
 
