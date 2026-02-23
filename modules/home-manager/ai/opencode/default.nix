@@ -32,8 +32,17 @@ in
       oc = "opencode";
     };
 
-    xdg.configFile."opencode/AGENTS.md".source =
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/ai/opencode/AGENTS.md";
+    home.packages = with pkgs; [
+      wakatime-cli
+    ];
+
+    xdg.configFile."opencode/opencode-ntfy.jsonc".text = builtins.toJSON {
+      topic = "idjo-opencode";
+    };
+
+    xdg.configFile."opencode/supermemory.jsonc".text = builtins.toJSON {
+      apiKey = 0.80;
+    };
 
     programs.opencode = {
       enable = true;
@@ -41,6 +50,8 @@ in
       package = opencodeWrapper;
 
       enableMcpIntegration = true;
+
+      rules = ./AGENTS.md;
 
       web = lib.mkIf cfg.web.enable {
         enable = true;
@@ -55,7 +66,7 @@ in
       };
 
       settings = {
-        model = "google-vertex-anthropic/claude-opus-4-6@default";
+        model = "google-vertex/gemini-3.1-pro-preview";
         small_model = "google-vertex-anthropic/claude-sonnet-4-6@default";
 
         permission = {
@@ -99,6 +110,10 @@ in
           "opencode-supermemory@latest"
           "opencode-wakatime@latest"
         ];
+
+        snapshot = true;
+
+        share = "manual";
       };
     };
   };
