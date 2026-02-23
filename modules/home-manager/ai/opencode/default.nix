@@ -28,20 +28,20 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    sops.secrets."apiKeys/supermemory" = { };
     home.shellAliases = {
       oc = "opencode";
     };
-
-    home.packages = with pkgs; [
-      wakatime-cli
-    ];
 
     xdg.configFile."opencode/opencode-ntfy.jsonc".text = builtins.toJSON {
       topic = "idjo-opencode";
     };
 
-    xdg.configFile."opencode/supermemory.jsonc".text = builtins.toJSON {
-      apiKey = 0.80;
+    sops.templates."supermemory.jsonc" = {
+      content = builtins.toJSON {
+        apiKey = config.sops.placeholder."apiKeys/supermemory";
+      };
+      path = "${config.home.homeDirectory}/.config/opencode/supermemory.jsonc";
     };
 
     programs.opencode = {
