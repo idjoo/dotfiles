@@ -66,7 +66,7 @@ in
       };
 
       settings = {
-        model = "google-vertex/gemini-3.1-pro-preview";
+        model = "openai/gpt-5.3-codex";
         small_model = "google-vertex-anthropic/claude-sonnet-4-6@default";
 
         permission = {
@@ -102,7 +102,6 @@ in
         compaction = {
           auto = true;
           prune = true;
-          reserved = 850000;
         };
 
         plugin = [
