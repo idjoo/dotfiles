@@ -111,7 +111,7 @@ in
           "opencode-wakatime@latest"
         ];
 
-        snapshot = true;
+        snapshot = false;
 
         share = "manual";
       };
