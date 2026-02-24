@@ -29,6 +29,7 @@ in
 
   config = lib.mkIf cfg.enable {
     sops.secrets."apiKeys/supermemory" = { };
+
     home.shellAliases = {
       oc = "opencode";
     };
