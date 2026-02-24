@@ -22,3 +22,7 @@ EOPY
 ## Context7
 
 Before doing any tasks always check if its beneficial to use the context7 mcp
+
+## Serena
+
+Use serena mcp tools whenever possible to reduce token usage
