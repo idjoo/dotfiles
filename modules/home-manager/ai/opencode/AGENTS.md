@@ -8,11 +8,15 @@ Before doing any tasks always check for all available skills you have
 
 When running python or pip always use uv:
 
-```
-uv run python ...
-uv run --with <deps> python ...
+```bash
 uv run script.py
 uv run --with <deps> script.py
+
+# For inline scripts, use a HEREDOC with EOPY:
+uv run python - << 'EOPY'
+import sys
+print("Inline python script")
+EOPY
 ```
 
 ## Context7
