@@ -73,5 +73,7 @@ in
       agent-browser.enable = mkDefault cfg.mcp;
       skills.enable = mkDefault cfg.skills;
     };
+
+    home.packages = [ pkgs.llm-agents.beads-rust ];
   };
 }
