@@ -2,7 +2,7 @@
 
 ## Skills
 
-Before doing any tasks always check for all available skills you have
+Before doing any tasks always use all available skills you have
 
 ## Python
 
@@ -21,8 +21,8 @@ EOPY
 
 ## Context7
 
-Before doing any tasks always check if its beneficial to use the context7 mcp
+Before doing any tasks always use context7 mcp
 
-## Serena
+## Task Tracking
 
-Use serena mcp tools whenever possible to reduce token usage
+Use `br` for task tracking
