@@ -38,11 +38,11 @@ in
       enable = cfg.enable;
 
       ignores = [
-        ".serena/"
         ".direnv/"
         "*.db"
-        "*.sqlite"
         ".claude/settings.local.json"
+        ".beads/"
+        ".serena/"
       ];
 
       settings = {
