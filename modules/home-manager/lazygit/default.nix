@@ -71,7 +71,7 @@ in
                 body = "Generate commit message with AI?";
               }
             ];
-            command = ''opencode run --model google-vertex/gemini-3-flash-preview "commit and push"'';
+            command = ''opencode run --model google-vertex/gemini-3-flash-preview commit'';
             loadingText = "Generating commit with AI...";
           }
         ];
