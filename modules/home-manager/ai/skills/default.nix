@@ -25,6 +25,7 @@ in
       defaultAgents = [
         "opencode"
         "claude-code"
+        "codex"
         "cursor"
         "gemini-cli"
       ];
@@ -36,7 +37,9 @@ in
         }
         {
           source = "obra/superpowers";
-          skills = [ "*" ];
+          skills = {
+            exclude = [ "commit-work" ];
+          };
         }
         {
           source = "wshobson/agents";
