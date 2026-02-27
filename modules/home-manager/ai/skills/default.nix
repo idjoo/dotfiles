@@ -69,6 +69,10 @@ in
           source = "softaworks/agent-toolkit";
           skills = [ "qa-test-planner" ];
         }
+        {
+          source = "nicobailon/visual-explainer";
+          skills = [ "*" ];
+        }
       ];
     };
   };
