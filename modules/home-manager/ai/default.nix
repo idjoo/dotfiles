@@ -11,6 +11,7 @@ in
 {
   imports = [
     ./claude-code
+    ./codex
     ./cursor
     ./gemini-cli
     ./mcp
@@ -19,12 +20,18 @@ in
   ];
 
   options.modules.ai = {
-    enable = mkEnableOption "AI tools (claude-code, cursor, gemini-cli, opencode, mcp)";
+    enable = mkEnableOption "AI tools (claude-code, codex, cursor, gemini-cli, opencode, mcp)";
 
     claude-code = mkOption {
       type = types.bool;
       default = cfg.enable;
       description = "Enable claude-code when ai.enable is true";
+    };
+
+    codex = mkOption {
+      type = types.bool;
+      default = cfg.enable;
+      description = "Enable codex when ai.enable is true";
     };
 
     cursor = mkOption {
@@ -64,6 +71,7 @@ in
   config = {
     modules = {
       claude-code.enable = mkDefault cfg.claude-code;
+      codex.enable = mkDefault cfg.codex;
       cursor.enable = mkDefault cfg.cursor;
       gemini-cli.enable = mkDefault cfg.gemini-cli;
       opencode = {
