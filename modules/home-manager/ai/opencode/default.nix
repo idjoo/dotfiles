@@ -100,6 +100,31 @@ in
           };
         };
 
+        formatter = {
+          prettier = {
+            command = [
+              "${pkgs.prettier}/bin/prettier"
+              "--write"
+              "$FILE"
+            ];
+            extensions = [
+              ".js"
+              ".ts"
+              ".jsx"
+              ".tsx"
+              ".json"
+              ".jsonc"
+              ".md"
+              ".mdx"
+              ".css"
+              ".scss"
+              ".html"
+              ".yml"
+              ".yaml"
+            ];
+          };
+        };
+
         compaction = {
           auto = true;
           prune = true;
