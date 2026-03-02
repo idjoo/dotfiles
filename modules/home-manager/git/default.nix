@@ -43,6 +43,7 @@ in
         ".claude/settings.local.json"
         ".beads/"
         ".serena/"
+        ".opencode/plans/*.md"
       ];
 
       settings = {
