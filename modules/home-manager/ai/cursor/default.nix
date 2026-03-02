@@ -39,6 +39,7 @@ in
           };
           display = {
             showLineNumbers = true;
+            showThinkingBlocks = true;
           };
           permissions = {
             allow = [
@@ -74,73 +75,40 @@ in
       };
 
       rules = {
-        workflow = ''
+        main = ''
           ---
-          description: "Task execution — plan, parallelize, verify"
+          description: "Main Agent Instructions"
           alwaysApply: true
           ---
 
-          ### Plan first
-          Call `TodoWrite` before your first action on any 2+ step task.
-          - Atomic, verifiable items. One `in_progress` at a time.
-          - Mark `completed` immediately when done — never batch completions.
+          # Agent Instructions
 
-          ### Execute efficiently
-          - **Parallel calls**: Independent tool calls go in one message.
-            `Read(a.ts) + Read(b.ts) + Grep("TODO")` in one turn, not three.
-          - **Shell chaining**: One `Shell` call with `&&` / `;` — never split across calls.
-          - **Python**: Always `uv run` — never bare `python` / `python3`.
+          ## Skills
 
-          ### Verify before completing
+          Before doing any tasks always use all available skills you have
 
-          | Change | Verification |
-          |--------|-------------|
-          | Code | Run tests or type-check |
-          | Config | Syntax check / dry-run |
-          | Bug fix | Reproduce → fix → confirm gone |
+          ## Python
 
-          Two failures with the same approach → pivot strategy or ask the user.
-        '';
+          When running python or pip always use uv:
 
-        code-intelligence = ''
-          ---
-          description: "Navigate code with Serena, query libraries with Context7"
-          alwaysApply: true
-          ---
+          ```bash
+          uv run script.py
+          uv run --with <deps> script.py
 
-          ### Code: Serena first
-          Semantic tools understand structure — prefer them over text search.
+          # For inline scripts, use a HEREDOC with EOPY:
+          uv run python - << 'EOPY'
+          import sys
+          print("Inline python script")
+          EOPY
+          ```
 
-          | Goal | Tool |
-          |------|------|
-          | File overview | `serena-get_symbols_overview` |
-          | Find definition | `serena-find_symbol` (include_body: true) |
-          | Find usages | `serena-find_referencing_symbols` |
-          | Regex search | `serena-search_for_pattern` |
-          | Edit symbol | `serena-replace_symbol_body` |
+          ## Context7
 
-          Use `Grep` / `Read` only for non-code files or when Serena is unavailable.
+          Before doing any tasks always use context7 mcp
 
-          ### Libraries: Context7 first
-          Before calling any library API, query its current docs:
-          1. `context7-resolve-library-id("<lib>", "<goal>")`
-          2. `context7-query-docs(id, "<specific question>")`
-          3. Implement from returned docs — never from training-data memory
+          ## Task Tracking
 
-          Skip only for purely project-internal code with no external API calls.
-        '';
-
-        communication = ''
-          ---
-          description: "Interaction style and scope discipline"
-          alwaysApply: true
-          ---
-
-          - **Act, don't narrate.** Do the work — don't describe what you're about to do.
-          - **Ask on ambiguity.** If a request has multiple valid interpretations, clarify before committing.
-          - **Surface blockers.** Report errors immediately. Don't silently retry the same failed approach.
-          - **Stay in scope.** Do what was asked. No unrequested refactors, no bonus features, no surprise files.
-          - **Summarize at the end.** State what changed and why in 1-3 sentences.
+          Use `br` for task tracking
         '';
       };
     };
