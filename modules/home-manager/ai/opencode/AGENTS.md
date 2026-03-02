@@ -2,7 +2,7 @@
 
 ## Skills
 
-Before doing any tasks always use all available skills you have
+Always use superpower skill
 
 ## Python
 
@@ -18,6 +18,8 @@ import sys
 print("Inline python script")
 EOPY
 ```
+
+Use inline python scripts whenever possible so doesnt leave any temporary files scattered
 
 ## Context7
 
