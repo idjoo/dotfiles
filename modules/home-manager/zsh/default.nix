@@ -99,7 +99,7 @@ in
           zstyle ':completion:*' menu select
           setopt interactivecomments
 
-          [[ ! -z "$DISPLAY" ]] && ${pkgs.xorg.xset}/bin/xset r rate 200 50
+          [[ ! -z "$DISPLAY" ]] && ${pkgs.xset}/bin/xset r rate 200 50
         '';
 
       envExtra = # bash
