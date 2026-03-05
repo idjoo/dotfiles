@@ -59,7 +59,20 @@ in
         pull = {
           rebase = true;
         };
+
+        url."git@paulsjob.ai:hyrdrocks/".insteadOf = "git@paulsjob.ai:";
       };
+    };
+
+    programs.ssh = {
+      enable = true;
+      matchBlocks."paulsjob.ai" = {
+        host = "paulsjob.ai";
+        hostname = "github.com";
+        identityFile = "~/.ssh/paulsjob";
+        identitiesOnly = true;
+      };
+
     };
 
     programs.diff-so-fancy = {
