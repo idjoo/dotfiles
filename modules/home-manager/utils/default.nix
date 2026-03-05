@@ -67,6 +67,8 @@ in
 
         # database
         dbeaver-bin
+
+        postman
       ]
       ++ optionals cfg.custom.enable [
         # custom packages
