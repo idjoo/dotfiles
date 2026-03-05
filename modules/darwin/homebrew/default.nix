@@ -40,6 +40,7 @@ in
         "another-redis-desktop-manager"
         "whatsapp"
         "microsoft-edge"
+        "postman"
       ];
     };
   };
