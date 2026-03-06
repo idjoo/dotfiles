@@ -43,6 +43,7 @@ in
         ".claude/settings.local.json"
         ".beads/"
         ".serena/"
+        ".slim/"
         ".opencode/plans/*.md"
         ".DS_Store"
       ];
