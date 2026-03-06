@@ -28,7 +28,7 @@ in
       "custom-instructions" = builtins.readFile ./AGENTS.md;
 
       settings = {
-        model = "gpt-5.3-codex";
+        model = "gpt-5.4";
         model_provider = "openai";
       };
     };
