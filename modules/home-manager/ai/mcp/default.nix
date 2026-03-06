@@ -9,6 +9,7 @@ with lib;
   home.packages = [
     pkgs.serena
     pkgs.marksman
+    pkgs.ruby-lsp
   ];
 
   programs.mcp = {
