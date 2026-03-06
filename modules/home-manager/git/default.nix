@@ -44,6 +44,7 @@ in
         ".beads/"
         ".serena/"
         ".opencode/plans/*.md"
+        ".DS_Store"
       ];
 
       settings = {
@@ -61,6 +62,7 @@ in
         };
 
         url."git@paulsjob.ai:hyrdrocks/".insteadOf = "git@paulsjob.ai:";
+        url."git@paulsjob.ai:vian-paulsjob/".insteadOf = "git@vian.paulsjob.ai:";
       };
     };
 
@@ -72,7 +74,12 @@ in
         identityFile = "~/.ssh/paulsjob";
         identitiesOnly = true;
       };
-
+      matchBlocks."vian.paulsjob.ai" = {
+        host = "vian.paulsjob.ai";
+        hostname = "github.com";
+        identityFile = "~/.ssh/paulsjob";
+        identitiesOnly = true;
+      };
     };
 
     programs.diff-so-fancy = {
