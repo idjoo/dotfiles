@@ -82,6 +82,6 @@ in
       skills.enable = mkDefault cfg.skills;
     };
 
-    home.packages = [ pkgs.llm-agents.beads-rust ];
+    home.packages = [ pkgs.llm-agents.qmd pkgs.llm-agents.beads-rust ];
   };
 }
