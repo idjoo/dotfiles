@@ -30,6 +30,13 @@ in
       settings = {
         model = "gpt-5.4";
         model_provider = "openai";
+
+        approval_policy = "never";
+        sandbox_mode = "danger-full-access";
+
+        feedback = {
+          enabled = false;
+        };
       };
     };
   };
