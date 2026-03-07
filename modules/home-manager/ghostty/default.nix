@@ -73,7 +73,9 @@ in
           "${shaders}/ripple_rectangle_cursor.glsl"
         ];
 
-        auto-update = "check";
+        auto-update = "off";
+
+        macos-option-as-alt = true;
       };
     };
   };
