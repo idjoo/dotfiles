@@ -21,7 +21,7 @@ in
       keyMode = "vi";
       mouse = true;
       newSession = false;
-      prefix = if pkgs.stdenv.isDarwin && config.programs.ghostty.enable then "ƒ" else "M-f";
+      prefix = "M-f";
       resizeAmount = 5;
       sensibleOnTop = false;
       shell = "${pkgs.zsh}/bin/zsh";
