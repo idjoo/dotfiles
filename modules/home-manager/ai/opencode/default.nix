@@ -134,7 +134,7 @@ in
           "opencode-ntfy@latest"
           "opencode-supermemory@latest"
           "opencode-wakatime@latest"
-          "@simonwjackson/opencode-direnv@latest"
+          "@simonwjackson/opencode-direnv"
         ];
 
         snapshot = false;
