@@ -67,7 +67,7 @@ in
       };
 
       settings = {
-        model = "openai/gpt-5.4";
+        model = "openai/gpt-5.3-codex";
         small_model = "google-vertex-anthropic/claude-sonnet-4-6@default";
 
         permission = {
