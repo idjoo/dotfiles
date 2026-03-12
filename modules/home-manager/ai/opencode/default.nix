@@ -9,12 +9,11 @@ let
   cfg = config.modules.opencode;
 
   opencodeWrapper = pkgs.writeShellScriptBin "opencode" ''
-    export ENABLE_TOOL_SEARCH=true
     export GOOGLE_APPLICATION_CREDENTIALS=${config.sops.secrets."serviceAccounts/ai".path}
     export GOOGLE_VERTEX_PROJECT=lv-playground-genai
     export GOOGLE_VERTEX_LOCATION=global
-    export OPENCODE_DISABLE_LSP_DOWNLOAD=true
     export OPENCODE_EXPERIMENTAL=true
+    export OPENCODE_DISABLE_LSP_DOWNLOAD=true
     exec ${pkgs.llm-agents.opencode}/bin/opencode "$@"
   '';
 in
