@@ -10,7 +10,7 @@ let
 
   opencodeWrapper = pkgs.writeShellScriptBin "opencode" ''
     export GOOGLE_APPLICATION_CREDENTIALS=${config.sops.secrets."serviceAccounts/ai".path}
-    export GOOGLE_VERTEX_PROJECT=lv-playground-genai
+    export GOOGLE_VERTEX_PROJECT=paul-oracle
     export GOOGLE_VERTEX_LOCATION=global
     export OPENCODE_EXPERIMENTAL=true
     export OPENCODE_DISABLE_LSP_DOWNLOAD=true
