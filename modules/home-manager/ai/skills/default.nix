@@ -62,10 +62,6 @@ in
           skills = [ "agent-browser" ];
         }
         {
-          source = "vercel-labs/agent-browser";
-          skills = [ "agent-browser" ];
-        }
-        {
           source = "softaworks/agent-toolkit";
           skills = [ "qa-test-planner" ];
         }
