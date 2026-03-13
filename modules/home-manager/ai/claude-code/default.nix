@@ -42,13 +42,12 @@ in
           DISABLE_AUTOUPDATER = "1";
           DISABLE_TELEMETRY = "1";
           DISABLE_ERROR_REPORTING = "1";
-          SUPERMEMORY_CC_API_KEY = "***REDACTED***";
           ENABLE_TOOL_SEARCH = "0";
           CLAUDE_CODE_USE_VERTEX = "1";
           ANTHROPIC_DEFAULT_OPUS_MODEL = "claude-opus-4-6@default";
           ANTHROPIC_DEFAULT_SONNET_MODEL = "claude-sonnet-4-5@20250929";
           ANTHROPIC_DEFAULT_HAIKU_MODEL = "claude-haiku-4-5@20251001";
-          GOOGLE_APPLICATION_CREDENTIALS = config.sops.secrets."serviceAccounts/ai".path;
+          GOOGLE_APPLICATION_CREDENTIALS = config.sops.secrets."serviceAccounts/ai.bak".path;
           GOOGLE_CLOUD_PROJECT = "lv-playground-genai";
           CLOUD_ML_REGION = "global";
         };
