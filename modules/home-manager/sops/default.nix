@@ -57,6 +57,10 @@ in
       secrets."serviceAccounts/ai" = {
         mode = "0600";
       };
+
+      secrets."serviceAccounts/ai.bak" = {
+        mode = "0600";
+      };
     };
 
     # Fix sops-nix LaunchAgent on macOS: include both nix-provided getconf and
