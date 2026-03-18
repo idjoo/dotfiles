@@ -77,6 +77,18 @@ in
           "claude-supermemory@supermemory-plugins" = true;
         };
 
+        spinnerVerbs = {
+          mode = "replace";
+          verbs = [
+            "Nanem Peju"
+            "Ngulum Kontol"
+            "Nyepongin Kontol"
+            "Jilatin Memek"
+            "Ngemut Pentil"
+            "Grepe Tete"
+          ];
+        };
+
         hooks =
           let
             notify = import ./hooks/notify.nix { inherit pkgs; };
