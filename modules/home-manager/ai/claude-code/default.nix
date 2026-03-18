@@ -11,6 +11,7 @@ let
 
   claudeWrapper = pkgs.writeShellScriptBin "claude" ''
     export ANTHROPIC_AUTH_TOKEN=$(cat ${config.sops.secrets."apiKeys/byteplus".path})
+    export SUPERMEMORY_CC_API_KEY=$(cat ${config.sops.secrets."apiKeys/supermemory".path})
     exec ${pkgs.llm-agents.claude-code}/bin/claude "$@"
   '';
 in
@@ -25,6 +26,7 @@ in
 
   config = mkIf cfg.enable {
     sops.secrets."apiKeys/byteplus" = { };
+    sops.secrets."apiKeys/supermemory" = { };
 
     home.shellAliases = {
       cc = "claude";
@@ -70,7 +72,7 @@ in
         };
 
         enabledPlugins = {
-          # "claude-supermemory@supermemory-plugins" = true;
+          "claude-supermemory@supermemory-plugins" = true;
         };
 
         hooks =
