@@ -8,6 +8,11 @@
 with lib;
 let
   cfg = config.modules.claude-code;
+
+  claudeWrapper = pkgs.writeShellScriptBin "claude" ''
+    export ANTHROPIC_AUTH_TOKEN=$(cat ${config.sops.secrets."apiKeys/byteplus".path})
+    exec ${pkgs.llm-agents.claude-code}/bin/claude "$@"
+  '';
 in
 {
   options.modules.claude-code = {
@@ -19,6 +24,8 @@ in
   ];
 
   config = mkIf cfg.enable {
+    sops.secrets."apiKeys/byteplus" = { };
+
     home.shellAliases = {
       cc = "claude";
     };
@@ -28,12 +35,11 @@ in
 
       memory.source = ./CLAUDE.md;
 
-      package = pkgs.llm-agents.claude-code;
+      package = claudeWrapper;
 
       enableMcpIntegration = true;
 
       settings = {
-        model = "opus";
         cleanupPeriodDays = 30;
         outputStyle = "Explanatory";
         alwaysThinkingEnabled = true;
@@ -43,13 +49,8 @@ in
           DISABLE_TELEMETRY = "1";
           DISABLE_ERROR_REPORTING = "1";
           ENABLE_TOOL_SEARCH = "0";
-          CLAUDE_CODE_USE_VERTEX = "1";
-          ANTHROPIC_DEFAULT_OPUS_MODEL = "claude-opus-4-6@default";
-          ANTHROPIC_DEFAULT_SONNET_MODEL = "claude-sonnet-4-5@20250929";
-          ANTHROPIC_DEFAULT_HAIKU_MODEL = "claude-haiku-4-5@20251001";
-          GOOGLE_APPLICATION_CREDENTIALS = config.sops.secrets."serviceAccounts/ai.bak".path;
-          GOOGLE_CLOUD_PROJECT = "lv-playground-genai";
-          CLOUD_ML_REGION = "global";
+          ANTHROPIC_BASE_URL = "https://ark.ap-southeast.bytepluses.com/api/coding";
+          ANTHROPIC_MODEL = "kimi-k2.5";
         };
 
         permissions = {
@@ -68,9 +69,9 @@ in
           command = "${pkgs.llm-agents.ccstatusline}/bin/ccstatusline";
         };
 
-        # enabledPlugins = {
-        #   "claude-supermemory@supermemory-plugins" = true;
-        # };
+        enabledPlugins = {
+          # "claude-supermemory@supermemory-plugins" = true;
+        };
 
         hooks =
           let
@@ -89,59 +90,6 @@ in
                 hooks = [ notify ];
               }
             ];
-
-            # Memory
-            # SessionStart = [
-            #   {
-            #     matcher = "startup|resume";
-            #     hooks = [
-            #       {
-            #         type = "command";
-            #         command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks session-start --claude";
-            #         timeout = 10;
-            #       }
-            #     ];
-            #   }
-            # ];
-            #
-            # UserPromptSubmit = [
-            #   {
-            #     hooks = [
-            #       {
-            #         type = "command";
-            #         command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks user-prompt --claude";
-            #         timeout = 10;
-            #       }
-            #     ];
-            #   }
-            # ];
-            #
-            # PreCompact = [
-            #   {
-            #     matcher = "auto|manual";
-            #     hooks = [
-            #       {
-            #         type = "command";
-            #         command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks curation --claude";
-            #         timeout = 10;
-            #       }
-            #     ];
-            #   }
-            # ];
-            #
-            # SessionEnd = [
-            #   {
-            #     matcher = "auto|manual";
-            #     hooks = [
-            #       {
-            #         type = "command";
-            #         command = "${pkgs.bun}/bin/bunx github:idjoo/memory-ts hooks curation --claude";
-            #         timeout = 10;
-            #       }
-            #     ];
-            #   }
-            # ];
-
           };
       };
     };
