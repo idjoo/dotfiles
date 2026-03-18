@@ -66,8 +66,7 @@ in
       };
 
       settings = {
-        model = "openai/gpt-5.3-codex";
-        small_model = "google-vertex-anthropic/claude-sonnet-4-6@default";
+        model = "byteplus/kimi-k2.5";
 
         permission = {
           "*" = "allow";
@@ -139,6 +138,26 @@ in
         snapshot = false;
 
         share = "manual";
+
+        provider = {
+          byteplus = {
+            npm = "@ai-sdk/openai-compatible";
+            name = "BytePlus";
+            options = {
+              baseURL = "https://ark.ap-southeast.bytepluses.com/api/coding/v3";
+            };
+            models = {
+              "kimi-k2.5" = {
+                name = "Kimi K2.5";
+                options = {
+                  thinking = {
+                    type = "enabled";
+                  };
+                };
+              };
+            };
+          };
+        };
       };
     };
   };
