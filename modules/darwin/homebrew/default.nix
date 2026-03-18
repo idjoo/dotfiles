@@ -26,7 +26,7 @@ in
       enable = cfg.enable;
 
       # Don't quarantine apps installed by homebrew with gatekeeper
-      caskArgs.no_quarantine = true;
+      # caskArgs.no_quarantine = true;
 
       # Remove all homebrew packages when they get removed from the configuration
       onActivation.cleanup = "uninstall";
@@ -41,6 +41,8 @@ in
         "whatsapp"
         "microsoft-edge"
         "postman"
+        "tidal"
+        "supercollider"
       ];
     };
   };
