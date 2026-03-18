@@ -11,7 +11,7 @@ let
 
     def send_notification(title, message, tags=""):
         cmd = [
-            "${pkgs.ntfy-sh}/bin/ntfy",
+            "${pkgs.ntfy}/bin/ntfy",
             "publish",
             "--title",
             title,
