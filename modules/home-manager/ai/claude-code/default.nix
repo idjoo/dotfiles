@@ -42,9 +42,11 @@ in
       enableMcpIntegration = true;
 
       settings = {
-        cleanupPeriodDays = 30;
+        cleanupPeriodDays = 90;
         outputStyle = "Explanatory";
         alwaysThinkingEnabled = true;
+        autoMemoryDirectory = "~/.claude/memory";
+        includeGitInstructions = false;
 
         env = {
           DISABLE_AUTOUPDATER = "1";
