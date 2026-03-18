@@ -45,8 +45,11 @@ in
         cleanupPeriodDays = 90;
         outputStyle = "Explanatory";
         alwaysThinkingEnabled = true;
-        autoMemoryDirectory = "~/.claude/memory";
         includeGitInstructions = false;
+        enableAllProjectMcpServers = true;
+        language = "english";
+        voiceEnabled = true;
+        teammateMode = "auto";
 
         env = {
           DISABLE_AUTOUPDATER = "1";
@@ -65,8 +68,6 @@ in
           commit = "";
           pr = "";
         };
-
-        enableAllProjectMcpServers = true;
 
         statusLine = {
           type = "command";
