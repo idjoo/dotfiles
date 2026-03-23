@@ -38,6 +38,8 @@ in
         feedback = {
           enabled = false;
         };
+
+        personality = "pragmatic";
       };
     };
   };
