@@ -86,7 +86,7 @@
 
     desktopManager.xterm.enable = true;
 
-    displayManager.startx.enable = true;
+    displayManager.ly.enable = true;
 
     windowManager.herbstluftwm.enable = true;
   };
