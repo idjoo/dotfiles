@@ -14,6 +14,7 @@ let
   identity =
     {
       ox = "idjo";
+      tiger = "idjo";
       horse = "idjo";
       snake = "idjo";
       dragon = "idjo";
