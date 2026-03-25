@@ -158,7 +158,7 @@
             inherit inputs outputs rootPath;
           };
           modules = [
-            ./hosts/tiger/nixos/configuration.nix
+            ./hosts/tiger/config.nix
           ];
         };
 
@@ -241,7 +241,7 @@
             hostName = "tiger";
           };
           modules = [
-            ./hosts/tiger/home-manager/home.nix
+            ./hosts/tiger/home.nix
           ];
         };
 

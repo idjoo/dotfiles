@@ -13,13 +13,18 @@
   home = {
     username = "${outputs.lib.username}";
     homeDirectory = "/home/${outputs.lib.username}";
-  };
 
-  home.packages = with pkgs; [
-    (google-cloud-sdk.withExtraComponents [
-      google-cloud-sdk.components.gke-gcloud-auth-plugin
-    ])
-  ];
+    shell = {
+      enableShellIntegration = false;
+    };
+
+    packages = with pkgs; [
+      (google-cloud-sdk.withExtraComponents [
+        google-cloud-sdk.components.gke-gcloud-auth-plugin
+        google-cloud-sdk.components.log-streaming
+      ])
+    ];
+  };
 
   modules = {
     nh.enable = true;
@@ -39,10 +44,12 @@
 
     # terminal
     urxvt.enable = true;
-    wezterm.enable = true;
+    wezterm.enable = false;
+    ghostty.enable = true;
 
     # shell
     zsh.enable = true;
+    nushell.enable = true;
 
     # editor
     neovim.enable = true;
@@ -52,6 +59,10 @@
 
     # notification
     dunst.enable = true;
+
+    # browser
+    firefox.enable = false;
+    zen-browser.enable = true;
 
     # cli
     btop.enable = true;
@@ -68,13 +79,14 @@
     tmux.enable = true;
     cava.enable = true;
     fzf.enable = true;
+    direnv.enable = true;
+    zoxide.enable = true;
+    atuin.enable = true;
+    sops.enable = true;
 
     # prog lang
     go.enable = true;
   };
-
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.11";
