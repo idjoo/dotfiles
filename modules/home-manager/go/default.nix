@@ -14,9 +14,10 @@ in
   config = mkIf cfg.enable {
     programs.go = {
       enable = cfg.enable;
-      goPath = ".local/share/go";
-      goBin = ".local/share/go/bin";
-      packages = { };
+      env = {
+        GOPATH = ".local/share/go";
+        GOBIN = ".local/share/go/bin";
+      };
     };
   };
 }
