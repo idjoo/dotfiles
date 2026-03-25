@@ -34,8 +34,6 @@ in
       ++ optionals cfg.gui.enable [
         # Linux-only GUI apps
         libreoffice-qt6-fresh
-        discord
-        bottles
         zathura
       ];
   };
