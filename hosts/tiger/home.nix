@@ -37,7 +37,10 @@
     };
 
     # window manager
-    herbstluftwm.enable = true;
+    herbstluftwm = {
+      enable = true;
+      terminal = pkgs.rxvt-unicode;
+    };
 
     # bar
     polybar.enable = true;

@@ -25,6 +25,11 @@ in
 {
   options.modules.herbstluftwm = {
     enable = mkEnableOption "herbstluftwm";
+    terminal = mkOption {
+      type = types.package;
+      default = pkgs.ghostty;
+      description = "Terminal emulator package to use.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -48,7 +53,7 @@ in
         Mod4-w = "close";
 
         # terminal
-        Mod4-Return = "spawn ${pkgs.ghostty}/bin/ghostty";
+        Mod4-Return = "spawn ${getExe cfg.terminal}";
 
         # workspaces
         Mod4-1 = "use_index 0";
