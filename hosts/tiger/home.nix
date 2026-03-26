@@ -86,6 +86,11 @@
 
     # prog lang
     go.enable = true;
+
+    ai = {
+      enable = true;
+      skills = false;
+    };
   };
 
   systemd.user.startServices = "sd-switch";

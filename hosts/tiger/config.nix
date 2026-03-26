@@ -86,9 +86,14 @@
 
     desktopManager.xterm.enable = true;
 
-    displayManager.ly.enable = true;
-
     windowManager.herbstluftwm.enable = true;
+  };
+
+  services.displayManager = {
+    ly = {
+      enable = true;
+      x11Support = true;
+    };
   };
 
   # user accounts
@@ -109,6 +114,7 @@
   # packages
   environment.systemPackages = with pkgs; [
     google-chrome
+    microsoft-edge
     hicolor-icon-theme
   ];
 
