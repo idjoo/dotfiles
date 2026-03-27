@@ -15,7 +15,7 @@ in
 
   config = mkIf cfg.enable {
     home.shellAliases = {
-      cdx = "codex";
+      co = "codex";
     };
 
     programs.codex = {
