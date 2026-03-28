@@ -1,0 +1,102 @@
+{
+  pkgs,
+  outputs,
+  ...
+}:
+{
+  imports = [
+    outputs.homeModules
+  ];
+
+  programs.home-manager.enable = true;
+
+  home = {
+    username = "${outputs.lib.username}";
+    homeDirectory = "/home/${outputs.lib.username}";
+
+    shell = {
+      enableShellIntegration = false;
+    };
+
+    packages = with pkgs; [
+      (google-cloud-sdk.withExtraComponents [
+        google-cloud-sdk.components.gke-gcloud-auth-plugin
+        google-cloud-sdk.components.log-streaming
+      ])
+    ];
+  };
+
+  modules = {
+    nh.enable = true;
+    stylix.enable = true;
+    utils = {
+      enable = true;
+      nix.enable = true;
+      cli.enable = true;
+      gui.enable = true;
+    };
+
+    # window manager
+    herbstluftwm = {
+      enable = true;
+      terminal = pkgs.rxvt-unicode;
+    };
+
+    # bar
+    polybar.enable = true;
+
+    # terminal
+    urxvt.enable = true;
+    wezterm.enable = false;
+    ghostty.enable = true;
+
+    # shell
+    zsh.enable = true;
+    nushell.enable = true;
+
+    # editor
+    neovim.enable = true;
+
+    # launcher
+    rofi.enable = true;
+
+    # notification
+    dunst.enable = true;
+
+    # browser
+    firefox.enable = false;
+    zen-browser.enable = true;
+
+    # cli
+    btop.enable = true;
+    eza.enable = true;
+    flameshot.enable = true;
+    git = {
+      enable = true;
+      email = "vian@idjo.cc";
+    };
+    gpg.enable = true;
+    lazygit.enable = true;
+    password-store.enable = true;
+    ssh.enable = true;
+    tmux.enable = true;
+    cava.enable = true;
+    fzf.enable = true;
+    direnv.enable = true;
+    zoxide.enable = true;
+    atuin.enable = true;
+    sops.enable = true;
+
+    # prog lang
+    go.enable = true;
+
+    ai = {
+      enable = true;
+    };
+  };
+
+  systemd.user.startServices = "sd-switch";
+
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  home.stateVersion = "23.11";
+}
