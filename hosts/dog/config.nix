@@ -7,13 +7,12 @@
   ...
 }:
 {
-  imports =
-    [
-      outputs.nixosModules
+  imports = [
+    outputs.nixosModules
 
-      ./hardware.nix
-      ./disko.nix
-    ];
+    ./hardware.nix
+    ./disko.nix
+  ];
 
   nixpkgs = {
     overlays = [
