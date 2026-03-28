@@ -39,7 +39,7 @@
     # window manager
     herbstluftwm = {
       enable = true;
-      terminal = pkgs.rxvt-unicode;
+      terminal = pkgs.ghostty;
     };
 
     # bar
