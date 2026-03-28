@@ -60,6 +60,8 @@ in
         # cloud/devops
         oci-cli
         docker-buildx
+
+        wakatime-cli
       ]
       ++ optionals cfg.gui.enable [
         # IDE
@@ -69,6 +71,10 @@ in
         dbeaver-bin
 
         postman
+
+        microsoft-edge
+        google-chrome
+        telegram-desktop
       ]
       ++ optionals cfg.custom.enable [
         # custom packages
