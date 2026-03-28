@@ -1,5 +1,3 @@
-# Disko configuration for OCI ARM instance
-# OCI uses /dev/sda for the boot disk with UEFI boot
 {
   disko.devices = {
     disk = {
