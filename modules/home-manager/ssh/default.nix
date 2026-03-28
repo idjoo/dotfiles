@@ -13,6 +13,7 @@ let
     {
       ox = "idjo";
       tiger = "idjo";
+      dog = "idjo";
       horse = "devoteam";
       snake = "devoteam";
       dragon = "idjo";
