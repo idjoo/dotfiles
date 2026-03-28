@@ -82,10 +82,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-    };
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -175,6 +171,16 @@
             ./hosts/dragon/config.nix
           ];
         };
+	
+        dog = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs outputs rootPath;
+          };
+          modules = [
+            inputs.disko.nixosModules.disko
+            ./hosts/dog/config.nix
+          ];
+        };
       };
 
       darwinConfigurations = {
@@ -257,6 +263,17 @@
           };
           modules = [
             ./hosts/dragon/home.nix
+          ];
+        };
+
+        "idjo@dog" = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs rootPath;
+            hostName = "dog";
+          };
+          modules = [
+            ./hosts/dog/home.nix
           ];
         };
 
