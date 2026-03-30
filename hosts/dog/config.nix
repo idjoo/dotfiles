@@ -139,11 +139,11 @@
     ssh.enable = true;
     stylix.enable = true;
     tailscale.enable = true;
+    xremap.enable = true;
     utils = {
       enable = true;
       gui.enable = true;
     };
-    xremap.enable = true;
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
