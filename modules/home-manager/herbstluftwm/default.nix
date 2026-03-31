@@ -107,6 +107,7 @@ in
         Mod4-b = "spawn ${pkgs.rofi-bluetooth}/bin/rofi-bluetooth";
         Mod4-e = "spawn rofi -show emoji -modi emoji";
         Mod4-c = ''spawn rofi -show calc -modi calc -no-show-match -no-sort -calc-command " echo - n '{ result }' | xsel --clipboard"'';
+        Mod4-n = "spawn ${pkgs.rofi-network-manager}/bin/rofi-network-manager";
 
         # xf86
         XF86MonBrightnessUp = "spawn ${pkgs.acpilight}/bin/xbacklight -inc 10";

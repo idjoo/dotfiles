@@ -29,6 +29,7 @@ in
         rofi-emoji
         rofi-bluetooth
         rofi-power-menu
+        rofi-network-manager
         pinentry-rofi
       ];
 
