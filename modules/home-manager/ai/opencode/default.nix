@@ -66,8 +66,6 @@ in
       };
 
       settings = {
-        model = "byteplus/kimi-k2.5";
-
         permission = {
           "*" = "allow";
           external_directory = {
