@@ -42,7 +42,8 @@ in
       settings = {
         cleanupPeriodDays = 90;
         outputStyle = "Explanatory";
-        alwaysThinkingEnabled = true;
+        model = "opus";
+        effortLevel = "high";
         includeGitInstructions = false;
         enableAllProjectMcpServers = true;
         language = "english";
