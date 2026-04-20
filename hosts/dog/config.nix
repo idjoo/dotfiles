@@ -83,6 +83,19 @@
     #desktopManager.xterm.enable = true;
     #displayManager.startx.enable = true;
     windowManager.herbstluftwm.enable = true;
+
+    displayManager.sessionCommands = ''
+      ${pkgs.xset}/bin/xset s off
+      ${pkgs.xset}/bin/xset -dpms
+      ${pkgs.xset}/bin/xset s noblank
+    '';
+
+    serverFlagsSection = ''
+      Option "BlankTime" "0"
+      Option "StandbyTime" "0"
+      Option "SuspendTime" "0"
+      Option "OffTime" "0"
+    '';
   };
 
   services.displayManager = {
@@ -92,7 +105,10 @@
     };
   };
 
-  services.logind.settings.Login.HandleLidSwitchExternalPower = "ignore";
+  services.logind.settings.Login = {
+    HandleLidSwitchExternalPower = "ignore";
+    IdleAction = "ignore";
+  };
 
   # user accounts
   users.users.${outputs.lib.username} = {
