@@ -7,7 +7,6 @@
 with lib;
 {
   home.packages = [
-    pkgs.serena
     pkgs.marksman
     pkgs.ruby-lsp
   ];
@@ -20,16 +19,6 @@ with lib;
         command = "${pkgs.bun}/bin/bunx";
         args = [
           "@upstash/context7-mcp@latest"
-        ];
-      };
-
-      serena = {
-        command = "${pkgs.serena}/bin/serena";
-        args = [
-          "start-mcp-server"
-          "--open-web-dashboard=false"
-          "--context=claude-code"
-          "--project-from-cwd"
         ];
       };
 
