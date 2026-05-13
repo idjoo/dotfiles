@@ -62,6 +62,8 @@ in
         docker-buildx
 
         wakatime-cli
+
+        jira-cli-go
       ]
       ++ optionals cfg.gui.enable [
         # IDE
@@ -75,6 +77,7 @@ in
         microsoft-edge
         google-chrome
         telegram-desktop
+        upscayl
       ]
       ++ optionals cfg.custom.enable [
         # custom packages

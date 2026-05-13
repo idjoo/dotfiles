@@ -36,5 +36,12 @@ in
         libreoffice-qt6-fresh
         zathura
       ];
+
+    xdg.portal = mkIf cfg.gui.enable {
+      enable = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      config.common.default = "*";
+    };
+    services.flatpak.enable = cfg.gui.enable;
   };
 }
