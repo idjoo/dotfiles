@@ -33,6 +33,27 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # hibernation: resume the previous session instead of cold-booting after
+  # the battery dies. Requires swap >= RAM (15 GiB here) and, because the
+  # swap is a file on ext4 root, an explicit resume_offset kernel param.
+  #
+  # First rebuild creates /var/lib/swapfile. Then run:
+  #   sudo filefrag -v /var/lib/swapfile \
+  #     | awk '$1=="0:" {sub(/\.\..*/,"",$4); print $4; exit}'
+  # and replace PLACEHOLDER below with the printed number, then rebuild again.
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024; # MiB, matches RAM
+    }
+  ];
+  boot.resumeDevice = "/dev/disk/by-uuid/bfe5b52b-c15c-4365-86c6-925c053f3244";
+  # If the swapfile is ever recreated (resized, moved, or after disk repair),
+  # re-measure with:
+  #   sudo filefrag -v /var/lib/swapfile \
+  #     | awk '$1=="0:" {sub(/\.\..*/,"",$4); print $4; exit}'
+  boot.kernelParams = [ "resume_offset=33488896" ];
+
   # hostname
   networking.hostName = "dog";
 
@@ -106,8 +127,33 @@
   };
 
   services.logind.settings.Login = {
+    # On AC: ignore the lid. On battery: suspend, then hibernate after the
+    # delay set in systemd.sleep.extraConfig below.
+    HandleLidSwitch = "suspend-then-hibernate";
     HandleLidSwitchExternalPower = "ignore";
     IdleAction = "ignore";
+  };
+
+  # Suspend-then-hibernate timing: stay suspended (s2idle on this hardware)
+  # for HibernateDelaySec, then transition to hibernate. 10m chosen because
+  # s2idle drains faster than ACPI S3 and S3 isn't available here.
+  # NOTE: setting HibernateDelaySec disables systemd's automatic low-battery
+  # hibernation estimate; UPower's criticalPowerAction below covers the
+  # awake-with-low-battery case instead.
+  systemd.sleep.settings.Sleep = {
+    HibernateDelaySec = "10m";
+    SuspendState = "mem";
+  };
+
+  # When battery hits the action threshold while the system is awake,
+  # hibernate directly so the next boot resumes the previous session.
+  services.upower = {
+    enable = true;
+    criticalPowerAction = "Hibernate";
+    percentageLow = 15;
+    percentageCritical = 7;
+    percentageAction = 5;
+    usePercentageForPolicy = true;
   };
 
   # user accounts

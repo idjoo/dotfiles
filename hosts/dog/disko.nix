@@ -27,6 +27,10 @@
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/";
+                # Hibernation swap lives as a file on this partition,
+                # declared via `swapDevices` in config.nix. For a future
+                # reinstall, consider promoting it to a dedicated swap
+                # partition (no resume_offset needed).
               };
             };
           };
