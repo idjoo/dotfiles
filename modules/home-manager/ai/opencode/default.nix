@@ -51,7 +51,7 @@ in
 
       enableMcpIntegration = true;
 
-      rules = ./AGENTS.md;
+      context = ./AGENTS.md;
 
       web = lib.mkIf cfg.web.enable {
         enable = true;

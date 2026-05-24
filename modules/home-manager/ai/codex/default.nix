@@ -25,7 +25,7 @@ in
 
       enableMcpIntegration = true;
 
-      "custom-instructions" = builtins.readFile ./AGENTS.md;
+      context = ./AGENTS.md;
 
       settings = {
         model = "gpt-5.3-codex";

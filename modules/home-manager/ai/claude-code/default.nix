@@ -33,7 +33,7 @@ in
     programs.claude-code = {
       enable = cfg.enable;
 
-      memory.source = ./CLAUDE.md;
+      context = ./CLAUDE.md;
 
       package = claudeWrapper;
 
