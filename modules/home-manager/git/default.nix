@@ -69,17 +69,15 @@ in
 
     programs.ssh = {
       enable = true;
-      matchBlocks."paulsjob.ai" = {
-        host = "paulsjob.ai";
-        hostname = "github.com";
-        identityFile = "~/.ssh/paulsjob";
-        identitiesOnly = true;
+      settings."paulsjob.ai" = {
+        HostName = "github.com";
+        IdentityFile = "~/.ssh/paulsjob";
+        IdentitiesOnly = true;
       };
-      matchBlocks."vian.paulsjob.ai" = {
-        host = "vian.paulsjob.ai";
-        hostname = "github.com";
-        identityFile = "~/.ssh/paulsjob";
-        identitiesOnly = true;
+      settings."vian.paulsjob.ai" = {
+        HostName = "github.com";
+        IdentityFile = "~/.ssh/paulsjob";
+        IdentitiesOnly = true;
       };
     };
 

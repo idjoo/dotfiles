@@ -34,10 +34,10 @@ in
       enable = cfg.enable;
       enableDefaultConfig = false;
 
-      matchBlocks = {
+      settings = {
         "*" = {
-          addKeysToAgent = "yes";
-          forwardAgent = true;
+          AddKeysToAgent = "yes";
+          ForwardAgent = true;
         };
       };
     };
