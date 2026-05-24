@@ -60,6 +60,12 @@ in
         hide_agent_reasoning = false;
 
         model_reasoning_summary = "auto";
+
+        plugins = {
+          "superpowers@openai-curated" = {
+            enabled = true;
+          };
+        };
       };
     };
   };
