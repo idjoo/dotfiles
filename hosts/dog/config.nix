@@ -194,6 +194,16 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
+  # IPU6 webcam (Alder Lake ISP + OV2740 sensor). Kernel side enumerates
+  # /dev/media0 and /dev/video0..31 but apps see "no camera" because IPU6
+  # exposes raw ISYS streams, not UVC. This option pulls in the proprietary
+  # intel-ipu6-camera-bins HAL, the libcamera IPU6 IPAs, and v4l2-relayd
+  # which bridges IPU6 -> a virtual UVC node that browsers/Zoom can use.
+  hardware.ipu6 = {
+    enable = true;
+    platform = "ipu6ep";
+  };
+
   modules = {
     comma.enable = true;
     nix.enable = true;
