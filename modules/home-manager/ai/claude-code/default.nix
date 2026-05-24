@@ -39,6 +39,10 @@ in
 
       enableMcpIntegration = true;
 
+      marketplaces = {
+        claude-plugins-official = inputs.claude-plugins-official;
+      };
+
       settings = {
         cleanupPeriodDays = 90;
         outputStyle = "Explanatory";
@@ -73,6 +77,7 @@ in
 
         enabledPlugins = {
           "claude-supermemory@supermemory-plugins" = true;
+          "superpowers@claude-plugins-official" = true;
         };
 
         spinnerVerbs = {
