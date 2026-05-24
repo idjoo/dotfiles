@@ -63,11 +63,6 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    cursor = {
-      url = "github:idjoo/cursor.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
     };

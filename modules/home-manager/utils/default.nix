@@ -66,9 +66,6 @@ in
         jira-cli-go
       ]
       ++ optionals cfg.gui.enable [
-        # IDE
-        code-cursor
-
         # database
         dbeaver-bin
 
