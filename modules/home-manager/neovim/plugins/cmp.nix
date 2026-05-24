@@ -65,7 +65,6 @@
         { name = "dap"; }
         { name = "calc"; }
         { name = "conventionalcommits"; }
-        { name = "emoji"; }
         { name = "luasnip"; }
         { name = "render-markdown"; }
         { name = "path"; }
