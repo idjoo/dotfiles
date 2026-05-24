@@ -127,6 +127,22 @@
         "type": "github"
       }
     },
+    "claude-plugins-official": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779464905,
+        "narHash": "sha256-pfxvk3hNKobm2umctoaoex2E3cd9Ln/gqX8PLNnCKeU=",
+        "owner": "anthropics",
+        "repo": "claude-plugins-official",
+        "rev": "3449c10cd1f254c2529a4a7e96a094ef118a00a5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anthropics",
+        "repo": "claude-plugins-official",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1766774972,
@@ -848,6 +864,7 @@
     },
     "root": {
       "inputs": {
+        "claude-plugins-official": "claude-plugins-official",
         "disko": "disko",
         "home-manager": "home-manager",
         "llm-agents": "llm-agents",

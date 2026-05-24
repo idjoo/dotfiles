@@ -67,6 +67,11 @@
       url = "github:numtide/llm-agents.nix";
     };
 
+    claude-plugins-official = {
+      url = "github:anthropics/claude-plugins-official";
+      flake = false;
+    };
+
     serena = {
       url = "github:oraios/serena";
       inputs.nixpkgs.follows = "nixpkgs";
