@@ -106,6 +106,7 @@
         import nixpkgs {
           inherit system;
           config = {
+            allowUnfree = true;
             allowUnfreePredicate = (pkg: true);
           };
           overlays = [

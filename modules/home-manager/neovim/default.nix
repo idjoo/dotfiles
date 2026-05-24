@@ -27,6 +27,8 @@ in
       defaultEditor = true;
       enableMan = true;
 
+      nixpkgs.useGlobalPackages = true;
+
       clipboard = {
         register = "unnamedplus";
         providers = {
