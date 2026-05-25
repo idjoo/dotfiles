@@ -72,6 +72,11 @@
       flake = false;
     };
 
+    openai-codex = {
+      url = "github:openai/codex-plugin-cc";
+      flake = false;
+    };
+
     serena = {
       url = "github:oraios/serena";
       inputs.nixpkgs.follows = "nixpkgs";

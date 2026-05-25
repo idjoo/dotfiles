@@ -41,6 +41,7 @@ in
 
       marketplaces = {
         claude-plugins-official = inputs.claude-plugins-official;
+        openai-codex = inputs.openai-codex;
       };
 
       settings = {
@@ -78,6 +79,7 @@ in
         enabledPlugins = {
           "claude-supermemory@supermemory-plugins" = true;
           "superpowers@claude-plugins-official" = true;
+          "codex@openai-codex" = true;
         };
 
         spinnerVerbs = {

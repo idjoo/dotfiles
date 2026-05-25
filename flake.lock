@@ -812,6 +812,22 @@
         "type": "github"
       }
     },
+    "openai-codex": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1776544913,
+        "narHash": "sha256-zWddz18c3E15TPuEvjMkBkrwiFlK3ZqIG5YP5xX6ZII=",
+        "owner": "openai",
+        "repo": "codex-plugin-cc",
+        "rev": "807e03ac9d5aa23bc395fdec8c3767500a86b3cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "openai",
+        "repo": "codex-plugin-cc",
+        "type": "github"
+      }
+    },
     "pyproject-build-systems": {
       "inputs": {
         "nixpkgs": [
@@ -877,6 +893,7 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "nixvim": "nixvim",
         "nur": "nur",
+        "openai-codex": "openai-codex",
         "serena": "serena",
         "skills": "skills",
         "sops-nix": "sops-nix",
