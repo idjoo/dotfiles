@@ -35,12 +35,6 @@ in
           skills = [ "*" ];
         }
         {
-          source = "obra/superpowers";
-          skills = {
-            exclude = [ "commit-work" ];
-          };
-        }
-        {
           source = "wshobson/agents";
           skills = [ "*" ];
         }
@@ -53,20 +47,8 @@ in
           skills = [ "*" ];
         }
         {
-          source = "waynesutton/convexskills";
-          skills = [ "*" ];
-        }
-        {
           source = "vercel-labs/agent-browser";
           skills = [ "agent-browser" ];
-        }
-        {
-          source = "softaworks/agent-toolkit";
-          skills = [ "qa-test-planner" ];
-        }
-        {
-          source = "nicobailon/visual-explainer";
-          skills = [ "*" ];
         }
       ];
     };
