@@ -14,6 +14,9 @@ in
   };
 
   config = mkIf cfg.enable {
+    # Allow replacing an existing writable config.toml during switch.
+    home.file.".codex/config.toml".force = true;
+
     home.shellAliases = {
       co = "codex";
     };
@@ -23,12 +26,12 @@ in
 
       package = pkgs.llm-agents.codex;
 
-      enableMcpIntegration = true;
+      enableMcpIntegration = false;
 
       context = ./AGENTS.md;
 
       settings = {
-        model = "gpt-5.3-codex";
+        model = "gpt-5.4";
         model_reasoning_effort = "medium";
         model_provider = "openai";
         model_providers = {
@@ -54,12 +57,27 @@ in
         commit_attribution = "";
 
         features = {
+          fast_mode = false;
           undo = true;
         };
 
         hide_agent_reasoning = false;
 
         model_reasoning_summary = "auto";
+
+        # Mark this workspace as trusted to suppress trust prompt.
+        projects = {
+          "/home/idjo/dotfiles" = {
+            trust_level = "trusted";
+          };
+        };
+
+        # Pre-ack model migration notice so startup does not prompt.
+        notice = {
+          model_migrations = {
+            "gpt-5.3-codex" = "gpt-5.4";
+          };
+        };
 
         plugins = {
           "superpowers@openai-curated" = {
@@ -68,5 +86,17 @@ in
         };
       };
     };
+
+    # Keep config writable: codex persists small prompt preferences there.
+    home.activation.codexWritableConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      cfg="$HOME/.codex/config.toml"
+      if [ -L "$cfg" ]; then
+        tmp="$(mktemp)"
+        cp --dereference "$cfg" "$tmp"
+        rm -f "$cfg"
+        mv "$tmp" "$cfg"
+        chmod 600 "$cfg"
+      fi
+    '';
   };
 }
