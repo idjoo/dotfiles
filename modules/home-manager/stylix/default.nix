@@ -19,6 +19,9 @@ in
   };
 
   config = mkIf cfg.enable {
+    # Keep legacy HM behavior explicit and silence 26.05 warning.
+    gtk.gtk4.theme = config.gtk.theme;
+
     stylix = {
       enable = cfg.enable;
 
