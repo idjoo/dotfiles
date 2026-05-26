@@ -66,6 +66,16 @@ in
         set -g allow-passthrough on
         set -g focus-events on
 
+        # Disable wrap-around for pane navigation (overrides pain-control)
+        bind-key h if-shell -F '#{pane_at_left}'   ''' 'select-pane -L'
+        bind-key C-h if-shell -F '#{pane_at_left}'   ''' 'select-pane -L'
+        bind-key j if-shell -F '#{pane_at_bottom}' ''' 'select-pane -D'
+        bind-key C-j if-shell -F '#{pane_at_bottom}' ''' 'select-pane -D'
+        bind-key k if-shell -F '#{pane_at_top}'    ''' 'select-pane -U'
+        bind-key C-k if-shell -F '#{pane_at_top}'    ''' 'select-pane -U'
+        bind-key l if-shell -F '#{pane_at_right}'  ''' 'select-pane -R'
+        bind-key C-l if-shell -F '#{pane_at_right}'  ''' 'select-pane -R'
+
         unbind-key -T copy-mode-vi v
         bind-key -T copy-mode-vi 'v' send -X begin-selection
         bind-key -T copy-mode-vi 'C-v' send -X rectangle-toggle
