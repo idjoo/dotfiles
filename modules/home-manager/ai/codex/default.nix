@@ -31,8 +31,10 @@ in
       context = ./AGENTS.md;
 
       settings = {
-        model = "gpt-5.4";
-        model_reasoning_effort = "medium";
+        model = "gpt-5.4-mini";
+        model_reasoning_effort = "high";
+        plan_mode_model = "gpt-5.3-codex";
+        plan_mode_reasoning_effort = "high";
         model_provider = "openai";
         model_providers = {
           azure_cognitive_service = {
