@@ -10,6 +10,7 @@
     ./dap.nix
     ./fidget.nix
     ./gitsigns.nix
+    ./img-clip.nix
     ./indent-blankline.nix
     ./kubectl.nix
     ./lsp.nix
