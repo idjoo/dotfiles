@@ -5,6 +5,8 @@
   ...
 }:
 {
+  nixpkgs.config.allowUnfree = true;
+
   # List your module files here
   imports = [
     ./agent-browser
