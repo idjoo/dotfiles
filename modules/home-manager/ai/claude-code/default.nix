@@ -27,7 +27,9 @@ in
     sops.secrets."apiKeys/supermemory" = { };
 
     home.shellAliases = {
-      cc = "claude";
+      cc = "CLAUDE_CONFIG_DIR=$HOME/.claude-idjo claude";
+      cci = "CLAUDE_CONFIG_DIR=$HOME/.claude-idjo claude";
+      ccp = "CLAUDE_CONFIG_DIR=$HOME/.claude-paulsjob claude";
     };
 
     programs.claude-code = {
@@ -60,6 +62,7 @@ in
           DISABLE_TELEMETRY = "1";
           DISABLE_ERROR_REPORTING = "1";
           ENABLE_TOOL_SEARCH = "0";
+          CLAUDE_CODE_DISABLE_1M_CONTEXT = "1";
         };
 
         permissions = {
