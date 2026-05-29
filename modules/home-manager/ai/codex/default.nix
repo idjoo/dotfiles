@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }:
 with lib;
@@ -81,8 +82,24 @@ in
           };
         };
 
+        marketplaces = {
+          stitch-skills = {
+            source_type = "local";
+            source = "${inputs.stitch-skills}";
+          };
+        };
+
         plugins = {
           "superpowers@openai-curated" = {
+            enabled = true;
+          };
+          "stitch-design@stitch-skills" = {
+            enabled = true;
+          };
+          "stitch-build@stitch-skills" = {
+            enabled = true;
+          };
+          "stitch-utilities@stitch-skills" = {
             enabled = true;
           };
         };

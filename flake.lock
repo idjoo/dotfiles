@@ -896,6 +896,7 @@
         "serena": "serena",
         "skills": "skills",
         "sops-nix": "sops-nix",
+        "stitch-skills": "stitch-skills",
         "stylix": "stylix",
         "systems": "systems_5",
         "xremap": "xremap",
@@ -979,6 +980,22 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "stitch-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779813707,
+        "narHash": "sha256-O3n4p1UU8CI+ZBfjYXM656pCToAbIpHGZpKz0afAmDg=",
+        "owner": "google-labs-code",
+        "repo": "stitch-skills",
+        "rev": "53f15d81da854039aae10e8af19ad389c3997653",
+        "type": "github"
+      },
+      "original": {
+        "owner": "google-labs-code",
+        "repo": "stitch-skills",
         "type": "github"
       }
     },

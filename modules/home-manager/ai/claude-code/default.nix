@@ -44,6 +44,7 @@ in
       marketplaces = {
         claude-plugins-official = inputs.claude-plugins-official;
         openai-codex = inputs.openai-codex;
+        stitch-skills = inputs.stitch-skills;
       };
 
       settings = {
@@ -83,6 +84,9 @@ in
           "claude-supermemory@supermemory-plugins" = true;
           "superpowers@claude-plugins-official" = true;
           "codex@openai-codex" = true;
+          "stitch-design@stitch-skills" = true;
+          "stitch-build@stitch-skills" = true;
+          "stitch-utilities@stitch-skills" = true;
         };
 
         spinnerVerbs = {

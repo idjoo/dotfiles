@@ -77,6 +77,11 @@
       flake = false;
     };
 
+    stitch-skills = {
+      url = "github:google-labs-code/stitch-skills";
+      flake = false;
+    };
+
     serena = {
       url = "github:oraios/serena";
       inputs.nixpkgs.follows = "nixpkgs";
