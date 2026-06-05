@@ -10,7 +10,6 @@ let
   cfg = config.modules.claude-code;
 
   claudeWrapper = pkgs.writeShellScriptBin "claude" ''
-    export SUPERMEMORY_CC_API_KEY=$(cat ${config.sops.secrets."apiKeys/supermemory".path})
     exec ${pkgs.llm-agents.claude-code}/bin/claude "$@"
   '';
 in
@@ -24,8 +23,6 @@ in
   ];
 
   config = mkIf cfg.enable {
-    sops.secrets."apiKeys/supermemory" = { };
-
     home.shellAliases = {
       cc = "CLAUDE_CONFIG_DIR=$HOME/.claude-idjo claude";
       cci = "CLAUDE_CONFIG_DIR=$HOME/.claude-idjo claude";
@@ -81,12 +78,8 @@ in
         };
 
         enabledPlugins = {
-          "claude-supermemory@supermemory-plugins" = true;
           "superpowers@claude-plugins-official" = true;
           "codex@openai-codex" = true;
-          "stitch-design@stitch-skills" = true;
-          "stitch-build@stitch-skills" = true;
-          "stitch-utilities@stitch-skills" = true;
         };
 
         spinnerVerbs = {
