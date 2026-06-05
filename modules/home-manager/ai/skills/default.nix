@@ -35,10 +35,6 @@ in
           skills = [ "*" ];
         }
         {
-          source = "wshobson/agents";
-          skills = [ "*" ];
-        }
-        {
           source = "anthropics/skills";
           skills = [ "*" ];
         }
