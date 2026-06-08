@@ -47,7 +47,7 @@ in
         cleanupPeriodDays = 90;
         outputStyle = "Explanatory";
         model = "opus";
-        effortLevel = "high";
+        effortLevel = "xhigh";
         includeGitInstructions = false;
         enableAllProjectMcpServers = true;
         language = "english";
