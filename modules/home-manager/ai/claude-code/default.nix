@@ -41,7 +41,6 @@ in
       marketplaces = {
         claude-plugins-official = inputs.claude-plugins-official;
         openai-codex = inputs.openai-codex;
-        stitch-skills = inputs.stitch-skills;
       };
 
       settings = {
