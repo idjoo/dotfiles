@@ -33,8 +33,14 @@ in
           gemini'';
     };
 
-    programs.gemini-cli = {
+    programs.antigravity-cli = {
       enable = cfg.enable;
+
+      # The HM module was renamed gemini-cli -> antigravity-cli. Pin the
+      # gemini-cli package so the `gemini` binary stays installed and the
+      # legacy ~/.gemini config layout is kept (useLegacyGeminiConfig is
+      # auto-enabled when the package is gemini-cli).
+      package = pkgs.gemini-cli;
 
       commands = {
         "context" = {
