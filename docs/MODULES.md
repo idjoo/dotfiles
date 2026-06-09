@@ -95,15 +95,15 @@ Anthropic's Claude Code CLI with custom commands, skills, and MCP integration.
 
 ---
 
-#### `modules.gemini-cli`
+#### `modules.antigravity-cli`
 
-Google Gemini CLI tool for AI-powered assistance.
+Antigravity CLI tool for AI-powered assistance.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `enable` | bool | `false` | Enable Gemini CLI |
+| `enable` | bool | `false` | Enable Antigravity CLI |
 
-**Location:** `modules/home-manager/ai/gemini-cli/`
+**Location:** `modules/home-manager/ai/antigravity-cli/`
 
 ---
 

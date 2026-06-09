@@ -13,7 +13,7 @@ This repository provides a unified, declarative configuration system for managin
 
 - **6 machines** across 3 platforms (Linux servers, Linux desktop, macOS, Android)
 - **60+ reusable modules** with consistent enable patterns
-- **AI/ML tooling ecosystem** (Claude Code, Gemini CLI, MCP servers)
+- **AI/ML tooling ecosystem** (Claude Code, Antigravity CLI, MCP servers)
 - **Development environment** (Neovim with 30+ plugins, tmux, git workflows)
 - **Secret management** via SOPS with age encryption
 - **System theming** via Stylix with base16 color schemes
@@ -206,7 +206,7 @@ Modules are auto-imported via `outputs.homeManagerModules`, `outputs.nixosModule
 ### AI & Development Tooling
 
 - **Claude Code**: Anthropic's AI coding assistant with custom commands, skills, and MCP integration
-- **Gemini CLI**: Google's AI CLI tool
+- **Antigravity CLI**: AI CLI tool
 - **MCP Servers**: Context7, Serena, Playwright automation
 - **Neovim**: Nixvim-managed editor with 30+ plugins (LSP, Treesitter, Telescope, etc.)
 
@@ -251,7 +251,7 @@ Stylix-based system-wide theming with Catppuccin Frappe:
 
 | Category | Modules |
 |----------|---------|
-| **AI** | claude-code, gemini-cli, mcp, playwright |
+| **AI** | claude-code, antigravity-cli, mcp, playwright |
 | **Editors** | neovim (nixvim) |
 | **Shells** | zsh, nushell |
 | **Terminals** | ghostty, wezterm, urxvt |

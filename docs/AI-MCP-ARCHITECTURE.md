@@ -1,6 +1,6 @@
 # AI & MCP Integration Architecture
 
-This document provides detailed documentation of the AI tooling ecosystem integrated into this dotfiles repository, including Claude Code, Gemini CLI, and MCP (Model Context Protocol) servers.
+This document provides detailed documentation of the AI tooling ecosystem integrated into this dotfiles repository, including Claude Code, Antigravity CLI, and MCP (Model Context Protocol) servers.
 
 ## Table of Contents
 
@@ -10,7 +10,7 @@ This document provides detailed documentation of the AI tooling ecosystem integr
 - [Memory System](#memory-system)
 - [Skills & Commands](#skills--commands)
 - [Permissions System](#permissions-system)
-- [Gemini CLI](#gemini-cli)
+- [Antigravity CLI](#antigravity-cli)
 - [Neovim AI Integration](#neovim-ai-integration)
 
 ---
@@ -23,7 +23,7 @@ This document provides detailed documentation of the AI tooling ecosystem integr
 graph TB
     subgraph "AI CLI Tools"
         CC[Claude Code]
-        GC[Gemini CLI]
+        AG[Antigravity CLI]
     end
 
     subgraph "MCP Servers"
@@ -62,7 +62,7 @@ graph TB
 | Component | Location |
 |-----------|----------|
 | Claude Code | `modules/home-manager/ai/claude-code/` |
-| Gemini CLI | `modules/home-manager/ai/gemini-cli/` |
+| Antigravity CLI | `modules/home-manager/ai/antigravity-cli/` |
 | MCP Config | `modules/home-manager/ai/mcp/` |
 | Playwright | `modules/home-manager/playwright/` |
 | Neovim AI Plugins | `modules/home-manager/neovim/plugins/` |
@@ -582,17 +582,17 @@ permissions = {
 
 ---
 
-## Gemini CLI
+## Antigravity CLI
 
 ### Configuration
 
 ```nix
-modules.gemini-cli.enable = true;
+modules.antigravity-cli.enable = true;
 ```
 
-The Gemini CLI module provides access to Google's Gemini models for AI-powered assistance.
+The Antigravity CLI module provides AI-powered assistance.
 
-**Location**: `modules/home-manager/ai/gemini-cli/`
+**Location**: `modules/home-manager/ai/antigravity-cli/`
 
 ---
 

@@ -214,7 +214,7 @@ graph TB
 
     subgraph "AI Modules"
         CC[claude-code/]
-        GC[gemini-cli/]
+        GC[antigravity-cli/]
         MCP[mcp/]
     end
 
