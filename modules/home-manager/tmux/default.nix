@@ -65,6 +65,7 @@ in
         set-environment -g COLORTERM "truecolor"
         set -g allow-passthrough on
         set -g focus-events on
+        set -g set-clipboard on
 
         # Disable wrap-around for pane navigation (overrides pain-control)
         bind-key h if-shell -F '#{pane_at_left}'   ''' 'select-pane -L'
