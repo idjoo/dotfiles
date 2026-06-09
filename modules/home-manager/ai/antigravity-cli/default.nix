@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   config,
   inputs,
@@ -7,11 +6,11 @@
 }:
 with lib;
 let
-  cfg = config.modules.gemini-cli;
+  cfg = config.modules.antigravity-cli;
 in
 {
-  options.modules.gemini-cli = {
-    enable = mkEnableOption "gemini-cli";
+  options.modules.antigravity-cli = {
+    enable = mkEnableOption "antigravity-cli";
   };
 
   imports = [
@@ -19,28 +18,12 @@ in
   ];
 
   config = mkIf cfg.enable {
-    # User-level GEMINI.md symlinked from dotfiles (mutable, version-controlled)
-    # Uses home.homeDirectory to support both Linux (/home/user) and macOS (/Users/user)
-    home.file.".gemini/GEMINI.md".source =
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/modules/home-manager/gemini-cli/GEMINI.md";
-
-    home.shellAliases = {
-      gemini = ''
-        env \
-          GOOGLE_APPLICATION_CREDENTIALS=${config.sops.secrets."serviceAccounts/ai".path} \
-          GOOGLE_CLOUD_PROJECT=lv-playground-genai \
-          GOOGLE_CLOUD_LOCATION=global \
-          gemini'';
-    };
-
     programs.antigravity-cli = {
       enable = cfg.enable;
-
-      # The HM module was renamed gemini-cli -> antigravity-cli. Pin the
-      # gemini-cli package so the `gemini` binary stays installed and the
-      # legacy ~/.gemini config layout is kept (useLegacyGeminiConfig is
-      # auto-enabled when the package is gemini-cli).
-      package = pkgs.gemini-cli;
+      enableMcpIntegration = true;
+      context = {
+        AGENTS = ./AGENTS.md;
+      };
 
       commands = {
         "context" = {
@@ -84,7 +67,8 @@ in
 
       settings = {
         context = {
-          fileName = [ "GEMINI.md" ];
+          fileName = [ "AGENTS.md" ];
+          loadMemoryFromIncludeDirectories = true;
         };
 
         general = {
@@ -152,9 +136,6 @@ in
           auth = {
             selectedType = "vertex-ai";
           };
-        };
-        context = {
-          loadMemoryFromIncludeDirectories = true;
         };
         tools = {
           shell = {
