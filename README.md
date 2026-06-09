@@ -181,7 +181,7 @@ Modules are auto-imported via `outputs.homeManagerModules`, `outputs.nixosModule
 │
 ├── modules/               # Reusable configuration modules
 │   ├── home-manager/      # Cross-platform user modules (40+)
-│   │   ├── ai/            # AI tooling (claude-code, gemini, mcp)
+│   │   ├── ai/            # AI tooling (claude-code, antigravity-cli, mcp)
 │   │   ├── neovim/        # Nixvim configuration (30+ plugins)
 │   │   ├── zsh/           # Shell configuration
 │   │   ├── tmux/          # Terminal multiplexer
