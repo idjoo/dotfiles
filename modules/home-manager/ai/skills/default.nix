@@ -26,6 +26,7 @@ in
         "opencode"
         "claude-code"
         "codex"
+        "antigravity"
       ];
 
       sources = [
