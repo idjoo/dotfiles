@@ -12,14 +12,14 @@ in
   imports = [
     ./claude-code
     ./codex
-    ./gemini-cli
+    ./antigravity-cli
     ./mcp
     ./opencode
     ./skills
   ];
 
   options.modules.ai = {
-    enable = mkEnableOption "AI tools (claude-code, codex, gemini-cli, opencode, mcp)";
+    enable = mkEnableOption "AI tools (claude-code, codex, antigravity-cli, opencode, mcp)";
 
     claude-code = mkOption {
       type = types.bool;
@@ -33,10 +33,10 @@ in
       description = "Enable codex when ai.enable is true";
     };
 
-    gemini-cli = mkOption {
+    antigravity-cli = mkOption {
       type = types.bool;
       default = cfg.enable;
-      description = "Enable gemini-cli when ai.enable is true";
+      description = "Enable antigravity-cli when ai.enable is true";
     };
 
     opencode = {
@@ -65,7 +65,7 @@ in
     modules = {
       claude-code.enable = mkDefault cfg.claude-code;
       codex.enable = mkDefault cfg.codex;
-      gemini-cli.enable = mkDefault cfg.gemini-cli;
+      antigravity-cli.enable = mkDefault cfg.antigravity-cli;
       opencode = {
         enable = mkDefault cfg.opencode.enable;
         web.enable = mkDefault cfg.opencode.web.enable;

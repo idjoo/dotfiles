@@ -26,7 +26,6 @@ in
         "opencode"
         "claude-code"
         "codex"
-        "gemini-cli"
       ];
 
       sources = [
