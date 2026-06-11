@@ -50,6 +50,7 @@ in
         {
           plugin = pkgs.tmuxPlugins.tmux-thumbs;
           extraConfig = ''
+            set -g @thumbs-binary ${pkgs.thumbs}/bin/thumbs
             set -g @thumbs-command 'echo -n {} | xsel --clipboard'
             set -g @thumbs-contrast 1
           '';
