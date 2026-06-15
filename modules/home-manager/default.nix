@@ -12,6 +12,7 @@
     ./agent-browser
     ./ai
     ./atuin
+    ./bitwarden
     ./btop
     ./cava
     ./direnv

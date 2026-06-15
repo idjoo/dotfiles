@@ -78,6 +78,7 @@
     gpg.enable = true;
     lazygit.enable = true;
     password-store.enable = true;
+    bitwarden.enable = true;
     ssh.enable = true;
     tmux.enable = true;
     cava.enable = true;
