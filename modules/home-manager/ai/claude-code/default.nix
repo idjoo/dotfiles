@@ -24,9 +24,9 @@ in
 
   config = mkIf cfg.enable {
     home.shellAliases = {
-      cc = "ANTHROPIC_BASE_URL=https://headroom-621964697798.europe-west10.run.app CLAUDE_CONFIG_DIR=$HOME/.claude-idjo claude";
-      cci = "ANTHROPIC_BASE_URL=https://headroom-621964697798.europe-west10.run.app CLAUDE_CONFIG_DIR=$HOME/.claude-idjo claude";
-      ccp = "ANTHROPIC_BASE_URL=https://headroom-621964697798.europe-west10.run.app CLAUDE_CONFIG_DIR=$HOME/.claude-paulsjob claude";
+      cc = "CLAUDE_CONFIG_DIR=$HOME/.claude-idjo claude";
+      cci = "CLAUDE_CONFIG_DIR=$HOME/.claude-idjo claude";
+      ccp = "CLAUDE_CONFIG_DIR=$HOME/.claude-paulsjob claude";
     };
 
     programs.claude-code = {
