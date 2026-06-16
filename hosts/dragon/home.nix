@@ -43,6 +43,10 @@
     };
     gpg.enable = true;
     lazygit.enable = true;
+    bitwarden = {
+      enable = true;
+      pinentry = pkgs.pinentry-curses;
+    };
     neovim.enable = true;
     sops.enable = true;
     ssh.enable = true;
