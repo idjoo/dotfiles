@@ -27,7 +27,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ pkgs.llm-agents.agent-browser ];
+    home.packages = [
+      pkgs.llm-agents.agent-browser
+      pkgs.lightpanda
+    ];
 
     # agent-browser uses playwright under the hood
     modules.playwright.enable = mkDefault true;

@@ -4,4 +4,5 @@ pkgs: {
   # example = pkgs.callPackage ./example { };
   dank-mono-nerdfont = pkgs.callPackage ./dank-mono-nerdfont { inherit pkgs; };
   httpgenerator = pkgs.callPackage ./httpgenerator { };
+  lightpanda = pkgs.callPackage ./lightpanda { };
 }
