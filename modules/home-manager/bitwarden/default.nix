@@ -23,6 +23,7 @@ in
     };
   };
   config = mkIf cfg.enable {
+    home.packages = [ pkgs.bitwarden-cli ];
     programs.rbw = {
       enable = cfg.enable;
       settings = {

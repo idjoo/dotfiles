@@ -54,10 +54,7 @@
     zoxide.enable = true;
     zsh.enable = true;
     password-store.enable = true;
-    ai = {
-      enable = true;
-      opencode.web.enable = true;
-    };
+    ai.enable = true;
   };
 
   systemd.user = {

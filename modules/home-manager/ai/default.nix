@@ -9,71 +9,24 @@ let
   cfg = config.modules.ai;
 in
 {
-  imports = [
-    ./claude-code
-    ./codex
-    ./antigravity-cli
-    ./mcp
-    ./opencode
-    ./skills
-  ];
 
   options.modules.ai = {
     enable = mkEnableOption "AI tools (claude-code, codex, antigravity-cli, opencode, mcp)";
-
-    claude-code = mkOption {
-      type = types.bool;
-      default = cfg.enable;
-      description = "Enable claude-code when ai.enable is true";
-    };
-
-    codex = mkOption {
-      type = types.bool;
-      default = cfg.enable;
-      description = "Enable codex when ai.enable is true";
-    };
-
-    antigravity-cli = mkOption {
-      type = types.bool;
-      default = cfg.enable;
-      description = "Enable antigravity-cli when ai.enable is true";
-    };
-
-    opencode = {
-      enable = mkOption {
-        type = types.bool;
-        default = cfg.enable;
-        description = "Enable opencode when ai.enable is true";
-      };
-      web.enable = mkEnableOption "opencode web UI";
-    };
-
-    mcp = mkOption {
-      type = types.bool;
-      default = cfg.enable;
-      description = "Enable mcp servers when ai.enable is true";
-    };
-
-    skills = mkOption {
-      type = types.bool;
-      default = cfg.enable;
-      description = "Enable declarative agent skills when ai.enable is true";
-    };
   };
 
-  config = {
-    modules = {
-      claude-code.enable = mkDefault cfg.claude-code;
-      codex.enable = mkDefault cfg.codex;
-      antigravity-cli.enable = mkDefault cfg.antigravity-cli;
-      opencode = {
-        enable = mkDefault cfg.opencode.enable;
-        web.enable = mkDefault cfg.opencode.web.enable;
-      };
-      agent-browser.enable = mkDefault cfg.mcp;
-      skills.enable = mkDefault cfg.skills;
-    };
+  config = mkIf cfg.enable {
+    home.packages = [
+      pkgs.llm-agents.claude-code
+      pkgs.llm-agents.codex
+      pkgs.llm-agents.opencode
+      pkgs.llm-agents.skills
+      pkgs.llm-agents.rtk
+    ];
 
-    home.packages = [ pkgs.llm-agents.qmd pkgs.llm-agents.beads-rust pkgs.llm-agents.rtk ];
+    home.shellAliases = {
+      co = "codex";
+      cci = "CLAUDE_CONFIG_DIR=$HOME/.claude-idjo claude";
+      ccp = "CLAUDE_CONFIG_DIR=$HOME/.claude-paulsjob claude";
+    };
   };
 }
