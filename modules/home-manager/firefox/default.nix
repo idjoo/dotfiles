@@ -377,22 +377,6 @@ in
 
       profiles = {
         "vian@idjo.cc" = {
-          id = 0;
-
-          bookmarks = profile-bookmarks;
-
-          settings = profile-settings;
-
-          extensions.packages = profile-extensions;
-
-          search = {
-            default = "ddg";
-            privateDefault = "ddg";
-            force = true;
-          };
-        };
-
-        "vian@idjo.cc" = {
           id = 1;
 
           bookmarks = profile-bookmarks;

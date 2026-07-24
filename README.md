@@ -83,9 +83,7 @@ graph TB
 
     subgraph "hosts/"
         OX[ox<br/>Primary Server]
-        HORSE[horse<br/>Office Linux]
         TIGER[tiger<br/>Personal Linux]
-        SNAKE[snake<br/>Office Mac]
         MONKEY[monkey<br/>Personal Phone]
         RABBIT[rabbit<br/>Office Phone]
     end
@@ -130,9 +128,7 @@ graph TB
 | Host | Platform | Architecture | Type | Description |
 |------|----------|--------------|------|-------------|
 | **ox** | NixOS | x86_64-linux | Server | Primary server, backend services |
-| **horse** | NixOS | x86_64-linux | Desktop | Office Linux desktop |
 | **tiger** | NixOS | x86_64-linux | Desktop | Personal Linux desktop, herbstluftwm |
-| **snake** | nix-darwin | aarch64-darwin | Desktop | Office Mac, AeroSpace WM |
 | **monkey** | nix-on-droid | aarch64-linux | Mobile | Personal Android phone |
 | **rabbit** | nix-on-droid | aarch64-linux | Mobile | Office Android phone |
 
@@ -141,7 +137,7 @@ graph TB
 All modules follow a consistent enable pattern:
 
 ```nix
-# In host configuration (e.g., hosts/snake/home.nix)
+# In host configuration (e.g., hosts/tiger/home.nix)
 modules = {
   neovim.enable = true;
   zsh.enable = true;
@@ -173,9 +169,7 @@ Modules are auto-imported via `outputs.homeManagerModules`, `outputs.nixosModule
 │   │   ├── config.nix     # System configuration
 │   │   ├── home.nix       # Home Manager configuration
 │   │   └── hardware-config.nix
-│   ├── horse/             # NixOS server
 │   ├── tiger/             # NixOS desktop
-│   ├── snake/             # macOS
 │   ├── monkey/            # Android
 │   └── rabbit/            # Android
 │
@@ -232,8 +226,7 @@ SOPS with age encryption for managing secrets:
 # Per-host SSH key selection
 sshKey = {
   ox = "idjo";
-  horse = "idjo";
-  snake = "idjo";
+  tiger = "idjo";
 }."${hostName}";
 ```
 

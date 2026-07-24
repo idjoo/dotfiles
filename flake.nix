@@ -150,15 +150,6 @@
           ];
         };
 
-        horse = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs outputs rootPath;
-          };
-          modules = [
-            ./hosts/horse/config.nix
-          ];
-        };
-
         tiger = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit inputs outputs rootPath;
@@ -185,20 +176,6 @@
           modules = [
             inputs.disko.nixosModules.disko
             ./hosts/dog/config.nix
-          ];
-        };
-      };
-
-      darwinConfigurations = {
-        snake = nix-darwin.lib.darwinSystem {
-          specialArgs = {
-            inherit inputs outputs rootPath;
-          };
-          modules = [
-            ./hosts/snake/config.nix
-            {
-              system.configurationRevision = self.rev or self.dirtyRev or null;
-            }
           ];
         };
       };
@@ -239,17 +216,6 @@
           ];
         };
 
-        "idjo@horse" = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = pkgsFor.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs rootPath;
-            hostName = "horse";
-          };
-          modules = [
-            ./hosts/horse/home.nix
-          ];
-        };
-
         "idjo@tiger" = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = pkgsFor.x86_64-linux;
           extraSpecialArgs = {
@@ -283,17 +249,6 @@
           ];
         };
 
-        # Darwin host (macOS)
-        "idjo@snake" = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = pkgsFor.aarch64-darwin;
-          extraSpecialArgs = {
-            inherit inputs outputs rootPath;
-            hostName = "snake";
-          };
-          modules = [
-            ./hosts/snake/home.nix
-          ];
-        };
       };
     };
 }

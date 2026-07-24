@@ -47,9 +47,7 @@ graph TB
 
     subgraph "Hosts"
         OX[ox<br/>Primary Server]
-        HORSE[horse<br/>Office Linux Desktop]
         TIGER[tiger<br/>Personal Linux Desktop]
-        SNAKE[snake<br/>Office Mac]
         MONKEY[monkey<br/>Personal Phone]
         RABBIT[rabbit<br/>Office Phone]
     end
@@ -72,9 +70,7 @@ graph TB
     F --> PKG
 
     NC --> OX
-    NC --> HORSE
     NC --> TIGER
-    DC --> SNAKE
     NDC --> MONKEY
     NDC --> RABBIT
 ```
@@ -152,12 +148,7 @@ outputs = {
   # Configuration outputs
   nixosConfigurations = {
     ox = { ... };
-    horse = { ... };
     tiger = { ... };
-  };
-
-  darwinConfigurations = {
-    snake = { ... };
   };
 
   nixOnDroidConfigurations = {
@@ -167,9 +158,7 @@ outputs = {
 
   homeConfigurations = {
     "idjo@ox" = { ... };
-    "idjo@horse" = { ... };
     "idjo@tiger" = { ... };
-    "idjo@snake" = { ... };
   };
 };
 ```
@@ -280,7 +269,7 @@ in
 ```mermaid
 sequenceDiagram
     participant F as flake.nix
-    participant H as hosts/snake/home.nix
+    participant H as hosts/tiger/home.nix
     participant M as modules/home-manager/default.nix
     participant S as modules/home-manager/*/default.nix
 
@@ -440,15 +429,10 @@ graph TB
     end
 
     CP --> OX[ox]
-    CP --> HORSE[horse]
     CP --> TIGER[tiger]
-    CP --> SNAKE[snake]
 
     NO --> OX
-    NO --> HORSE
     NO --> TIGER
-
-    DO --> SNAKE
 
     NDO --> MONKEY[monkey]
     NDO --> RABBIT[rabbit]
@@ -551,8 +535,7 @@ flowchart TB
 
     subgraph "Per-Host Keys"
         OX_KEY[ox: idjo SSH key]
-        HORSE_KEY[horse: idjo SSH key]
-        SNAKE_KEY[snake: idjo SSH key]
+        TIGER_KEY[tiger: idjo SSH key]
     end
 
     AGE --> SOPS
@@ -560,8 +543,7 @@ flowchart TB
     SEC --> DEC
 
     DEC --> OX_KEY
-    DEC --> HORSE_KEY
-    DEC --> SNAKE_KEY
+    DEC --> TIGER_KEY
 ```
 
 ### Host-Specific Secret Selection
@@ -571,8 +553,7 @@ flowchart TB
 let
   sshKey = {
     ox = "idjo";
-    horse = "idjo";
-    snake = "idjo";
+    tiger = "idjo";
   }."${hostName}";
 in
 {

@@ -134,14 +134,12 @@
     # SSH authorized keys (public keys are not secret, can be hardcoded)
     # These correspond to the private keys managed by sops
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDU/Xo4ax3/WcsICw4thl4oDurw6j2ThuOlcWAxQBQoy vian@idjo.cc"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWyabW5NL2Ul6e1/FIn/nbx+Dl1GlpBOtNDRhba6YLd vian@idjo.cc"
     ];
   };
 
   # Allow root login for nixos-anywhere initial deployment
   users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDU/Xo4ax3/WcsICw4thl4oDurw6j2ThuOlcWAxQBQoy vian@idjo.cc"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWyabW5NL2Ul6e1/FIn/nbx+Dl1GlpBOtNDRhba6YLd vian@idjo.cc"
   ];
 

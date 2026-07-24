@@ -97,10 +97,7 @@ To build without switching:
 nix build .#nixosConfigurations.ox.config.system.build.toplevel
 
 # Home Manager
-nix build .#homeConfigurations."idjo@snake".activationPackage
-
-# Darwin
-nix build .#darwinConfigurations.snake.system
+nix build .#homeConfigurations."idjo@tiger".activationPackage
 ```
 
 ### Rollback
@@ -481,8 +478,7 @@ The repository uses `hostName` special arg for per-host secrets:
 let
   sshKey = {
     ox = "idjo";
-    horse = "idjo";
-    snake = "idjo";
+    tiger = "idjo";
   }."${hostName}";
 in
 {
@@ -589,7 +585,7 @@ nh home switch ~/dotfiles
 **Debug**:
 ```bash
 # Show detailed error
-nix build .#homeConfigurations."idjo@snake".activationPackage --show-trace
+nix build .#homeConfigurations."idjo@tiger".activationPackage --show-trace
 
 # Check specific host
 nix eval .#nixosConfigurations.ox.config.system.stateVersion
@@ -686,7 +682,7 @@ nh home switch ~/dotfiles
 
 ```bash
 # Build without switching
-nix build .#homeConfigurations."idjo@snake".activationPackage
+nix build .#homeConfigurations."idjo@tiger".activationPackage
 
 # Check derivation output
 ls -la result/
@@ -699,8 +695,8 @@ ls -la result/
 
 ```bash
 # Evaluate specific option
-nix eval .#homeConfigurations."idjo@snake".config.modules.neovim.enable
+nix eval .#homeConfigurations."idjo@tiger".config.modules.neovim.enable
 
 # Show all home packages
-nix eval .#homeConfigurations."idjo@snake".config.home.packages --json | jq
+nix eval .#homeConfigurations."idjo@tiger".config.home.packages --json | jq
 ```
