@@ -75,6 +75,7 @@ in
         google-chrome
         telegram-desktop
         upscayl
+        zapzap
       ]
       ++ optionals cfg.custom.enable [
         # custom packages
