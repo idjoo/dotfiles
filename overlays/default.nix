@@ -24,7 +24,7 @@
   };
 
   # llm-agents.nix overlay - provides pkgs.llm-agents.*
-  llm-agents = inputs.llm-agents.overlays.default;
+  llm-agents = inputs.llm-agents.overlays.shared-nixpkgs;
 
   # NUR overlay - provides pkgs.nur.*
   nur = inputs.nur.overlays.default;
