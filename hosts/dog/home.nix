@@ -64,8 +64,8 @@
     dunst.enable = true;
 
     # browser
-    firefox.enable = false;
-    zen-browser.enable = true;
+    firefox.enable = true;
+    zen-browser.enable = false;
 
     # cli
     btop.enable = true;
