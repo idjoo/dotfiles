@@ -64,6 +64,9 @@ in
         wakatime-cli
 
         jira-cli-go
+
+        # terminal multiplexer
+        herdr
       ]
       ++ optionals cfg.gui.enable [
         # database
