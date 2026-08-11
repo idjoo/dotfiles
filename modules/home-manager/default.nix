@@ -26,6 +26,7 @@
     ./go
     ./gpg
     ./herbstluftwm
+    ./herdr
     ./lazygit
     ./neovim
     ./nh
