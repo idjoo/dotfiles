@@ -80,6 +80,7 @@
     password-store.enable = true;
     ssh.enable = true;
     tmux.enable = true;
+    herdr.enable = true;
     cava.enable = true;
     fzf.enable = true;
     direnv.enable = true;

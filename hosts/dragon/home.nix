@@ -51,6 +51,7 @@
     sops.enable = true;
     ssh.enable = true;
     tmux.enable = true;
+    herdr.enable = true;
     zoxide.enable = true;
     zsh.enable = true;
     password-store.enable = true;
