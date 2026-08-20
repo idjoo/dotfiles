@@ -24,20 +24,31 @@ in
       defaultOptions = [
       ];
 
-      changeDirWidgetCommand = "fd --type d";
-      changeDirWidgetOptions = [
-        "--preview 'ls --tree {} | head -200'"
-      ];
+      changeDirWidget = {
+        command = "fd --type d";
+        options = [
+          "--preview 'ls --tree {} | head -200'"
+        ];
+      };
 
-      fileWidgetCommand = "fd --type f";
-      fileWidgetOptions = [
-        "--preview 'head {}'"
-      ];
+      fileWidget = {
+        command = "fd --type f";
+        options = [
+          "--preview 'head {}'"
+        ];
+      };
 
-      historyWidgetOptions = [
-        "--sort"
-        "--exact"
-      ];
+      historyWidget = {
+        # Atuin's shell integration is sourced after fzf's and already owns
+        # Ctrl-R, so fzf's history binding is disabled to settle the conflict.
+        # Swap to `programs.atuin.flags = [ "--disable-ctrl-r" ];` instead if
+        # fzf should own Ctrl-R.
+        command = "";
+        options = [
+          "--sort"
+          "--exact"
+        ];
+      };
 
       tmux = {
         enableShellIntegration = true;
