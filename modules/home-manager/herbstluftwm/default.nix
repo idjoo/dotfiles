@@ -166,5 +166,13 @@ in
         ${pkgs.dunst}/bin/dunstify "herbstluftwm reloaded!"
       '';
     };
+
+    # X compositor: herbstluftwm ships none, and transparent (Tauri/webkit)
+    # windows paint solid black without one. Runs as a systemd user service.
+    services.picom = {
+      enable = true;
+      backend = "glx";
+      vSync = true;
+    };
   };
 }
