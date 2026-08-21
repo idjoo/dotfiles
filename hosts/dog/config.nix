@@ -3,6 +3,7 @@
   outputs,
   pkgs,
   config,
+  lib,
   rootPath,
   ...
 }:
@@ -67,6 +68,52 @@
   # services
   services = {
     openssh.enable = true;
+
+    # touchpad: libinput defaults to the "adaptive" accel profile, whose
+    # velocity-dependent curve makes the cursor feel slow on small movements
+    # and fast on flicks. Switch to the "flat" profile so finger->cursor
+    # mapping is linear (consistent sensitivity), then set a constant fast
+    # speed. accelSpeed ranges -1.0 (slowest) .. 1.0 (fastest).
+    #
+    # NOTE: this only matches the multitouch node (ELAN067B "Touchpad",
+    # PROP=5); the chip's second, relative-pointer node is pinned to the
+    # same curve via xserver.inputClassSections below.
+    libinput = {
+      enable = true;
+      touchpad = {
+        accelProfile = "flat";
+        accelSpeed = "1.0";
+        # libinput caps accelSpeed at 1.0, which still was not enough reach
+        # on this 109x54mm pad. TransformationMatrix scales the deltas after
+        # acceleration and is uncapped, so it supplies the rest.
+        additionalOptions = ''
+          Option "TransformationMatrix" "1.5 0 0 0 1.5 0 0 0 1"
+        '';
+      };
+    };
+
+    # The same ELAN chip also exposes a relative-pointer node (ELAN067B
+    # "Mouse", event7, PROP=0). libinput classifies it as a generic pointer,
+    # so the touchpad block above does not match it and it would inherit the
+    # mouse defaults (adaptive / 0.0). If the pad ever drops to HID mouse
+    # mode that node drives the cursor and the feel changes mid-session. Pin
+    # it to the same flat curve so the touchpad is flat no matter which node
+    # is emitting.
+    #
+    # mkAfter is load-bearing: xorg applies every matching InputClass in file
+    # order with later sections overriding earlier ones, and the generated
+    # "libinput mouse configuration" section (AccelProfile "adaptive") is
+    # itself an element of this very list.
+    xserver.inputClassSections = lib.mkAfter [
+      ''
+        Identifier "ELAN touchpad mouse-node flat accel"
+        MatchDriver "libinput"
+        MatchProduct "ELAN067B:00 04F3:31F8 Mouse"
+        Option "AccelProfile" "flat"
+        Option "AccelSpeed" "1.0"
+        Option "TransformationMatrix" "1.5 0 0 0 1.5 0 0 0 1"
+      ''
+    ];
   };
 
   # firewall
