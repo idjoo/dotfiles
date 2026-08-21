@@ -76,6 +76,7 @@ in
         telegram-desktop
         upscayl
         zapzap
+        clips
       ]
       ++ optionals cfg.custom.enable [
         # custom packages
