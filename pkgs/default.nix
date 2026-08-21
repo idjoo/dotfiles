@@ -3,6 +3,7 @@
 pkgs: {
   # example = pkgs.callPackage ./example { };
   claude-desktop = pkgs.callPackage ./claude-desktop { };
+  clips = pkgs.callPackage ./clips { };
   dank-mono-nerdfont = pkgs.callPackage ./dank-mono-nerdfont { inherit pkgs; };
   httpgenerator = pkgs.callPackage ./httpgenerator { };
   lightpanda = pkgs.callPackage ./lightpanda { };
