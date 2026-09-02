@@ -20,7 +20,6 @@ in
       pkgs.llm-agents.codex
       pkgs.llm-agents.opencode
       pkgs.llm-agents.skills
-      pkgs.llm-agents.rtk
     ];
 
     home.shellAliases = {
