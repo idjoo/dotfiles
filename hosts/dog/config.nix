@@ -214,6 +214,9 @@
       "video"
       "adbusers"
       "kvm"
+      # lets gamemoded apply its renice/ioprio tuning to this session; the
+      # group is created by programs.gamemode but starts out empty
+      "gamemode"
     ];
     shell = pkgs.zsh;
     useDefaultShell = true;
@@ -251,8 +254,17 @@
     platform = "ipu6ep";
   };
 
+  # VA-API for the Alder Lake iGPU. This is video decode/encode only -- it is
+  # not a rendering driver, so it does nothing for game framerates (Vulkan
+  # comes from Mesa's ANV). Wanted for hardware-accelerated video playback and
+  # for Steam Remote Play's stream encoder.
+  hardware.graphics.extraPackages = with pkgs; [
+    intel-media-driver
+  ];
+
   modules = {
     comma.enable = true;
+    gaming.enable = true;
     nix.enable = true;
     pipewire.enable = true;
     ssh.enable = true;

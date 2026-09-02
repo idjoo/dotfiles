@@ -4,6 +4,7 @@
   # List your module files here
   imports = [
     ./comma
+    ./gaming
     ./nix
     ./pipewire
     ./ssh
