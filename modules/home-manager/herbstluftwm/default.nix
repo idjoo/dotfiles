@@ -110,8 +110,10 @@ in
         Mod4-n = "spawn ${pkgs.rofi-network-manager}/bin/rofi-network-manager";
 
         # xf86
-        XF86MonBrightnessUp = "spawn ${pkgs.brightnessctl}/bin/brightnessctl set +1%";
-        XF86MonBrightnessDown = "spawn ${pkgs.brightnessctl}/bin/brightnessctl set 1%-";
+        XF86MonBrightnessUp = "spawn ${pkgs.brightnessctl}/bin/brightnessctl set +5%";
+        Control-XF86MonBrightnessUp = "spawn ${pkgs.brightnessctl}/bin/brightnessctl set +1%";
+        XF86MonBrightnessDown = "spawn ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+        Control-XF86MonBrightnessDown = "spawn ${pkgs.brightnessctl}/bin/brightnessctl set 1%-";
         XF86AudioMute = "spawn ${pkgs.pamixer}/bin/pamixer --toggle-mute";
         XF86AudioRaiseVolume = "spawn ${pkgs.pamixer}/bin/pamixer --increase 5";
         XF86AudioLowerVolume = "spawn ${pkgs.pamixer}/bin/pamixer --decrease 5";
