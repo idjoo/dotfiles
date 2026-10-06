@@ -90,7 +90,18 @@
 
   # services
   services = {
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      # guest can't tunnel into services bound to localhost
+      extraConfig = ''
+        Match User guest
+          AllowTcpForwarding no
+          AllowStreamLocalForwarding no
+          AllowAgentForwarding no
+          X11Forwarding no
+          PermitTunnel no
+      '';
+    };
   };
 
   virtualisation = {
@@ -131,11 +142,35 @@
     packages = [ ];
     shell = pkgs.zsh;
     useDefaultShell = true;
+    homeMode = "700";
     # SSH authorized keys (public keys are not secret, can be hardcoded)
     # These correspond to the private keys managed by sops
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWyabW5NL2Ul6e1/FIn/nbx+Dl1GlpBOtNDRhba6YLd vian@idjo.cc"
     ];
+  };
+
+  # Unprivileged guest account for friends: no wheel/docker, can't read other homes.
+  # Private key lives in sops at sshKeys/guest/id_ed25519.
+  users.users.guest = {
+    isNormalUser = true;
+    uid = 1001;
+    description = "Guest";
+    extraGroups = [ ];
+    shell = pkgs.zsh;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINewv64MowdT7RBLOF+do/ooWjKabHOVuRvG7jJqyqYt guest@dragon"
+    ];
+  };
+
+  # Cap guest resources so they can't starve the host
+  systemd.slices."user-1001" = {
+    overrideStrategy = "asDropin";
+    sliceConfig = {
+      CPUQuota = "200%";
+      MemoryMax = "4G";
+      TasksMax = 512;
+    };
   };
 
   # Allow root login for nixos-anywhere initial deployment
