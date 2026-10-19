@@ -36,7 +36,7 @@ in
       enable = cfg.enable;
       enableSshSupport = false;
       pinentry = {
-        package = if pkgs.stdenv.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-rofi;
+        package = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-rofi;
       };
     };
 

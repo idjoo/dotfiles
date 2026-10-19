@@ -50,7 +50,7 @@
 
   home.shellAliases = {
     rebuild =
-      if pkgs.stdenv.isDarwin then
+      if pkgs.stdenv.hostPlatform.isDarwin then
         "${pkgs.nh}/bin/nh darwin switch ~/Dotfiles"
       else
         "${pkgs.nh}/bin/nh os switch";

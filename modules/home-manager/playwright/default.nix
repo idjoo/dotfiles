@@ -14,7 +14,7 @@ let
 
   # Platform-specific executable path
   executablePath =
-    if pkgs.stdenv.isDarwin then
+    if pkgs.stdenv.hostPlatform.isDarwin then
       let
         arch = if pkgs.stdenv.hostPlatform.isAarch64 then "mac-arm64" else "mac";
       in

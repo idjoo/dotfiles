@@ -25,7 +25,7 @@ in
     programs.ghostty = {
       enable = cfg.enable;
 
-      package = mkIf pkgs.stdenv.isDarwin null;
+      package = mkIf pkgs.stdenv.hostPlatform.isDarwin null;
 
       clearDefaultKeybinds = false;
 

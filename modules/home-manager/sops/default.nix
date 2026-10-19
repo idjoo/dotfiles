@@ -65,7 +65,7 @@ in
 
     # Fix sops-nix LaunchAgent on macOS: include both nix-provided getconf and
     # Apple system tools (hdiutil, etc.) used by sops-install-secrets.
-    launchd.agents.sops-nix.config.EnvironmentVariables.PATH = lib.mkIf pkgs.stdenv.isDarwin (
+    launchd.agents.sops-nix.config.EnvironmentVariables.PATH = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin (
       lib.mkForce "${pkgs.darwin.system_cmds}/bin:/usr/bin:/bin:/usr/sbin:/sbin"
     );
   };

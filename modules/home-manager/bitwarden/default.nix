@@ -18,7 +18,7 @@ in
     };
     pinentry = mkOption {
       type = types.package;
-      default = if pkgs.stdenv.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-rofi;
+      default = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-rofi;
       description = "The pinentry program rbw uses. Override on headless hosts.";
     };
   };
