@@ -60,7 +60,14 @@ in
           name = "Noto Color Emoji";
         };
       };
+
+      # stylix still sets the renamed `programs.rofi.font`; set it via settings below
+      targets.rofi.fonts.enable = false;
     };
+
+    programs.rofi.settings.font =
+      with config.stylix.fonts;
+      "${monospace.name} ${toString sizes.popups}";
 
     # base00 = base
     # base01 = mantle
