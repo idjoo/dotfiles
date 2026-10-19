@@ -14,7 +14,14 @@
     mcp-hub = inputs.mcp-hub.packages.${prev.stdenv.hostPlatform.system}.default;
     mcphub-nvim = inputs.mcphub-nvim.packages.${prev.stdenv.hostPlatform.system}.default;
     serena = inputs.serena.packages.${prev.stdenv.hostPlatform.system}.default;
-    herdr = inputs.herdr.packages.${prev.stdenv.hostPlatform.system}.default;
+    # Link with lld: GNU ld rejects the debug/eh_frame sections of zig's
+    # compiler_rt.o bundled in libghostty-vt ("overlapping FDEs").
+    herdr = inputs.herdr.packages.${prev.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
+      nativeBuildInputs = old.nativeBuildInputs ++ [ final.lld ];
+      env = old.env // {
+        RUSTFLAGS = "-C link-arg=-fuse-ld=lld";
+      };
+    });
 
     # Pin to 13.3.0: flameshot 14 routes all capture through the XDG screenshot
     # portal, and no portal backend here implements it (only -gtk is installed,
