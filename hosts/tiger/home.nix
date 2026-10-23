@@ -93,7 +93,6 @@
 
     ai = {
       enable = true;
-      skills = false;
     };
   };
 
