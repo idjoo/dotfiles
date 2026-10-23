@@ -141,7 +141,7 @@
       overlays = import ./overlays { inherit inputs; };
 
       nixosModules = import ./modules/nixos;
-      homeModules = import ./modules/home-manager;
+      homeModules.imports = [ ./modules/home-manager ];
       darwinModules = import ./modules/darwin;
       lib.nixOnDroidModules = import ./modules/nix-on-droid;
 
