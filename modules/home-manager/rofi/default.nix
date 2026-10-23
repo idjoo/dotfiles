@@ -16,10 +16,8 @@ in
     programs.rofi = {
       enable = cfg.enable;
 
-      location = "center";
-      terminal = "${pkgs.ghostty}/bin/ghostty";
-
-      extraConfig = {
+      settings = {
+        terminal = "${pkgs.ghostty}/bin/ghostty";
         modi = "drun,run,ssh";
         show-icon = true;
       };
@@ -32,18 +30,6 @@ in
         rofi-network-manager
         pinentry-rofi
       ];
-
-      pass = {
-        enable = true;
-
-        stores = [
-          "${config.xdg.dataHome}/pass"
-        ];
-
-        extraConfig = ''
-          default_user=":filename"
-        '';
-      };
 
       theme =
         let

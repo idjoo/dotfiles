@@ -102,7 +102,7 @@ in
 
         # rofi
         Mod4-d = "spawn rofi -show drun -modi drun";
-        Mod4-p = "spawn ${pkgs.rofi-pass}/bin/rofi-pass";
+        Mod4-p = "spawn ${pkgs.rofi-rbw-x11}/bin/rofi-rbw";
         Mod4-a = "spawn ${pkgs.ani-cli}/bin/ani-cli --rofi --skip";
         Mod4-b = "spawn ${pkgs.rofi-bluetooth}/bin/rofi-bluetooth";
         Mod4-e = "spawn rofi -show emoji -modi emoji";
