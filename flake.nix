@@ -96,6 +96,11 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    net-merge = {
+      url = "github:rohit267/net-merge";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -180,6 +185,7 @@
           };
           modules = [
             inputs.disko.nixosModules.disko
+            inputs.net-merge.nixosModules.default
             ./hosts/dog/config.nix
           ];
         };

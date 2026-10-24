@@ -467,6 +467,26 @@
         "type": "github"
       }
     },
+    "net-merge": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792833686,
+        "narHash": "sha256-fhsD7db0FVJxjMRsqMZkGo2Zi6IrmPZ3CYj/79FYQjQ=",
+        "owner": "rohit267",
+        "repo": "net-merge",
+        "rev": "c0a4eb3cd63d9d010dc5ecc436a30e4e1215045b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rohit267",
+        "repo": "net-merge",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -884,6 +904,7 @@
         "llm-agents": "llm-agents",
         "mcp-hub": "mcp-hub",
         "mcphub-nvim": "mcphub-nvim",
+        "net-merge": "net-merge",
         "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",
         "nix-on-droid": "nix-on-droid",
