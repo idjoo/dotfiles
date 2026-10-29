@@ -87,12 +87,26 @@ let
     [ "$VOLUME" -ge 1  ] && echo "🔈 $VOLUME%" && exit 0
     [ "$VOLUME" -eq 0  ] && echo "🔈 $VOLUME%" && exit 0
   '';
+  # Prints "N/A" only when there is no default route at all, i.e. neither
+  # wifi nor wired/tethering is providing connectivity. The internal/network
+  # modules stay blank when their own interface is down, so this is the single
+  # "truly offline" indicator.
+  networkOffline = pkgs.writeShellScriptBin "network-offline.sh" ''
+    if ${pkgs.iproute2}/bin/ip route show default | ${pkgs.gnugrep}/bin/grep -q .; then
+      exit 0
+    fi
+    echo "N/A"
+  '';
 in
 {
   options.modules.polybar = {
     enable = mkEnableOption "polybar";
   };
   config = mkIf cfg.enable {
+    # polybar's tray is XEmbed-only; snixembed hosts StatusNotifierItem icons
+    # (e.g. the net-merge tray) and re-embeds them into it.
+    services.snixembed.enable = true;
+
     services.polybar = {
       enable = cfg.enable;
 
@@ -139,7 +153,7 @@ in
           modules = {
             left = "distro date xwindow";
             center = "hlwm";
-            right = "backlight pipewire cpu memory temperature wireless battery";
+            right = "backlight pipewire cpu memory temperature wired wireless offline battery tray";
           };
         };
 
@@ -271,31 +285,62 @@ in
           };
         };
 
+        "module/wired" = {
+          type = "internal/network";
+          interface-type = "wired";
+
+          format = {
+            connected = {
+              text = "<label-connected>";
+              prefix = {
+                text = "󰈀 ";
+                foreground = "#${config.lib.stylix.colors.base0F}";
+              };
+            };
+            disconnected = "";
+            padding = 1;
+          };
+
+          label = {
+            connected = "%ifname%";
+            disconnected = "";
+          };
+        };
+
         "module/wireless" = {
           type = "internal/network";
           interface-type = "wireless";
 
           format = {
             connected = "<ramp-signal> <label-connected>";
-            disconnected = {
-              text = "<label-disconnected>";
-              foregound = "#${config.lib.stylix.colors.base0F}";
-            };
+            disconnected = "";
             padding = 1;
           };
 
-          label = {
-            connected = "%essid%";
-            disconnected = {
-              text = "N/A";
-              foreground = "#${config.lib.stylix.colors.base0F}";
-            };
-          };
+          label.connected = "%essid%";
 
           ramp.signal = {
             text = [ "🛜" ];
             foreground = "#${config.lib.stylix.colors.base0F}";
           };
+        };
+
+        "module/offline" = {
+          type = "custom/script";
+          exec = "${networkOffline}/bin/network-offline.sh";
+          interval = 3;
+          format = {
+            text = "<label>";
+            foreground = "#${config.lib.stylix.colors.base0F}";
+            padding = 1;
+          };
+        };
+
+        "module/tray" = {
+          type = "internal/tray";
+          tray.spacing = 4;
+          tray.size = "66%";
+          format.padding = 1;
         };
 
         "module/battery" = {
