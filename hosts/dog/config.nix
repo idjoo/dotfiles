@@ -67,37 +67,13 @@
 
   # net-merge: balance connections across every adapter with internet
   # (Wi-Fi + Ethernet + phone tether). Installs a cap_net_admin wrapper at
-  # /run/wrappers/bin/net-merge. polybar has no StatusNotifierItem tray, so
-  # the tray / autostart is useless here; run headless as a service instead.
-  programs.net-merge.enable = true;
-
-  # `net-merge run` only needs CAP_NET_ADMIN (it checks CapEff, not uid 0), so
-  # run it as the user with ambient caps: its state dir is then
-  # ~/.cache/net-merge, the same one `net-merge status` / `off` read from the
-  # shell. Adapters are rescanned every 3s, so plugging a tether in later is
-  # picked up; it only exits at boot when no adapter is up yet, hence Restart.
-  systemd.services.net-merge = {
-    description = "net-merge (balance connections across all adapters)";
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      ExecStart = "${lib.getExe config.programs.net-merge.package} run -stats 0";
-      User = outputs.lib.username;
-      AmbientCapabilities = [
-        "CAP_NET_ADMIN"
-        "CAP_NET_RAW"
-      ];
-      CapabilityBoundingSet = [
-        "CAP_NET_ADMIN"
-        "CAP_NET_RAW"
-      ];
-      # `net-merge off` makes it exit cleanly; on-failure keeps it off then.
-      Restart = "on-failure";
-      RestartSec = 5;
-      # leftover routes after a crash
-      ExecStopPost = "-${lib.getExe config.programs.net-merge.package} cleanup";
-    };
+  # /run/wrappers/bin/net-merge; autostart runs `net-merge tray` as a user
+  # service on graphical-session.target. Its icon is StatusNotifierItem, shown
+  # in polybar via snixembed (see modules/home-manager/polybar). The tray
+  # pauses itself while only one connection has internet.
+  programs.net-merge = {
+    enable = true;
+    autostart = true;
   };
 
   # services
