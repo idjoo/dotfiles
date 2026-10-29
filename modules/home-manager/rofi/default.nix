@@ -20,6 +20,8 @@ in
         terminal = "${pkgs.ghostty}/bin/ghostty";
         modi = "drun,run,ssh";
         show-icon = true;
+        matching = "fuzzy";
+        normalize-match = true;
       };
 
       plugins = with pkgs; [
