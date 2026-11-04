@@ -34,6 +34,7 @@ in
         sqlite
         rclone
         git-filter-repo
+        ffmpeg
       ]
       ++ optionals cfg.nix.enable [
         # nix tooling
