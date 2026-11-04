@@ -95,6 +95,7 @@
   services = {
     openssh = {
       enable = true;
+      settings.X11Forwarding = true;
       # guest can't tunnel into services bound to localhost
       extraConfig = ''
         Match User guest

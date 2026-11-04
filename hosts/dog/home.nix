@@ -10,6 +10,11 @@
 
   programs.home-manager.enable = true;
 
+  programs.ssh.settings.dragon = {
+    ForwardX11 = true;
+    ForwardX11Trusted = true;
+  };
+
   home = {
     username = "${outputs.lib.username}";
     homeDirectory = "/home/${outputs.lib.username}";
