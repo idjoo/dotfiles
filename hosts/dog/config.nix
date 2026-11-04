@@ -238,6 +238,10 @@
     hicolor-icon-theme
   ];
 
+  # Codex sandbox commands inherit nix-ld's system library path.
+  programs.nix-ld.libraries =
+    inputs.codex-desktop-linux.packages.${pkgs.stdenv.hostPlatform.system}.codex-desktop.workspaceRuntimeLibraries;
+
   # fonts
   fonts.packages = with pkgs; [
     nerd-fonts.roboto-mono

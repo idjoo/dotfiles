@@ -67,6 +67,10 @@
       url = "github:numtide/llm-agents.nix";
     };
 
+    codex-desktop-linux = {
+      url = "github:ilysenko/codex-desktop-linux";
+    };
+
     claude-plugins-official = {
       url = "github:anthropics/claude-plugins-official";
       flake = false;
