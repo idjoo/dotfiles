@@ -27,6 +27,7 @@ in
       cc = "CLAUDE_CONFIG_DIR=$HOME/.claude-idjo claude";
       cci = "CLAUDE_CONFIG_DIR=$HOME/.claude-idjo claude";
       ccp = "CLAUDE_CONFIG_DIR=$HOME/.claude-paulsjob claude";
+      ccpj = "CLAUDE_CONFIG_DIR=$HOME/.claude-pj claude";
     };
 
     programs.claude-code = {
