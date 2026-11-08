@@ -50,8 +50,13 @@
     };
   };
 
-  # llm-agents.nix overlay - provides pkgs.llm-agents.*
-  llm-agents = inputs.llm-agents.overlays.shared-nixpkgs;
+  # llm-agents.nix packages - provides pkgs.llm-agents.*
+  # Use the flake's own packages (built against its pinned nixpkgs) instead of
+  # overlays.shared-nixpkgs, so they substitute from cache.numtide.com rather
+  # than compiling locally against our nixpkgs.
+  llm-agents = _final: prev: {
+    llm-agents = inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system};
+  };
 
   # NUR overlay - provides pkgs.nur.*
   nur = inputs.nur.overlays.default;
