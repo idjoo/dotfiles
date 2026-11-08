@@ -26,6 +26,7 @@
 
     packages = with pkgs; [
       inputs.codex-desktop-linux.packages.${pkgs.stdenv.hostPlatform.system}.codex-desktop
+      pkgs.llm-agents.t3code-desktop
       (google-cloud-sdk.withExtraComponents [
         google-cloud-sdk.components.gke-gcloud-auth-plugin
         google-cloud-sdk.components.log-streaming
