@@ -147,6 +147,8 @@
     shell = pkgs.zsh;
     useDefaultShell = true;
     homeMode = "700";
+    # keep user services (e.g. codex-remote-control) running without a login session
+    linger = true;
     # SSH authorized keys (public keys are not secret, can be hardcoded)
     # These correspond to the private keys managed by sops
     openssh.authorizedKeys.keys = [
