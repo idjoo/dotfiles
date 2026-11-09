@@ -54,9 +54,27 @@
   # Use the flake's own packages (built against its pinned nixpkgs) instead of
   # overlays.shared-nixpkgs, so they substitute from cache.numtide.com rather
   # than compiling locally against our nixpkgs.
-  llm-agents = _final: prev: {
-    llm-agents = inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system};
-  };
+  llm-agents =
+    _final: prev:
+    let
+      upstream = inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system};
+      # Upstream package omits T3CODE_CLERK_JWT_TEMPLATE, so hasCloudPublicConfig()
+      # is false and T3 Connect is hidden. Value from t3code's .env.example.
+      # Drop once fixed in llm-agents.nix (builds locally until then).
+      t3code = upstream.t3code.override {
+        t3code-unwrapped = upstream.t3code.unwrapped.overrideAttrs (old: {
+          env = old.env // {
+            T3CODE_CLERK_JWT_TEMPLATE = "t3-relay";
+          };
+        });
+      };
+    in
+    {
+      llm-agents = upstream // {
+        inherit t3code;
+        t3code-desktop = upstream.t3code-desktop.override { inherit t3code; };
+      };
+    };
 
   # NUR overlay - provides pkgs.nur.*
   nur = inputs.nur.overlays.default;
