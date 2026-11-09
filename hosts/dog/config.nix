@@ -184,6 +184,11 @@
     };
   };
 
+  # Secret Service for Electron safeStorage (t3code-desktop etc.), unlocked
+  # with the login password through ly's PAM stack.
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.ly.enableGnomeKeyring = true;
+
   services.logind.settings.Login = {
     # On AC: ignore the lid. On battery: suspend, then hibernate after the
     # delay set in systemd.sleep.extraConfig below.

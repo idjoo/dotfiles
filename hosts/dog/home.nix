@@ -26,7 +26,18 @@
 
     packages = with pkgs; [
       inputs.codex-desktop-linux.packages.${pkgs.stdenv.hostPlatform.system}.codex-desktop
-      pkgs.llm-agents.t3code-desktop
+      # Electron can't detect a keyring backend under herbstluftwm, so force
+      # libsecret; otherwise safeStorage falls back to basic_text and t3code
+      # refuses to save connections.
+      (symlinkJoin {
+        name = "t3code-desktop";
+        paths = [ pkgs.llm-agents.t3code-desktop ];
+        nativeBuildInputs = [ makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/t3code-desktop \
+            --add-flags "--password-store=gnome-libsecret"
+        '';
+      })
       (google-cloud-sdk.withExtraComponents [
         google-cloud-sdk.components.gke-gcloud-auth-plugin
         google-cloud-sdk.components.log-streaming
