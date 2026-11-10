@@ -13,7 +13,7 @@ This repository provides a unified, declarative configuration system for managin
 
 - **6 machines** across 3 platforms (Linux servers, Linux desktop, macOS, Android)
 - **60+ reusable modules** with consistent enable patterns
-- **AI/ML tooling ecosystem** (Claude Code, Antigravity CLI, MCP servers)
+- **AI tooling** (Claude Code, Codex, T3 Code, Antigravity CLI, OpenCode)
 - **Development environment** (Neovim with 30+ plugins, tmux, git workflows)
 - **Secret management** via SOPS with age encryption
 - **System theming** via Stylix with base16 color schemes
@@ -175,7 +175,7 @@ Modules are auto-imported via `outputs.homeManagerModules`, `outputs.nixosModule
 │
 ├── modules/               # Reusable configuration modules
 │   ├── home-manager/      # Cross-platform user modules (40+)
-│   │   ├── ai/            # AI tooling (claude-code, antigravity-cli, mcp)
+│   │   ├── ai/            # AI CLIs (claude-code, codex, t3code, …)
 │   │   ├── neovim/        # Nixvim configuration (30+ plugins)
 │   │   ├── zsh/           # Shell configuration
 │   │   ├── tmux/          # Terminal multiplexer
@@ -199,9 +199,7 @@ Modules are auto-imported via `outputs.homeManagerModules`, `outputs.nixosModule
 
 ### AI & Development Tooling
 
-- **Claude Code**: Anthropic's AI coding assistant with custom commands, skills, and MCP integration
-- **Antigravity CLI**: AI CLI tool
-- **MCP Servers**: Context7, Serena, Playwright automation
+- **AI CLIs**: Claude Code, Codex, T3 Code, Antigravity CLI and OpenCode installed via `modules.ai` (configs managed by hand)
 - **Neovim**: Nixvim-managed editor with 30+ plugins (LSP, Treesitter, Telescope, etc.)
 
 ### Cross-Platform Abstractions
@@ -244,7 +242,7 @@ Stylix-based system-wide theming with Catppuccin Frappe:
 
 | Category | Modules |
 |----------|---------|
-| **AI** | claude-code, antigravity-cli, mcp, playwright |
+| **AI** | ai, playwright |
 | **Editors** | neovim (nixvim) |
 | **Shells** | zsh, nushell |
 | **Terminals** | ghostty, wezterm, urxvt |

@@ -71,23 +71,8 @@
       url = "github:ilysenko/codex-desktop-linux";
     };
 
-    claude-plugins-official = {
-      url = "github:anthropics/claude-plugins-official";
-      flake = false;
-    };
-
-    openai-codex = {
-      url = "github:openai/codex-plugin-cc";
-      flake = false;
-    };
-
     serena = {
       url = "github:oraios/serena";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    skills = {
-      url = "github:idjoo/skills.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

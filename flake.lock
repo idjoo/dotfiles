@@ -102,22 +102,6 @@
         "type": "github"
       }
     },
-    "claude-plugins-official": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1792118421,
-        "narHash": "sha256-Tfs8Ig1rzLvaAuTZwqGUzKCK0TMWE2SddYss+H/04ug=",
-        "owner": "anthropics",
-        "repo": "claude-plugins-official",
-        "rev": "ea10b213686c90bb1984b2016937310e05336cf3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "anthropics",
-        "repo": "claude-plugins-official",
-        "type": "github"
-      }
-    },
     "codex-desktop-linux": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -882,22 +866,6 @@
         "type": "github"
       }
     },
-    "openai-codex": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1783469820,
-        "narHash": "sha256-S/R4kHTcIHBcG0TRX063C7ILXZZm0oMqunchPGg6ToU=",
-        "owner": "openai",
-        "repo": "codex-plugin-cc",
-        "rev": "db52e28f4d9ded852ab3942cea316258ae4ef346",
-        "type": "github"
-      },
-      "original": {
-        "owner": "openai",
-        "repo": "codex-plugin-cc",
-        "type": "github"
-      }
-    },
     "pyproject-build-systems": {
       "inputs": {
         "nixpkgs": [
@@ -950,7 +918,6 @@
     },
     "root": {
       "inputs": {
-        "claude-plugins-official": "claude-plugins-official",
         "codex-desktop-linux": "codex-desktop-linux",
         "disko": "disko",
         "herdr": "herdr",
@@ -966,9 +933,7 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "nixvim": "nixvim",
         "nur": "nur",
-        "openai-codex": "openai-codex",
         "serena": "serena",
-        "skills": "skills",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "systems": "systems_6",
@@ -1034,26 +999,6 @@
       "original": {
         "owner": "oraios",
         "repo": "serena",
-        "type": "github"
-      }
-    },
-    "skills": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1780655032,
-        "narHash": "sha256-jjnHDnqaWVEtcKTlgH4+FL5Ju3TsQ9zAXtaeOItq4Pc=",
-        "owner": "idjoo",
-        "repo": "skills.nix",
-        "rev": "7025beca6beefc8be3878a5031aee67de33fb5ce",
-        "type": "github"
-      },
-      "original": {
-        "owner": "idjoo",
-        "repo": "skills.nix",
         "type": "github"
       }
     },

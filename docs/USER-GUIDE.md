@@ -260,7 +260,7 @@ Create `hosts/newhostname/home.nix`:
     ssh.enable = true;
 
     # AI tooling
-    claude-code.enable = true;
+    ai.enable = true;
 
     # Utilities
     atuin.enable = true;

@@ -75,35 +75,19 @@ Cross-platform user-level modules available on all platforms.
 
 ### AI & Development
 
-#### `modules.claude-code`
+#### `modules.ai`
 
-Anthropic's Claude Code CLI with custom commands, skills, and MCP integration.
+Installs AI coding CLIs from the `llm-agents` flake. Their configs (`~/.claude`, `~/.codex`, …) are managed by hand, not by Nix.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `enable` | bool | `false` | Enable Claude Code |
+| `enable` | bool | `false` | Install claude-code, codex, t3code, antigravity-cli, opencode, skills |
 
 **Features:**
-- Wrapper script with Anthropic/Google Cloud credentials
-- MCP server integration (Context7, Serena, Playwright, Atlassian)
-- Custom commands (`/commit`, `/tag`)
-- Skills (Playwright automation, Context7 docs, Tmux)
-- Lifecycle hooks (session-start, user-prompt-submit, pre-compact, session-end)
-- Memory system integration
+- Shell aliases: `co` (codex), `cci` / `ccp` / `ccpj` (Claude Code with per-profile `CLAUDE_CONFIG_DIR`)
+- `~/.claude-pj` profile sharing `CLAUDE.md`, `plugins`, `skills` and `settings.json` with `~/.claude`
 
-**Location:** `modules/home-manager/ai/claude-code/`
-
----
-
-#### `modules.antigravity-cli`
-
-Antigravity CLI tool for AI-powered assistance.
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `enable` | bool | `false` | Enable Antigravity CLI |
-
-**Location:** `modules/home-manager/ai/antigravity-cli/`
+**Location:** `modules/home-manager/ai/`
 
 ---
 
@@ -846,7 +830,7 @@ nix-on-droid utilities.
 | tmux | ✓ | ✓ | ✓ |
 | git | ✓ | ✓ | ✓ |
 | ssh (client) | ✓ | ✓ | ✓ |
-| claude-code | ✓ | ✓ | - |
+| ai | ✓ | ✓ | - |
 | ghostty | - | ✓ | - |
 | herbstluftwm | ✓ | - | - |
 | polybar | ✓ | - | - |

@@ -11,7 +11,7 @@ in
 {
 
   options.modules.ai = {
-    enable = mkEnableOption "AI tools (claude-code, codex, t3code, antigravity-cli, opencode, mcp)";
+    enable = mkEnableOption "AI CLIs (claude-code, codex, t3code, antigravity-cli, opencode, skills)";
   };
 
   config = mkIf cfg.enable {

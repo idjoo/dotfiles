@@ -200,16 +200,6 @@ graph TB
             UTILS_A[utils/]
         end
     end
-
-    subgraph "AI Modules"
-        CC[claude-code/]
-        GC[antigravity-cli/]
-        MCP[mcp/]
-    end
-
-    AI --> CC
-    AI --> GC
-    AI --> MCP
 ```
 
 ### Module Enable Pattern
@@ -604,63 +594,6 @@ graph TB
     PL --> GIT
     PL --> UI
     PL --> MORE
-```
-
----
-
-## AI/MCP Integration
-
-### Claude Code Architecture
-
-```mermaid
-graph TB
-    subgraph "Claude Code Module"
-        CC[modules/home-manager/ai/claude-code/]
-        WRAP[Wrapper with env vars]
-        CFG[settings.json]
-    end
-
-    subgraph "Commands"
-        COMMIT[commit.md]
-        TAG[tag.md]
-    end
-
-    subgraph "Skills"
-        CTX7[context7/]
-        PW[playwright/]
-        TMUX[tmux/]
-    end
-
-    subgraph "Hooks"
-        START[session-start]
-        PROMPT[user-prompt-submit]
-        COMPACT[pre-compact]
-        END[session-end]
-    end
-
-    subgraph "MCP Servers"
-        MCP_CTX[context7]
-        MCP_SER[serena]
-        MCP_ATL[atlassian]
-        MCP_PW[playwright]
-    end
-
-    CC --> WRAP
-    CC --> CFG
-    CC --> COMMIT
-    CC --> TAG
-    CC --> CTX7
-    CC --> PW
-    CC --> TMUX
-    CC --> START
-    CC --> PROMPT
-    CC --> COMPACT
-    CC --> END
-
-    CFG --> MCP_CTX
-    CFG --> MCP_SER
-    CFG --> MCP_ATL
-    CFG --> MCP_PW
 ```
 
 ---
