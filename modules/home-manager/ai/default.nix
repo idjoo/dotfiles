@@ -7,6 +7,49 @@
 with lib;
 let
   cfg = config.modules.ai;
+  browserLibraryPath = lib.makeLibraryPath (
+    with pkgs;
+    [
+      glib
+      nspr
+      nss
+      atk
+      at-spi2-atk
+      at-spi2-core
+      dbus
+      libX11
+      libXcomposite
+      libXdamage
+      libXext
+      libXfixes
+      libXrandr
+      libgbm
+      expat
+      libxcb
+      libxkbcommon
+      systemd
+      alsa-lib
+      cairo
+      pango
+      cups
+      fontconfig
+    ]
+  );
+  # T3 downloads an unpatched Chrome headless shell. Its dependency check
+  # invokes ldd, which does not use NIX_LD_LIBRARY_PATH on NixOS.
+  t3code =
+    if pkgs.stdenv.hostPlatform.isLinux then
+      pkgs.symlinkJoin {
+        name = "t3code-browser-runtime";
+        paths = [ pkgs.llm-agents.t3code ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/t3 \
+            --prefix LD_LIBRARY_PATH : ${browserLibraryPath}
+        '';
+      }
+    else
+      pkgs.llm-agents.t3code;
 in
 {
 
@@ -18,11 +61,21 @@ in
     home.packages = [
       pkgs.llm-agents.claude-code
       pkgs.llm-agents.codex
-      pkgs.llm-agents.t3code
+      t3code
       pkgs.llm-agents.antigravity-cli
       pkgs.llm-agents.opencode
       pkgs.llm-agents.skills
     ];
+
+    # The self-updating background service starts its downloaded binary directly.
+    xdg.configFile."systemd/user/t3code.service.d/browser-runtime.conf" =
+      mkIf pkgs.stdenv.hostPlatform.isLinux
+        {
+          text = ''
+            [Service]
+            Environment="LD_LIBRARY_PATH=${browserLibraryPath}"
+          '';
+        };
 
     home.shellAliases = {
       co = "codex";
@@ -31,14 +84,18 @@ in
       ccpj = "CLAUDE_CONFIG_DIR=$HOME/.claude-pj claude";
     };
 
-    home.file = builtins.listToAttrs (map (name: {
-      name = ".claude-pj/${name}";
-      value.source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.claude/${name}";
-    }) [
-      "CLAUDE.md"
-      "plugins"
-      "skills"
-    ]);
+    home.file = builtins.listToAttrs (
+      map
+        (name: {
+          name = ".claude-pj/${name}";
+          value.source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.claude/${name}";
+        })
+        [
+          "CLAUDE.md"
+          "plugins"
+          "skills"
+        ]
+    );
 
     # Claude writes settings atomically next to the symlink target. A direct
     # link avoids making it create temporary files in the read-only Nix store.
