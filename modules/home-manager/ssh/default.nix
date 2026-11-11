@@ -28,6 +28,13 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.file.".local/bin/git-ssh" = {
+      source = ./git-ssh.sh;
+      executable = true;
+    };
+
+    programs.git.settings.core.sshCommand = lib.mkDefault "${config.home.homeDirectory}/.local/bin/git-ssh";
+
     programs.ssh = {
       enable = cfg.enable;
       enableDefaultConfig = false;
