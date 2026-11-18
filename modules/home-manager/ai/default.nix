@@ -54,15 +54,17 @@ in
 {
 
   options.modules.ai = {
-    enable = mkEnableOption "AI CLIs (claude-code, codex, t3code, antigravity-cli, opencode, skills)";
+    enable = mkEnableOption "AI CLIs (claude-code, codex, dsh, t3code, antigravity-cli, antigravity-acp, opencode, skills)";
   };
 
   config = mkIf cfg.enable {
     home.packages = [
       pkgs.llm-agents.claude-code
       pkgs.llm-agents.codex
+      pkgs.llm-agents.dsh
       t3code
       pkgs.llm-agents.antigravity-cli
+      pkgs.antigravity-acp
       pkgs.llm-agents.opencode
       pkgs.llm-agents.skills
     ];
