@@ -233,6 +233,8 @@
       # lets gamemoded apply its renice/ioprio tuning to this session; the
       # group is created by programs.gamemode but starts out empty
       "gamemode"
+      # raw access to optical drives (/dev/sr*) for burning discs
+      "cdrom"
     ];
     shell = pkgs.zsh;
     useDefaultShell = true;
