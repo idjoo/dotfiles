@@ -78,6 +78,7 @@ in
         upscayl
         zapzap
         clips
+        pear-desktop
       ]
       ++ optionals cfg.custom.enable [
         # custom packages
