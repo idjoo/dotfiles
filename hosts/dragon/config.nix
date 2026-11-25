@@ -13,6 +13,7 @@
   imports = [
     outputs.nixosModules
     ./disko.nix
+    ./komodo.nix
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
