@@ -1,7 +1,7 @@
 # Komodo (https://komo.do) — deploys the Docker stacks in github.com/idjoo/stacks
 # (from the checkout at ~/documents/stacks on dragon).
 #
-#   UI:  https://dragon.wyvern-vector.ts.net:9120 (tailnet only, via `tailscale serve`)
+#   UI:  https://komodo.wyvern-vector.ts.net (Tailscale Service svc:komodo → 127.0.0.1:9120)
 #
 # Core + Periphery + MongoDB run as plain Docker containers on a private network.
 # Periphery connects outbound to Core (Komodo v2), so nothing but the UI is published.
@@ -127,7 +127,7 @@ in
         environment = {
           TZ = config.time.timeZone;
           KOMODO_DATABASE_ADDRESS = "komodo-mongo:27017";
-          KOMODO_HOST = "https://dragon.wyvern-vector.ts.net:9120";
+          KOMODO_HOST = "https://komodo.wyvern-vector.ts.net";
           KOMODO_TITLE = "dragon";
           KOMODO_FIRST_SERVER_NAME = "dragon";
           KOMODO_PERIPHERY_PUBLIC_KEY = "file:/config/keys/periphery.pub";
