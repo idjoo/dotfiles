@@ -31,6 +31,14 @@ let
   stackSecrets = [
     "waha"
     "whatsapp-vian"
+    "artex"
+    "cliproxyapi"
+  ];
+
+  # source checkouts that stacks build from (compose build.context by absolute path)
+  buildDirs = [
+    "/home/${user}/documents/artex"
+    "/home/${user}/documents/hub"
   ];
 
   common = {
@@ -74,6 +82,12 @@ in
     "d ${stacksDir}/whatsapp-vian 0755 ${user} users -"
     "d ${stacksDir}/bolak-balok 0755 ${user} users -"
     "d ${stacksDir}/survivor-picker 0755 ${user} users -"
+    # artex runs as root; data/ holds dirs owned by its executor uid 10001
+    "d ${stacksDir}/artex 0755 root root -"
+    # cliproxyapi + hub run as idjo; proxy/ holds config.yaml + OAuth tokens, so keep it private
+    "d ${stacksDir}/cliproxyapi 0755 ${user} users -"
+    "d ${stacksDir}/cliproxyapi/proxy 0700 ${user} users -"
+    "d ${stacksDir}/cliproxyapi/hub 0755 ${user} users -"
   ];
 
   systemd.services.docker-komodo-periphery.restartTriggers = map (
@@ -167,7 +181,8 @@ in
           # so periphery is restarted whenever a stack secret changes (restartTriggers below)
           "/run/secrets:/run/secrets:ro"
           "${repoDir}:${repoDir}"
-        ];
+        ]
+        ++ map (d: "${d}:${d}") buildDirs;
       };
     };
   };
