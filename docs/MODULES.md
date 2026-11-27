@@ -80,7 +80,7 @@ Installs AI coding CLIs from the `llm-agents` flake. Their configs (`~/.claude`,
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `enable` | bool | `false` | Install claude-code, codex, dsh, t3code, antigravity-cli, antigravity-acp, opencode, skills |
+| `enable` | bool | `false` | Install claude-code, codex, dsh, t3code, antigravity-cli, antigravity-acp, opencode, skills, qmd |
 
 **Features:**
 - Shell aliases: `co` (codex), `cci` / `ccp` / `ccpj` (Claude Code with per-profile `CLAUDE_CONFIG_DIR`)

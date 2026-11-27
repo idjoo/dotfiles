@@ -58,7 +58,7 @@ in
   ];
 
   options.modules.ai = {
-    enable = mkEnableOption "AI CLIs (claude-code, codex, dsh, t3code, antigravity-cli, antigravity-acp, opencode, skills)";
+    enable = mkEnableOption "AI CLIs (claude-code, codex, dsh, t3code, antigravity-cli, antigravity-acp, opencode, skills, qmd)";
   };
 
   config = mkIf cfg.enable {
@@ -71,6 +71,7 @@ in
       pkgs.antigravity-acp
       pkgs.llm-agents.opencode
       pkgs.llm-agents.skills
+      pkgs.llm-agents.qmd
       pkgs.jira-jr
     ];
 
