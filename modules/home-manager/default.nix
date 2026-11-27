@@ -87,7 +87,9 @@
     ox = "TERM=xterm-256color ${pkgs.openssh}/bin/ssh ${outputs.lib.username}@ox";
   };
 
-  home.sessionVariables = { };
+  home.sessionVariables = {
+    OMB_DATA_DIR = "${config.xdg.dataHome}/omb";
+  };
 
   home.sessionPath = [
     "${config.home.homeDirectory}/.local/bin"
