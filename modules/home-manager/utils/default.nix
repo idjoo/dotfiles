@@ -63,6 +63,8 @@ in
         docker-buildx
 
         wakatime-cli
+
+        teams-cli
       ]
       ++ optionals cfg.gui.enable [
         # database

@@ -11,4 +11,5 @@ pkgs: {
   httpgenerator = pkgs.callPackage ./httpgenerator { };
   jira-jr = pkgs.callPackage ./jira-jr { };
   lightpanda = pkgs.callPackage ./lightpanda { };
+  teams-cli = pkgs.callPackage ./teams-cli { };
 }
