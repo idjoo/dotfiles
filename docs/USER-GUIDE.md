@@ -94,10 +94,10 @@ To build without switching:
 
 ```bash
 # NixOS
-nix build .#nixosConfigurations.ox.config.system.build.toplevel
+nix build .#nixosConfigurations.dragon.config.system.build.toplevel
 
 # Home Manager
-nix build .#homeConfigurations."idjo@tiger".activationPackage
+nix build .#homeConfigurations."idjo@dog".activationPackage
 ```
 
 ### Rollback
@@ -477,8 +477,8 @@ The repository uses `hostName` special arg for per-host secrets:
 ```nix
 let
   sshKey = {
-    ox = "idjo";
-    tiger = "idjo";
+    dog = "idjo";
+    dragon = "idjo";
   }."${hostName}";
 in
 {
@@ -585,10 +585,10 @@ nh home switch ~/dotfiles
 **Debug**:
 ```bash
 # Show detailed error
-nix build .#homeConfigurations."idjo@tiger".activationPackage --show-trace
+nix build .#homeConfigurations."idjo@dog".activationPackage --show-trace
 
 # Check specific host
-nix eval .#nixosConfigurations.ox.config.system.stateVersion
+nix eval .#nixosConfigurations.dragon.config.system.stateVersion
 ```
 
 ### Module Option Not Found
@@ -682,7 +682,7 @@ nh home switch ~/dotfiles
 
 ```bash
 # Build without switching
-nix build .#homeConfigurations."idjo@tiger".activationPackage
+nix build .#homeConfigurations."idjo@dog".activationPackage
 
 # Check derivation output
 ls -la result/
@@ -695,8 +695,8 @@ ls -la result/
 
 ```bash
 # Evaluate specific option
-nix eval .#homeConfigurations."idjo@tiger".config.modules.neovim.enable
+nix eval .#homeConfigurations."idjo@dog".config.modules.neovim.enable
 
 # Show all home packages
-nix eval .#homeConfigurations."idjo@tiger".config.home.packages --json | jq
+nix eval .#homeConfigurations."idjo@dog".config.home.packages --json | jq
 ```

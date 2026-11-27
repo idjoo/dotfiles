@@ -18,7 +18,6 @@ This document provides a comprehensive reference for all modules in the dotfiles
   - [Theming](#theming)
 - [NixOS Modules](#nixos-modules)
 - [Darwin Modules](#darwin-modules)
-- [nix-on-droid Modules](#nix-on-droid-modules)
 
 ---
 
@@ -788,55 +787,22 @@ macOS utilities.
 
 ---
 
-## nix-on-droid Modules
-
-Android/Termux-specific modules.
-
-### `modules.android-integration`
-
-Termux/Android integration.
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `enable` | bool | `false` | Enable Android integration |
-
-**Features:**
-- Termux command wrappers (am, termux-open, etc.)
-- Android-specific environment setup
-
-**Location:** `modules/nix-on-droid/android-integration/`
-
----
-
-### `modules.utils`
-
-nix-on-droid utilities.
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `enable` | bool | `false` | Enable utils |
-
-**Location:** `modules/nix-on-droid/utils/`
-
----
-
 ## Module Availability Matrix
 
-| Module | NixOS | Darwin | nix-on-droid |
-|--------|:-----:|:------:|:------------:|
+| Module | NixOS | Darwin |
+|--------|:-----:|:------:|
 | **Home Manager** |
-| neovim | ✓ | ✓ | ✓ |
-| zsh | ✓ | ✓ | ✓ |
-| tmux | ✓ | ✓ | ✓ |
-| git | ✓ | ✓ | ✓ |
-| ssh (client) | ✓ | ✓ | ✓ |
-| ai | ✓ | ✓ | - |
-| ghostty | - | ✓ | - |
-| herbstluftwm | ✓ | - | - |
-| polybar | ✓ | - | - |
+| neovim | ✓ | ✓ |
+| zsh | ✓ | ✓ |
+| tmux | ✓ | ✓ |
+| git | ✓ | ✓ |
+| ssh (client) | ✓ | ✓ |
+| ai | ✓ | ✓ |
+| ghostty | - | ✓ |
+| herbstluftwm | ✓ | - |
+| polybar | ✓ | - |
 | **System** |
-| aerospace | - | ✓ | - |
-| homebrew | - | ✓ | - |
-| pipewire | ✓ | - | - |
-| xremap | ✓ | - | - |
-| android-integration | - | - | ✓ |
+| aerospace | - | ✓ |
+| homebrew | - | ✓ |
+| pipewire | ✓ | - |
+| xremap | ✓ | - |

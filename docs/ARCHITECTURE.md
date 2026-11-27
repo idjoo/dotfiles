@@ -28,7 +28,6 @@ graph TB
         NP[nixpkgs]
         HM[home-manager]
         ND[nix-darwin]
-        NOD[nix-on-droid]
         ST[stylix]
         NV[nixvim]
         SOPS[sops-nix]
@@ -37,8 +36,6 @@ graph TB
 
     subgraph "Outputs"
         NC[nixosConfigurations]
-        DC[darwinConfigurations]
-        NDC[nixOnDroidConfigurations]
         HC[homeConfigurations]
         MOD[*Modules]
         OV[overlays]
@@ -46,42 +43,35 @@ graph TB
     end
 
     subgraph "Hosts"
-        OX[ox<br/>Primary Server]
-        TIGER[tiger<br/>Personal Linux Desktop]
-        MONKEY[monkey<br/>Personal Phone]
-        RABBIT[rabbit<br/>Office Phone]
+        DOG[dog<br/>Personal Linux Laptop]
+        DRAGON[dragon<br/>ARM Cloud VM]
     end
 
     NP --> F
     HM --> F
     ND --> F
-    NOD --> F
     ST --> F
     NV --> F
     SOPS --> F
     MCP --> F
 
     F --> NC
-    F --> DC
-    F --> NDC
     F --> HC
     F --> MOD
     F --> OV
     F --> PKG
 
-    NC --> OX
-    NC --> TIGER
-    NDC --> MONKEY
-    NDC --> RABBIT
+    NC --> DOG
+    NC --> DRAGON
+    HC --> DOG
+    HC --> DRAGON
 ```
 
 ### Platform Distribution
 
 ```mermaid
 pie title Host Distribution by Platform
-    "NixOS (Linux)" : 3
-    "nix-darwin (macOS)" : 1
-    "nix-on-droid (Android)" : 2
+    "NixOS (Linux)" : 2
 ```
 
 ---
@@ -100,7 +90,6 @@ graph LR
 
     subgraph "Platform"
         ND[nix-darwin]
-        NOD[nix-on-droid]
     end
 
     subgraph "Features"
@@ -119,7 +108,6 @@ graph LR
 
     NP --> HM
     NP --> ND
-    NP --> NOD
     NP --> ST
     NP --> NV
     NP --> SOPS
@@ -143,22 +131,16 @@ outputs = {
   nixosModules = { ... };
   homeManagerModules = { ... };
   darwinModules = { ... };
-  nixOnDroidModules = { ... };
 
   # Configuration outputs
   nixosConfigurations = {
-    ox = { ... };
-    tiger = { ... };
-  };
-
-  nixOnDroidConfigurations = {
-    monkey = { ... };
-    rabbit = { ... };
+    dog = { ... };
+    dragon = { ... };
   };
 
   homeConfigurations = {
-    "idjo@ox" = { ... };
-    "idjo@tiger" = { ... };
+    "idjo@dog" = { ... };
+    "idjo@dragon" = { ... };
   };
 };
 ```
@@ -193,11 +175,6 @@ graph TB
             HB[homebrew/]
             AS[aerospace/]
             PM[podman/]
-        end
-
-        subgraph "nix-on-droid/"
-            ANDROID[android-integration/]
-            UTILS_A[utils/]
         end
     end
 ```
@@ -259,7 +236,7 @@ in
 ```mermaid
 sequenceDiagram
     participant F as flake.nix
-    participant H as hosts/tiger/home.nix
+    participant H as hosts/dog/home.nix
     participant M as modules/home-manager/default.nix
     participant S as modules/home-manager/*/default.nix
 
@@ -414,18 +391,11 @@ graph TB
         DO[aerospace, homebrew, podman]
     end
 
-    subgraph "nix-on-droid Only"
-        NDO[android-integration]
-    end
+    CP --> DOG[dog]
+    CP --> DRAGON[dragon]
 
-    CP --> OX[ox]
-    CP --> TIGER[tiger]
-
-    NO --> OX
-    NO --> TIGER
-
-    NDO --> MONKEY[monkey]
-    NDO --> RABBIT[rabbit]
+    NO --> DOG
+    NO --> DRAGON
 ```
 
 ---
@@ -524,16 +494,16 @@ flowchart TB
     end
 
     subgraph "Per-Host Keys"
-        OX_KEY[ox: idjo SSH key]
-        TIGER_KEY[tiger: idjo SSH key]
+        DOG_KEY[dog: idjo SSH key]
+        DRAGON_KEY[dragon: idjo SSH key]
     end
 
     AGE --> SOPS
     SOPS --> SEC
     SEC --> DEC
 
-    DEC --> OX_KEY
-    DEC --> TIGER_KEY
+    DEC --> DOG_KEY
+    DEC --> DRAGON_KEY
 ```
 
 ### Host-Specific Secret Selection
@@ -542,8 +512,8 @@ flowchart TB
 # In sops module
 let
   sshKey = {
-    ox = "idjo";
-    tiger = "idjo";
+    dog = "idjo";
+    dragon = "idjo";
   }."${hostName}";
 in
 {
@@ -631,7 +601,7 @@ sequenceDiagram
 This architecture enables:
 
 1. **Unified Configuration**: Single source of truth for all machines
-2. **Cross-Platform Support**: Same modules work across NixOS, macOS, and Android
+2. **Cross-Platform Support**: Same modules work across NixOS hosts and Home Manager (with nix-darwin modules maintained)
 3. **Modular Design**: 60+ independent, composable modules
 4. **Type-Safe Options**: All configuration is validated at build time
 5. **Reproducible Builds**: Flake lock ensures consistent builds

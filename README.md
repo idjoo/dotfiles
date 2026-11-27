@@ -1,17 +1,17 @@
 # Nix Dotfiles
 
 ![Nix](https://img.shields.io/badge/Nix-Flakes-5277C3?logo=nixos&logoColor=white)
-![Platforms](https://img.shields.io/badge/Platforms-NixOS%20%7C%20macOS%20%7C%20Android-blue)
-![Hosts](https://img.shields.io/badge/Hosts-6-green)
+![Platforms](https://img.shields.io/badge/Platforms-NixOS-blue)
+![Hosts](https://img.shields.io/badge/Hosts-2-green)
 ![Modules](https://img.shields.io/badge/Modules-60%2B-orange)
 
-A comprehensive Nix flake-based dotfiles repository managing system configurations across **NixOS**, **macOS (nix-darwin)**, and **Android (nix-on-droid)**.
+A comprehensive Nix flake-based dotfiles repository managing system configurations on **NixOS**, plus Home Manager user environments (nix-darwin modules are also maintained).
 
 ## Overview
 
 This repository provides a unified, declarative configuration system for managing:
 
-- **6 machines** across 3 platforms (Linux servers, Linux desktop, macOS, Android)
+- **2 machines** on NixOS (x86_64 Linux laptop, aarch64 cloud VM)
 - **60+ reusable modules** with consistent enable patterns
 - **AI tooling** (Claude Code, Codex, T3 Code, Antigravity CLI, OpenCode)
 - **Development environment** (Neovim with 30+ plugins, tmux, git workflows)
@@ -77,22 +77,18 @@ graph TB
 
     subgraph "Outputs"
         NC[nixosConfigurations]
-        DC[darwinConfigurations]
         HC[homeConfigurations]
     end
 
     subgraph "hosts/"
-        OX[ox<br/>Primary Server]
-        TIGER[tiger<br/>Personal Linux]
-        MONKEY[monkey<br/>Personal Phone]
-        RABBIT[rabbit<br/>Office Phone]
+        DOG[dog<br/>Personal Linux Laptop]
+        DRAGON[dragon<br/>ARM Cloud VM]
     end
 
     subgraph "modules/"
         NIXOS[nixos/]
         DARWIN[darwin/]
         HOMEMGR[home-manager/]
-        DROID[nix-on-droid/]
     end
 
     subgraph "overlays/"
@@ -112,32 +108,27 @@ graph TB
     NV --> FLAKE
 
     FLAKE --> NC
-    FLAKE --> DC
     FLAKE --> HC
 
-    NC --> OX
-    NC --> HORSE
-    NC --> TIGER
-    DC --> SNAKE
-    HC --> MONKEY
-    HC --> RABBIT
+    NC --> DOG
+    NC --> DRAGON
+    HC --> DOG
+    HC --> DRAGON
 ```
 
 ### Host Matrix
 
 | Host | Platform | Architecture | Type | Description |
 |------|----------|--------------|------|-------------|
-| **ox** | NixOS | x86_64-linux | Server | Primary server, backend services |
-| **tiger** | NixOS | x86_64-linux | Desktop | Personal Linux desktop, herbstluftwm |
-| **monkey** | nix-on-droid | aarch64-linux | Mobile | Personal Android phone |
-| **rabbit** | nix-on-droid | aarch64-linux | Mobile | Office Android phone |
+| **dog** | NixOS | x86_64-linux | Laptop | Personal Linux laptop, herbstluftwm |
+| **dragon** | NixOS | aarch64-linux | Server | OCI ARM cloud VM, Komodo, Tailscale exit node |
 
 ### Module System
 
 All modules follow a consistent enable pattern:
 
 ```nix
-# In host configuration (e.g., hosts/tiger/home.nix)
+# In host configuration (e.g., hosts/dog/home.nix)
 modules = {
   neovim.enable = true;
   zsh.enable = true;
@@ -165,13 +156,12 @@ Modules are auto-imported via `outputs.homeManagerModules`, `outputs.nixosModule
 ├── README.md              # This file
 │
 ├── hosts/                 # Per-machine configurations
-│   ├── ox/                # NixOS server
+│   ├── dog/               # NixOS laptop
 │   │   ├── config.nix     # System configuration
 │   │   ├── home.nix       # Home Manager configuration
-│   │   └── hardware-config.nix
-│   ├── tiger/             # NixOS desktop
-│   ├── monkey/            # Android
-│   └── rabbit/            # Android
+│   │   ├── hardware.nix
+│   │   └── disko.nix
+│   └── dragon/            # NixOS cloud VM (Komodo)
 │
 ├── modules/               # Reusable configuration modules
 │   ├── home-manager/      # Cross-platform user modules (40+)
@@ -181,8 +171,7 @@ Modules are auto-imported via `outputs.homeManagerModules`, `outputs.nixosModule
 │   │   ├── tmux/          # Terminal multiplexer
 │   │   └── ...
 │   ├── nixos/             # Linux-specific system modules
-│   ├── darwin/            # macOS-specific system modules
-│   └── nix-on-droid/      # Android-specific modules
+│   └── darwin/            # macOS-specific system modules
 │
 ├── overlays/              # Package overlays
 │   └── default.nix        # additions, modifications, stable-packages
@@ -223,8 +212,8 @@ SOPS with age encryption for managing secrets:
 ```nix
 # Per-host SSH key selection
 sshKey = {
-  ox = "idjo";
-  tiger = "idjo";
+  dog = "idjo";
+  dragon = "idjo";
 }."${hostName}";
 ```
 
