@@ -82,9 +82,6 @@
     t = "${pkgs.tmux}/bin/tmux";
     tn = "${pkgs.tmux}/bin/tmux new";
     ta = "${pkgs.tmux}/bin/tmux attach -t 0";
-
-    # ssh
-    ox = "TERM=xterm-256color ${pkgs.openssh}/bin/ssh ${outputs.lib.username}@ox";
   };
 
   home.sessionVariables = {

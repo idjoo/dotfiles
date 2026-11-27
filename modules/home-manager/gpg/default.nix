@@ -11,10 +11,7 @@ let
 
   identity =
     {
-      ox = "idjo";
       dragon = "idjo";
-      monkey = "idjo";
-      tiger = "idjo";
       dog = "idjo";
     }
     ."${hostName}";

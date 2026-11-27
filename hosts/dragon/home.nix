@@ -1,5 +1,4 @@
-# Dragon - GCP cloud VM home-manager configuration
-# Based on ox, but without ox-specific services
+# Dragon - OCI ARM cloud VM home-manager configuration
 {
   pkgs,
   outputs,

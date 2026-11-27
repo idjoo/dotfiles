@@ -18,12 +18,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/testing";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
-
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -96,7 +90,6 @@
     {
       self,
       nixpkgs,
-      nix-on-droid,
       nix-darwin,
       systems,
       ...
@@ -137,27 +130,8 @@
       nixosModules = import ./modules/nixos;
       homeModules.imports = [ ./modules/home-manager ];
       darwinModules = import ./modules/darwin;
-      lib.nixOnDroidModules = import ./modules/nix-on-droid;
 
       nixosConfigurations = {
-        ox = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs outputs rootPath;
-          };
-          modules = [
-            ./hosts/ox/config.nix
-          ];
-        };
-
-        tiger = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs outputs rootPath;
-          };
-          modules = [
-            ./hosts/tiger/config.nix
-          ];
-        };
-
         dragon = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit inputs outputs rootPath;
@@ -167,7 +141,7 @@
             ./hosts/dragon/config.nix
           ];
         };
-	
+
         dog = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit inputs outputs rootPath;
@@ -180,53 +154,9 @@
         };
       };
 
-      nixOnDroidConfigurations = {
-        monkey = nix-on-droid.lib.nixOnDroidConfiguration {
-          pkgs = import nixpkgs { system = "aarch64-linux"; };
-          extraSpecialArgs = {
-            inherit inputs outputs rootPath;
-          };
-          modules = [
-            ./hosts/monkey/config.nix
-          ];
-        };
-
-        rabbit = nix-on-droid.lib.nixOnDroidConfiguration {
-          pkgs = import nixpkgs { system = "aarch64-linux"; };
-          extraSpecialArgs = {
-            inherit inputs outputs rootPath;
-          };
-          modules = [
-            ./hosts/rabbit/config.nix
-          ];
-        };
-      };
-
       # Standalone Home Manager configurations for `nh home switch`
       homeConfigurations = {
         # NixOS hosts (Linux)
-        "idjo@ox" = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = pkgsFor.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs rootPath;
-            hostName = "ox";
-          };
-          modules = [
-            ./hosts/ox/home.nix
-          ];
-        };
-
-        "idjo@tiger" = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = pkgsFor.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs rootPath;
-            hostName = "tiger";
-          };
-          modules = [
-            ./hosts/tiger/home.nix
-          ];
-        };
-
         "idjo@dragon" = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = pkgsFor.aarch64-linux;
           extraSpecialArgs = {
