@@ -63,8 +63,6 @@ in
         docker-buildx
 
         wakatime-cli
-
-        jira-cli-go
       ]
       ++ optionals cfg.gui.enable [
         # database

@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }:
 with lib;
@@ -52,6 +53,9 @@ let
       pkgs.llm-agents.t3code;
 in
 {
+  imports = [
+    inputs.sops-nix.homeManagerModules.sops
+  ];
 
   options.modules.ai = {
     enable = mkEnableOption "AI CLIs (claude-code, codex, dsh, t3code, antigravity-cli, antigravity-acp, opencode, skills)";
@@ -67,7 +71,27 @@ in
       pkgs.antigravity-acp
       pkgs.llm-agents.opencode
       pkgs.llm-agents.skills
+      pkgs.jira-jr
     ];
+
+    # Jira: every agent uses `jr` (sofq/jira-cli) plus its skill, installed
+    # with the skills CLI (`skills add sofq/jira-cli -g`).
+    sops.secrets."apiKeys/jira" = { };
+    sops.secrets."apiKeys/jiraUser" = { };
+    sops.templates."jr-config.json" = {
+      path = "${config.xdg.configHome}/jr/config.json";
+      content = builtins.toJSON {
+        default_profile = "default";
+        profiles.default = {
+          base_url = "https://hyrd.atlassian.net";
+          auth = {
+            type = "basic";
+            username = config.sops.placeholder."apiKeys/jiraUser";
+            token = config.sops.placeholder."apiKeys/jira";
+          };
+        };
+      };
+    };
 
     # The self-updating background service starts its downloaded binary directly.
     xdg.configFile."systemd/user/t3code.service.d/browser-runtime.conf" =

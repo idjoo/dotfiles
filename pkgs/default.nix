@@ -9,5 +9,6 @@ pkgs: {
   clips = pkgs.callPackage ./clips { };
   dank-mono-nerdfont = pkgs.callPackage ./dank-mono-nerdfont { inherit pkgs; };
   httpgenerator = pkgs.callPackage ./httpgenerator { };
+  jira-jr = pkgs.callPackage ./jira-jr { };
   lightpanda = pkgs.callPackage ./lightpanda { };
 }
