@@ -79,6 +79,7 @@ in
         zapzap
         clips
         pear-desktop
+        teams-token
       ]
       ++ optionals cfg.custom.enable [
         # custom packages

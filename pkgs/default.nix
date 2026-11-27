@@ -12,4 +12,5 @@ pkgs: {
   jira-jr = pkgs.callPackage ./jira-jr { };
   lightpanda = pkgs.callPackage ./lightpanda { };
   teams-cli = pkgs.callPackage ./teams-cli { };
+  teams-token = pkgs.callPackage ./teams-token { };
 }
